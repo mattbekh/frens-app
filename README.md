@@ -8,10 +8,12 @@ A social app for students to meet new people with similar interests. Will store 
 
 ## Minimal Requirements
 
--   Welcome page, with "login" & "register" button
--   Login page, with account name and password input
--   Register page, form with input for username, password, email, profile picture
--   Register page 2 ("Basic Info"), user specifies interests, school and general account biography display info
+-   Welcome page (animation), then display logo (at the top) and "login(goto Login page)" & "register(goto Register page)" button, transition between pages
+
+    -   Login page, with account name and password input
+
+-   Register page, form with input for username, password, email, choose 3 interests from 10
+-   Profile page (scrollable), user bio, profile picture, school and general account biography display info, pre-defined questions
 -   Main page, display the account information of user (name, picture) as header, updating "find friends" list with suggested friends
 
 ## Standard Requirements
@@ -26,13 +28,15 @@ A social app for students to meet new people with similar interests. Will store 
 -   "Remember me" data persistence for the app
 -   Chat functionality between matches with chat persistence
 -   Ability to send media
+-   display mutual friends
 
 ## Minimal Requirements Tasks Break Down
 
 -   Register page:
-    -   **Forms** for user "Basice Info" collection, including textbox, checkbox, dropdown menu, etc. Define required fields.
+    -   **Forms** for user "Basice Info" collection, including textbox, checkbox, radioboxes, etc. Define required fields.
     -   **Upload picture(s)** functionality
 -   Main page:
+    -   create JSON user, display their info on Main page later on
     -   **Header** to display user profile info
     -   **List** of "find friends" to display recommendations
     -   **Daily auto-updation** functionality with number of total matches or new matches
