@@ -20,7 +20,6 @@ A social app for students to meet new people with similar interests. Will store 
 -   Matches page, displays a page of current matches with clickable sections which display their accounts
 -   Password reset functionality for login page
 -   Add prompts which are displayed once you match with someone
--   Users are able to click on names in "find friends" list to find out contact info
 
 ## Stretch Requirements
 
@@ -31,10 +30,10 @@ A social app for students to meet new people with similar interests. Will store 
 ## Minimal Requirements Tasks Break Down
 
 -   Register page:
-    -   **forms** for user "Basice Info" collection, including textbox, checkbox, dropdown menu, etc.
-    -   **upload picture(s)** functionality
+    -   **Forms** for user "Basice Info" collection, including textbox, checkbox, dropdown menu, etc. Define required fields.
+    -   **Upload picture(s)** functionality
 -   Main page:
-    -   **header** to display user profile info
-    -   **list** of "find friends" to display recommendations
-    -   **daily auto-updation** functionality
-    -   **clickable** names in "find friends" list to display contact info
+    -   **Header** to display user profile info
+    -   **List** of "find friends" to display recommendations
+    -   **Daily auto-updation** functionality with number of total matches or new matches
+    -   **Clickable** names in "find friends" list to display contact info
