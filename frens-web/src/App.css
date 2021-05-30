@@ -12,9 +12,11 @@
 }
 
 body {
-  background-color: var(--black);
+  background-color: var(--yellow);
 }
 
 h1 {
-  color: var(--blue);
+  margin-top: 25rem;
+  font-size: 10rem;
+  color: var(--black);
 }
