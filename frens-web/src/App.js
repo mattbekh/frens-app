@@ -1,13 +1,21 @@
-import logo from './logo.svg';
+
 import './App.css';
 
-import { HomePage } from "./containers/HomePage";
+import { WelcomePage } from "./containers/WelcomePage";
+import { SigninPage } from "./containers/SigninPage";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <HomePage />
-    </div>
+    <Router>
+      <div >
+        <Switch>
+          <Route path="/" exact component={WelcomePage}/>;
+          <Route path="/signin" component={SigninPage}/>;
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
