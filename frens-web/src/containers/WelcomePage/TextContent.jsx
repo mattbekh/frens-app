@@ -1,10 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import gsap, { Power3 } from "gsap";
 import styled from "styled-components/macro";
-
-import AddMargin from "../../components/AddMargin";
 import { Link } from "react-router-dom";
 
+// CSS STYLING
 import '../../App.css';
 const Container = styled.div`
     visibility: hidden;
@@ -13,18 +12,18 @@ const Container = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     text-align: center;
-    height: 100vh;
-    width: 100vh;
+    margin: auto;
+    height: 100%;
+    width: 100%;
 `
 const SectionWrapper = styled.section`
-    margin: auto;
+    margin: 18rem auto;
+    height: 10rem;
     text-align: center;
     overflow: hidden;
 `
 
 const LoginWrapper = styled.div`
-    background-color: var(--yellow);
-    border: 2px solid var(--black);
     border-radius: 50%;
     width: 10rem;
     height: 10rem;
@@ -41,7 +40,6 @@ const LoginWrapper = styled.div`
 `
 
 const RegisterWrapper = styled.div`
-    background-color: var(--black);
     border-radius: 50%;
     width: 10rem;
     height: 10rem;
@@ -60,7 +58,7 @@ const RegisterWrapper = styled.div`
 const LoginButton = styled.button`
     border: none;
     font-weight: bold;
-    color: var(--black);
+    font-size: 1.8rem;
     background: none;
     margin: auto;
 `
@@ -68,8 +66,8 @@ const LoginButton = styled.button`
 const RegisterButton = styled.button`
     background: none;
     font-weight: bold;
+    font-size: 1.2rem;
     border: none;
-    color: white;
     margin: auto;
 `
 
@@ -89,8 +87,8 @@ function TextContent(props) {
         const headlineSecond = textContent.children[0].children[1];
         const headlineThird = textContent.children[0].children[2];
 
-        tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 200, ease: Power3.easeOut})
-          .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 200, ease: Power3.easeOut});
+        tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 250, ease: Power3.easeOut})
+          .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 250, ease: Power3.easeOut});
 
         tl.from(loginRef,2,{scale: 0, ease: Power3.easeOut}, 2.3)
           .from(registerRef,2,{scale: 0, ease: Power3.easeOut},2.9);
@@ -104,30 +102,30 @@ function TextContent(props) {
 
     return (
 
-        <Container ref={el => content = el} >
-            <Link to="/signin">
-                <LoginWrapper ref={el => loginRef = el} >
-                    <LoginButton>Sign In</LoginButton>
-                </LoginWrapper>
-            </Link>
-            
+            <Container ref={el => content = el} >
+                <Link to={{ pathname: '/signin', state: { theme: `poo`} }}>
+                    <LoginWrapper ref={el => loginRef = el} className="emptyContainer">
+                        <LoginButton>Sign In</LoginButton>
+                    </LoginWrapper>
+                    {/* <div ref={el => loginRef = el} className="emptyContainer">
+                        <LoginButton>Sign In</LoginButton>
+                    </div> */}
+                </Link>
+                
                 <SectionWrapper ref={el => textContent = el}>
                     {/*replace after animation*/}
-                    <h1>
+                    <h2>
                         <div className="text-content-line">Make friends</div>
                         <div className="text-content-line">which last</div>
                         <div className="text-content-line">forever.</div>
-                    </h1>
+                    </h2>
 
                     
                 </SectionWrapper>
-            <RegisterWrapper ref={el => registerRef = el}>
-                <RegisterButton>Register</RegisterButton>
-            </RegisterWrapper>
-        </Container>
-
-        
-        
+                <RegisterWrapper ref={el => registerRef = el} className="fullContainer">
+                    <RegisterButton className="fullContainer-text">Register</RegisterButton>
+                </RegisterWrapper>
+            </Container>
     );
 }
 

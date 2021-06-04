@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -22,8 +22,20 @@ label {
 
 h1 {
   font-weight: bold;
+  font-size: 4rem;
+  color: var(--black);
+  margin: 0;
+}
+
+.header-h1 {
+  display: inline;
+}
+
+h2 {
+  font-weight: bold;
   color: var(--black);
 }
+
 input {
   border-radius: 5px;
   height: 2.3rem;
@@ -34,4 +46,5 @@ a {
   text-decoration: none;
   font-weight: bold;
   color: var(--orange);
-}
+  color: rgba(255, 230, 0, 0.8);
+} */

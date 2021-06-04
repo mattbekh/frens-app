@@ -10,28 +10,28 @@ import '../../App.css';
 const MiddleSectionContainer = styled.div`
     color: var(--yellow);
     width: 100%;
-    
-    background: var(--yellow);
+    height: 90vh;
+    background: none;
+    position: absolute;
     display: flex;
-    justify-content: center;
+    margin: 0 auto;
+
 `;
 
 const InputContainer = styled.div`
     max-width: 100%;
+    min-width: 75%;
     margin: 0 auto;
 `
 
 const FormContainer = styled.form`
     min-width: 400px;
-    background: var(--yellow);
     border-radius: 5px;
-    margin: 13rem auto;
+    margin: 9rem auto;
     width: 28%;
     height: 33rem;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--black);
-    box-shadow: 0px 0px 1rem rgba(0,0,0,0.8);
 `
 
 const LabelWrapper = styled.label`
@@ -55,21 +55,20 @@ const SpanWrapper = styled.span`
 `
 
 const ButtonWrapper = styled.button`
-    font-weight: bold;
-    color: white;
-    background-color: var(--black);
+    font-weight: 900;
     width: 102%;
     border-radius: 5px;
-    height: 2.5rem;
+    
+    height: 2.8rem;
     margin: 0 4px;
 `
 
 function MiddleSection(props) {
     return <MiddleSectionContainer>
-        <FormContainer action="submit">
+        <FormContainer action="submit" className="login-form">
             <InputContainer>
                 <AddMargin direction="vertical" margin={30} />
-                <h1>Sign in to your account</h1>
+                <h2>Sign in to your account</h2>
                 <LabelWrapper htmlFor="email">Email</LabelWrapper>
                 <AddMargin direction="vertical" margin={20} />
                 <br/>
@@ -86,7 +85,7 @@ function MiddleSection(props) {
                 <LabelWrapper>Remember me</LabelWrapper>
                 <br/>
                 <AddMargin direction="vertical" margin={30} />
-                <ButtonWrapper>Login</ButtonWrapper>
+                <ButtonWrapper className="login-button">Login</ButtonWrapper>
                 <AddMargin direction="vertical" margin={10} />
                 <Link to="/register">
                 <SpanWrapper><a href="">Register</a></SpanWrapper>

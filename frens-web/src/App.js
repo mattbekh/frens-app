@@ -1,5 +1,6 @@
 
 import './App.css';
+import {useSelector} from "react-redux";
 
 import { WelcomePage } from "./containers/WelcomePage";
 import { SigninPage } from "./containers/SigninPage";
@@ -7,6 +8,11 @@ import { SigninPage } from "./containers/SigninPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+
+  // Check redux isDark state
+  // const isDark = useSelector(state => state.isDark);
+  // console.log(isDark);
+
   return (
     <Router>
       <div >
