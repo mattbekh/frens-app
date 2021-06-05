@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 import '../../App.css';
 const Container = styled.div`
     visibility: hidden;
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: flex;
+    // flex-direction: row;
+    // justify-content: center;
+    // flex-wrap: wrap;
     text-align: center;
     margin: auto;
-    height: 100%;
+    min-height: 100%;
     width: 100%;
 `
 const SectionWrapper = styled.section`
-    margin: 18rem auto;
-    height: 10rem;
+    margin: auto;
+    min-height: 100%;
     text-align: center;
     overflow: hidden;
 `
@@ -107,9 +107,6 @@ function TextContent(props) {
                     <LoginWrapper ref={el => loginRef = el} className="emptyContainer">
                         <LoginButton>Sign In</LoginButton>
                     </LoginWrapper>
-                    {/* <div ref={el => loginRef = el} className="emptyContainer">
-                        <LoginButton>Sign In</LoginButton>
-                    </div> */}
                 </Link>
                 
                 <SectionWrapper ref={el => textContent = el}>
@@ -120,8 +117,8 @@ function TextContent(props) {
                         <div className="text-content-line">forever.</div>
                     </h2>
 
-                    
                 </SectionWrapper>
+
                 <RegisterWrapper ref={el => registerRef = el} className="fullContainer">
                     <RegisterButton className="fullContainer-text">Register</RegisterButton>
                 </RegisterWrapper>

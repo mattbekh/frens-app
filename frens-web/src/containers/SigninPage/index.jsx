@@ -5,42 +5,40 @@ import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 import gsap, { Power3 } from "gsap";
 import {useLocation} from "react-router-dom";
 
-// import { PageContainer } from "../../components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
+import { HeaderWrapper } from "../../components/HeaderWrapper";
+import { ContentWrapper } from "../../components/ContentWrapper";
+import { FooterWrapper } from "../../components/FooterWrapper";
+
 import MiddleSection from "./MiddleSection";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
 
 // CSS Styling here
 
-const PageWrapper = styled.body`
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-`
+// const HeaderWrapper = styled.header`
+//     width: 100%:
+//     padding: 0;
+//     margin: 0;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: left;
+//     order: 1;
+// `
+// const MiddleSectionWrapper = styled.div`
+//     width: 100%;
+//     height: 100%;
+//     margin: 0 auto;
+//     order: 2;
+// `
 
-const HeaderWrapper = styled.header`
-    width: 100%:
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    order: 1;
-`
-const MiddleSectionWrapper = styled.div`
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    order: 2;
-`
-
-const FooterWrapper = styled.footer`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    order: 3;
-    padding: 1rem;
-`
+// const FooterWrapper = styled.footer`
+//     position: absolute;
+//     bottom: 0;
+//     right: 0;
+//     order: 3;
+//     padding: 1rem;
+// `
 
 export function SigninPage(props) {
 
@@ -76,20 +74,27 @@ export function SigninPage(props) {
     return (
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
             <GlobalStyles />
-            <PageWrapper>
-                <HeaderWrapper ref={el => head = el}>
-                    <SlipIn name="Sign in"/>
+            <PageContainer>
+                <HeaderWrapper>
+                    <div ref={el => head = el}>
+                        <SlipIn name="Sign in"/>
+                    </div>
                 </HeaderWrapper>
                 
-                <MiddleSectionWrapper ref={el => middleSection = el} >
+                <ContentWrapper>
+                    <div ref={el => middleSection = el} >
+                        <MiddleSection />
+                    </div>
+                </ContentWrapper>
+                {/* <MiddleSectionWrapper ref={el => middleSection = el} >
                     <MiddleSection />
-                </MiddleSectionWrapper>
+                </MiddleSectionWrapper> */}
 
                 <FooterWrapper>
                     <Footer/>
                 </FooterWrapper>
 
-            </PageWrapper>
+            </PageContainer>
         </ThemeProvider>
     );
 }

@@ -7,12 +7,14 @@ import styled from "styled-components/macro";
 
 const PageWrapper = styled.div`
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
+  height: 100%;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
+  // align-items: center;
 `;
 
 export function PageContainer(props) {

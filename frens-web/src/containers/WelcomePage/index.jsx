@@ -5,47 +5,22 @@ import styled, {ThemeProvider} from "styled-components/macro";
 import gsap, { Power3 } from "gsap";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 
-// import { PageContainer } from "../../components/PageContainer";
+import { PageContainer } from "../../components/PageContainer";
+import { HeaderWrapper } from "../../components/HeaderWrapper";
+import { ContentWrapper } from "../../components/ContentWrapper";
+import { FooterWrapper } from "../../components/FooterWrapper";
+
 import TextContent from "./TextContent";
 import SlipIn from "../../components/SlipIn";
 import ToggleNM from "../../components/ToggleNM";
 
-// CSS Styling here
-import '../../App.css';
-
-const PageWrapper = styled.body`
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-`
-
-const HeaderWrapper = styled.header`
-    width: 100%:
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-`
-
-const FooterWrapper = styled.footer`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    order: 3;
-    padding: 1rem;
-`
-
 export function WelcomePage(props) {
 
-    // const [theme, setTheme] = useState("light");
     let theme = "light";
     // Check redux isDark state
     const isDark = useSelector(state => state.isDark);
-    // console.log(isDark);
 
     if(isDark) {
-        // setTheme("dark");
         theme = "dark";
     } else {
         theme = "light";
@@ -53,12 +28,6 @@ export function WelcomePage(props) {
 
     let head = useRef(null);
     let tl = new gsap.timeline;
-
-    
-    // const themeToggler = () => {
-    //     theme === "light" ? setTheme("dark") : setTheme("light");
-    // };
-
 
     useEffect( () => {
 
@@ -69,16 +38,21 @@ export function WelcomePage(props) {
     return (
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
             <GlobalStyles />
-            <PageWrapper>
-                <HeaderWrapper ref={el => head = el}>
-                    <SlipIn name="Frens" theme={theme==="light" ? lightTheme : darkTheme}/>
+            <PageContainer>
+                <HeaderWrapper >
+                    <div ref={el => head = el}>
+                        <SlipIn name="Frens" theme={theme==="light" ? lightTheme : darkTheme}/>
+                    </div>
                 </HeaderWrapper>
 
-                <TextContent theme={theme==="light" ? lightTheme : darkTheme}/>
+                <ContentWrapper>
+                    <TextContent theme={theme==="light" ? lightTheme : darkTheme}/>
+                </ContentWrapper>
+
                 <FooterWrapper>
                     <ToggleNM />
                 </FooterWrapper>
-            </PageWrapper>
+            </PageContainer>
         </ThemeProvider>
     );
 }

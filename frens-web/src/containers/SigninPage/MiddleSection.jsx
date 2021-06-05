@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 
 // CSS for this section
 import '../../App.css';
+
 const MiddleSectionContainer = styled.div`
     color: var(--yellow);
     width: 100%;
-    height: 90vh;
+    height: 70vh;
     background: none;
     position: absolute;
     display: flex;
