@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import {useSelector} from "react-redux";
-import styled, {ThemeProvider} from "styled-components/macro";
+import {ThemeProvider} from "styled-components/macro";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 import gsap, { Power3 } from "gsap";
 import {useLocation} from "react-router-dom";
@@ -14,40 +14,13 @@ import MiddleSection from "./MiddleSection";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
 
-// CSS Styling here
-
-// const HeaderWrapper = styled.header`
-//     width: 100%:
-//     padding: 0;
-//     margin: 0;
-//     display: flex;
-//     flex-direction: row;
-//     align-items: left;
-//     order: 1;
-// `
-// const MiddleSectionWrapper = styled.div`
-//     width: 100%;
-//     height: 100%;
-//     margin: 0 auto;
-//     order: 2;
-// `
-
-// const FooterWrapper = styled.footer`
-//     position: absolute;
-//     bottom: 0;
-//     right: 0;
-//     order: 3;
-//     padding: 1rem;
-// `
-
 export function SigninPage(props) {
-
-    // const [theme, setTheme] = useState("light");
+    
     let theme = "light";
     // Check redux isDark state
     const isDark = useSelector(state => state.isDark);
     if(isDark) {
-        // setTheme("dark");
+
         theme = "dark";
     } else {
         theme = "light";
@@ -86,9 +59,6 @@ export function SigninPage(props) {
                         <MiddleSection />
                     </div>
                 </ContentWrapper>
-                {/* <MiddleSectionWrapper ref={el => middleSection = el} >
-                    <MiddleSection />
-                </MiddleSectionWrapper> */}
 
                 <FooterWrapper>
                     <Footer/>
