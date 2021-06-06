@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+
 }
 
 :root {
@@ -12,7 +13,7 @@
 }
 
 body {
-  background-color: var(--black);
+  /*background-color: var(--black);*/
 }
 
 h1 {
