@@ -15,6 +15,7 @@ body {
     font-family: "Bradley Hand", sans-serif;
     background-color: var(--yellow);
 }
+
 .max-container {
     max-width: 1200px;
     margin: auto;
@@ -46,3 +47,4 @@ p {
 h3 {
     color: var(--yellow);
 }
+
