@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Rachel Green",
+        "imgURL": "https://pyxis.nymag.com/v1/imgs/47c/71a/130bf1e557e534b3f2be3351afc2ecf952-17-rachel-green-jewish.rsquare.w700.jpg",
+        "contactInfo": "Facebook: Rachel_Green"
+    },
+    {
+        "name": "Phoebe Buffay",
+        "imgURL": "https://upload.wikimedia.org/wikipedia/en/f/f6/Friendsphoebe.jpg",
+        "contactInfo": "Facebook: Phoebe_Buffay"
+    },
+    {
+        "name": "Joey Tribbiani",
+        "imgURL": "https://i.guim.co.uk/img/media/ae14333615408ab5d5ba6c23810be683e0d6f631/389_282_1481_889/master/1481.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=fe8e04916fba748b25cc93727609a391",
+        "contactInfo": "Facebook: Joey_Tribbiani"
+    },
+    {
+        "name": "Chandler Bing",
+        "imgURL": "https://cdn.onebauer.media/one/media/6019/638b/6bf6/c622/d91d/b871/chandler-from-friends-now.png?format=jpg&quality=80&width=440&ratio=1-1&resize=aspectfit",
+        "contactInfo": "Facebook: Chandler_Bing"
+    },
+    {
+        "name": "Ross Geller",
+        "imgURL": "https://upload.wikimedia.org/wikipedia/en/6/6f/David_Schwimmer_as_Ross_Geller.jpg",
+        "contactInfo": "Ins: Ross_Geller"
+    },
+    {
+        "name": "Mike Hannigan",
+        "imgURL": "https://i.pinimg.com/736x/f2/be/12/f2be127a5f756232c393da6d6fe09a3d.jpg",
+        "contactInfo": "Ins: Mike_Hannigan"
+    },
+    {
+        "name": "Carol Willick",
+        "imgURL": "https://i.pinimg.com/originals/b4/8c/6b/b48c6b4aa141caed9b6ff29851e27483.jpg",
+        "contactInfo": "Facebook: Carol_Willick"
+    },
+    {
+        "name": "Charlie Wheeler",
+        "imgURL": "https://i.pinimg.com/originals/0a/d9/3c/0ad93c4bc4ce9405652b439b8034c406.jpg",
+        "contactInfo": "Facebook: Charlie_Wheeler"
+    }
+]

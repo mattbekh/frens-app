@@ -1,50 +1,50 @@
-/* .App {
-  text-align: center;
+.App {
+    text-align: center;
 }
 
 :root {
-  --blue: #3A86FF;
-  --orange: #FB5607;
-  --yellow: #FFBE0B;
-  --pink: #ff006e;
-  --purple: #8338ec;
-  --black: #010101;
+    --blue: #3a86ff;
+    --orange: #fb5607;
+    --yellow: #ffbe0b;
+    --pink: #ff006e;
+    --purple: #8338ec;
+    --black: #010101;
 }
 
 body {
-  background-color: var(--yellow);
+    font-family: "Bradley Hand", sans-serif;
+    background-color: var(--yellow);
 }
 
+.max-container {
+    max-width: 1200px;
+    margin: auto;
+}
 label {
-  color: var(--black);
-  
+    color: var(--black);
 }
 
 h1 {
-  font-weight: bold;
-  font-size: 4rem;
-  color: var(--black);
-  margin: 0;
+    font-weight: bold;
+    color: var(--black);
 }
-
-.header-h1 {
-  display: inline;
-}
-
-h2 {
-  font-weight: bold;
-  color: var(--black);
-}
-
 input {
-  border-radius: 5px;
-  height: 2.3rem;
-  border: 1px solid grey;
+    border-radius: 5px;
+    height: 2.3rem;
+    border: 1px solid grey;
 }
 
 a {
-  text-decoration: none;
-  font-weight: bold;
-  color: var(--orange);
-  color: rgba(255, 230, 0, 0.8);
-} */
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--orange);
+}
+
+p {
+    color: white;
+}
+
+h3 {
+    color: var(--yellow);
+}
+

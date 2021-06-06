@@ -1,0 +1,7 @@
+.frens-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 80%;
+    margin: 0 auto;
+}
