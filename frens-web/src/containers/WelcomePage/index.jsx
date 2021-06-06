@@ -42,6 +42,7 @@ export function WelcomePage(props) {
                 <HeaderWrapper >
                     <div ref={el => head = el}>
                         <SlipIn name="Frens" theme={theme==="light" ? lightTheme : darkTheme}/>
+                        
                     </div>
                 </HeaderWrapper>
 

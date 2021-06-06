@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap, { Power3 } from "gsap";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ const Container = styled.div`
     width: 100%;
 `
 const SectionWrapper = styled.section`
+    // visibility: visible;
     margin: auto;
     min-height: 100%;
     text-align: center;
@@ -81,24 +82,43 @@ function TextContent(props) {
     let tl = new gsap.timeline;
 
     useEffect( () => {
+        // Content remains hidden until everything is ready to be rendered
         gsap.to(content, 0, {css: {visibility: 'visible'}})
         
         const headlineFirst = textContent.children[0].children[0];
         const headlineSecond = textContent.children[0].children[1];
         const headlineThird = textContent.children[0].children[2];
 
-        tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 250, ease: Power3.easeOut})
-          .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 250, ease: Power3.easeOut});
+        // Stagger in the catch phrase 
+        gsap.to(textContent,0,{css: {visibility: 'visible'}})
+        tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 250, ease: Power3.easeOut},0.15)
+          .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 250, ease: Power3.easeOut})
+          .to(textContent,0,{css: {visibility: 'hidden'}});
 
-        tl.from(loginRef,2,{scale: 0, ease: Power3.easeOut}, 2.3)
-          .from(registerRef,2,{scale: 0, ease: Power3.easeOut},2.9);
+        tl.staggerTo([headlineFirst, headlineSecond, headlineThird], 0, {y: 0, ease: Power3.easeOut});
+       
+        // tl.staggerFrom(textContent, 2, {y: 250, ease: Power3.easeOut})
+        //   .staggerTo(textContent, 1, {y: 250, ease: Power3.easeOut});
+
+        // Ease in the Sign In and Register Bubbles
+        tl.from(loginRef,2,{scale: 0, ease: Power3.easeOut}, 2.5)
+          .from(registerRef,2,{scale: 0, ease: Power3.easeOut},3.1);
+        
+    })
+
+
+        // const headlineFirst = textContent.children[0].children[0];
+        // const headlineSecond = textContent.children[0].children[1];
+        // const headlineThird = textContent.children[0].children[2];
+        
+        // tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 250, ease: Power3.easeOut})
+        //   .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 250, ease: Power3.easeOut});
 
         // tl.from(loginRef, 2, {y: 1280, ease: Power3.easeOut})
         //   .from(loginRef,2,{scale: 0, ease: Power3.easeOut}, .2)
         //   .from(registerRef, 1.2, {y: -1080, ease: Power3.easeOut}, 0.9)
         //   .from(registerRef,2,{scale: 0, ease: Power3.easeOut});
 
-    })
 
     return (
 
