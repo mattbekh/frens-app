@@ -1,21 +1,48 @@
 .App {
-  text-align: center;
-
+    text-align: center;
 }
 
 :root {
-  --blue: #3a86ff;
-  --orange: #fb5607;
-  --yellow: #ffbe0b;
-  --pink: #ff006e;
-  --purple: #8338ec;
-  --black: #010101;
+    --blue: #3a86ff;
+    --orange: #fb5607;
+    --yellow: #ffbe0b;
+    --pink: #ff006e;
+    --purple: #8338ec;
+    --black: #010101;
 }
 
 body {
-  /*background-color: var(--black);*/
+    font-family: "Bradley Hand", sans-serif;
+    background-color: var(--yellow);
+}
+.max-container {
+    max-width: 1200px;
+    margin: auto;
+}
+label {
+    color: var(--black);
 }
 
 h1 {
-  color: var(--blue);
+    font-weight: bold;
+    color: var(--black);
+}
+input {
+    border-radius: 5px;
+    height: 2.3rem;
+    border: 1px solid grey;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--orange);
+}
+
+p {
+    color: white;
+}
+
+h3 {
+    color: var(--yellow);
 }

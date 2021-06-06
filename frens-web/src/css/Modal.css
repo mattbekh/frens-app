@@ -1,0 +1,64 @@
+.modal-container {
+    max-width: 720px;
+    width: 80%;
+    padding: 1rem;
+    background: var(--black);
+
+    position: absolute;
+    top: calc(137px + 2rem);
+    left: 50%;
+    transform: translate(-50%); /*50% of itself*/
+}
+.modal-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    font-size: 36px;
+    transform: rotate(45deg);
+    transition: 0.3s;
+    transform-origin: 50% 50%;
+    padding: 0;
+    background: var(--black);
+    color: white;
+}
+.modal-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.modal-img-wrapper {
+    width: 40%;
+}
+.modal-text-wrapper {
+    width: 40%;
+    padding: 15px;
+    font-weight: 300;
+}
+.modal-close:hover {
+    transform: rotate(135deg);
+}
+.modal-img {
+    width: 100%;
+}
+.modal-name {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.random-topic {
+    color: white;
+}
+
+.topic-line {
+    border-bottom: 2px solid var(--yellow);
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1rem;
+}
