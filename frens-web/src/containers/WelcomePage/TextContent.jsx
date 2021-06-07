@@ -18,41 +18,63 @@ const Container = styled.div`
 `
 const SectionWrapper = styled.section`
     // visibility: visible;
-    margin: auto;
-    min-height: 100%;
-    text-align: center;
-    overflow: hidden;
-`
-
-const LoginWrapper = styled.div`
-    border-radius: 50%;
-    width: 10rem;
-    height: 10rem;
     position: absolute;
+    left: 46%;
+    margin: 0;
+    // min-height: 100%;
+    // text-align: center;
+    overflow: hidden;
+
+    @media screen and (max-width: 600px) {
+        left: 38%;
+    }
+`
+const ButtonWrapper = styled.div`
+    margin: 0 auto;
+    display: inline-flex;
+    flex-direction: row;
+    min-height: 100%;
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+    }
+`
+const LoginWrapper = styled.div`
+    border-radius: 10px;
+    width: 16rem;
+    height: 8rem;
+    margin: 0 1rem 0 0;
     display: flex;
-    top: 50%;
-    left: 50%;
     box-shadow: 0px 0px 1rem rgba(0,0,0,0.5);
     &:hover {
-        width: 12rem;
-        height: 12rem;
+        width: 14rem;
+        height: 7rem;
         transition: 1s;
+    }
+
+    @media screen and (max-width: 600px) {
+        margin: 1rem 0 0 0;
     }
 `
 
 const RegisterWrapper = styled.div`
-    border-radius: 50%;
-    width: 10rem;
-    height: 10rem;
-    position: absolute;
+    border-radius: 10px;
+    width: 16rem;
+    height: 8rem;
+    margin: 0 0 0 1rem;
+    align-self: center;
+    // position: absolute;
     display: flex;
-    right: 50%;
-    bottom: 50%;
+    // right: 50%;
+    // bottom: 50%;
     box-shadow: 0px 0px 1rem rgba(0,0,0,0.5);
     &:hover {
-        width: 12rem;
-        height: 12rem;
+        width: 14rem;
+        height: 7rem;
         transition: 1s;
+    }
+    @media screen and (max-width: 600px) {
+        margin: 1rem 0 0 0;
     }
 `
 
@@ -123,12 +145,6 @@ function TextContent(props) {
     return (
 
             <Container ref={el => content = el} >
-                <Link to={{ pathname: '/signin', state: { theme: `poo`} }}>
-                    <LoginWrapper ref={el => loginRef = el} className="emptyContainer">
-                        <LoginButton className="emptyContainer-text">Sign In</LoginButton>
-                    </LoginWrapper>
-                </Link>
-                
                 <SectionWrapper ref={el => textContent = el}>
                     {/*replace after animation*/}
                     <h2>
@@ -136,13 +152,22 @@ function TextContent(props) {
                         <div className="text-content-line">which last</div>
                         <div className="text-content-line">forever.</div>
                     </h2>
-
                 </SectionWrapper>
+                <ButtonWrapper>
+
+                <Link to={{ pathname: '/signin', state: { theme: `poo`} }}>
+                    <LoginWrapper ref={el => loginRef = el} className="emptyContainer">
+                        <LoginButton className="emptyContainer-text">Sign In</LoginButton>
+                    </LoginWrapper>
+                </Link>
+                
                 <Link to={{ pathname: '/register'}}>
                     <RegisterWrapper ref={el => registerRef = el} className="fullContainer">
                         <RegisterButton className="fullContainer-text">Register</RegisterButton>
                     </RegisterWrapper>
                 </Link>
+                </ButtonWrapper>
+
             </Container>
     );
 }

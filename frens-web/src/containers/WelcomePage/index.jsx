@@ -14,6 +14,9 @@ import TextContent from "./TextContent";
 import SlipIn from "../../components/SlipIn";
 import ToggleNM from "../../components/ToggleNM";
 
+import ImageWrapper from "./ImageContent";
+
+
 export function WelcomePage(props) {
 
     let theme = "light";
@@ -29,23 +32,23 @@ export function WelcomePage(props) {
     let head = useRef(null);
     let tl = new gsap.timeline;
 
-    useEffect( () => {
+    // useEffect( () => {
 
-        tl.from(head, 1, {x:-1000, ease: Power3.easeOut});
-    })
+    //     tl.from(head, 1, {x:-1000, ease: Power3.easeOut});
+    // })
 
 
     return (
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
             <GlobalStyles />
             <PageContainer>
-                <HeaderWrapper >
+                
+                {/* <HeaderWrapper >
                     <div ref={el => head = el}>
                         <SlipIn name="Frens" theme={theme==="light" ? lightTheme : darkTheme}/>
-                        
                     </div>
-                </HeaderWrapper>
-
+                </HeaderWrapper> */}
+                <ImageWrapper/>
                 <ContentWrapper>
                     <TextContent theme={theme==="light" ? lightTheme : darkTheme}/>
                 </ContentWrapper>
