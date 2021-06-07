@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {SubmitButton, Input, FormContainer, BoxContainer, Label, MutedLink, BoldLink} from "./CommonElement";
+import {RegisterContext} from "./RegisterContext";
 
 const RegisterForm = () => {
+    const {switchToInFo} = useContext(RegisterContext);
     return (
         <BoxContainer>
             <FormContainer>
@@ -9,7 +11,7 @@ const RegisterForm = () => {
                 <Input type= "email" placeholder = "Email"/>
                 <Label>Password</Label>
                 <Input type= "password" placeholder = "Password"/>
-                <SubmitButton>Next</SubmitButton>
+                <SubmitButton onClick = {switchToInFo}> Next </SubmitButton>
                 <MutedLink>
                     Already have an account?
                     <BoldLink href = "#">
