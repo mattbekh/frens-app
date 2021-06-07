@@ -125,7 +125,7 @@ function TextContent(props) {
             <Container ref={el => content = el} >
                 <Link to={{ pathname: '/signin', state: { theme: `poo`} }}>
                     <LoginWrapper ref={el => loginRef = el} className="emptyContainer">
-                        <LoginButton>Sign In</LoginButton>
+                        <LoginButton className="emptyContainer-text">Sign In</LoginButton>
                     </LoginWrapper>
                 </Link>
                 
@@ -138,10 +138,11 @@ function TextContent(props) {
                     </h2>
 
                 </SectionWrapper>
-
-                <RegisterWrapper ref={el => registerRef = el} className="fullContainer">
-                    <RegisterButton className="fullContainer-text">Register</RegisterButton>
-                </RegisterWrapper>
+                <Link to={{ pathname: '/register'}}>
+                    <RegisterWrapper ref={el => registerRef = el} className="fullContainer">
+                        <RegisterButton className="fullContainer-text">Register</RegisterButton>
+                    </RegisterWrapper>
+                </Link>
             </Container>
     );
 }

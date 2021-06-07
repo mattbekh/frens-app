@@ -6,14 +6,14 @@ import AddMargin from "../../components/AddMargin";
 import { Link } from "react-router-dom";
 
 // CSS for this section
-import '../../App.css';
+// import '../../App.css';
 
 const FormContainer = styled.form`
     height: 33rem;
     width: 34rem;
     min-width: 28rem;
     border-radius: 5px;
-    margin: 9rem auto;
+    margin: 8rem auto;
     display: flex;
     flex-direction: column;
 `
@@ -78,7 +78,11 @@ function MiddleSection(props) {
                     <LabelWrapper>Remember me</LabelWrapper>
                     <br/>
                         <AddMargin direction="vertical" margin={30} />
-                    <ButtonWrapper className="login-button">Login</ButtonWrapper>
+                        
+                    {/*Temporary Link to Main*/}
+                    <Link to="/main">     
+                        <ButtonWrapper className="login-button">Login</ButtonWrapper>
+                    </Link>
                         <AddMargin direction="vertical" margin={10} />
                     <Link to="/register">
                     <SpanWrapper><a href="">Register</a></SpanWrapper>

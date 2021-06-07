@@ -36,20 +36,21 @@ export const Label = styled.label`
   font-size: 25px;
   font-weight: 600;
   margin: 5px;
+  float: left;
 `
 
 export const SubmitButton = styled.button`
   width: 50%;
   padding: 20px;
   margin-top: 3em;
-  color: #fff;
+  // color: #fff;
   font-size: 15px;
   font-weight: 600;
   border: none;
   //border-radius: 100px 100px 100px 100px;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
-  background: black;
+  // background: black;
   &:hover {
     filter: brightness(1.5);
   }

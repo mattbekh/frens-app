@@ -65,24 +65,24 @@ export function SigninPage(props) {
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
             <GlobalStyles />
             <Container ref={el => content = el}>
-            <PageContainer>
-                <HeaderWrapper>
-                    <div ref={el => head = el}>
-                        <SlipIn name="Sign in"/>
-                    </div>
-                </HeaderWrapper>
-                
-                <ContentWrapper>
-                    <div ref={el => middleSection = el} >
-                        <MiddleSection />
-                    </div>
-                </ContentWrapper>
+                <PageContainer>
+                    <HeaderWrapper>
+                        <div ref={el => head = el}>
+                            <SlipIn name="Sign in"/>
+                        </div>
+                    </HeaderWrapper>
+                    
+                    <ContentWrapper>
+                        <div ref={el => middleSection = el} >
+                            <MiddleSection />
+                        </div>
+                    </ContentWrapper>
 
-                <FooterWrapper>
-                    <Footer/>
-                </FooterWrapper>
+                    <FooterWrapper>
+                        <Footer/>
+                    </FooterWrapper>
 
-            </PageContainer>
+                </PageContainer>
             </Container>
         </ThemeProvider>
     );

@@ -18,6 +18,9 @@ export const lightTheme = {
 
 //global styles for theme switching
 export const GlobalStyles = createGlobalStyle`
+    .App {
+        text-align: center;
+    }
 
     body {
         background-color: ${props => props.theme.secondaryColor};
@@ -38,15 +41,28 @@ export const GlobalStyles = createGlobalStyle`
     } 
 
     button {
+        color: ${props => props.theme.highlightColor};
+        background-color: ${props => props.theme.primaryColor};
+    }
+
+    h2 {
+        color: ${props => props.theme.primaryColor};
+    }
+
+    h3 {   
         color: ${props => props.theme.primaryColor};
     }
 
 
-    /*welcome page css*/
+
+    /*WELCOME PAGE CSS*/
     .emptyContainer {
         background-color: none;
-        border: solid 3px ${props => props.theme.primaryColor};
+        border: solid 1px ${props => props.theme.primaryColor};
+    }
 
+    .emptyContainer-text {
+        color: ${props => props.theme.primaryColor};
     }
 
     .fullContainer {
@@ -66,7 +82,8 @@ export const GlobalStyles = createGlobalStyle`
     }
 
 
-    /*signin page css*/
+
+    /*SIGN IN PAGE CSS*/
     .login-button {
         color: ${props => props.theme.highlightColor};
         background-color: ${props => props.theme.primaryColor};
@@ -77,4 +94,39 @@ export const GlobalStyles = createGlobalStyle`
         border: 1px solid ${props => props.theme.primaryColor};
         box-shadow: ${props => props.theme.shadow};
     }
+
+
+
+    /*PROFILE PAGE CSS*/
+    .socialMedia {
+        box-shadow: ${props => props.theme.shadow};
+      }
+
+      .socialMedia input {
+        border: 1px solid ${props => props.theme.primaryColor};
+      }
+
+      .socialMedia button {
+        border: 1px solid ${props => props.theme.primaryColor};
+      }
+      
+      .thumbs {
+        border: 1px solid ${props => props.theme.primaryColor};
+      }
+      
+      .card {
+        box-shadow: ${props => props.theme.shadow};
+        background-color: ${props => props.theme.primaryColor};
+      }
+      
+      .card .front {
+        color: ${props => props.theme.secondaryColor};
+        background-color: ${props => props.theme.primaryColor};
+      }
+      
+      .card .back {
+        color: ${props => props.theme.secondaryColor};
+        background-color: ${props => props.theme.primaryColor};
+      }
+
 `

@@ -10,15 +10,20 @@ import { useState } from 'react';
 
 // the drop down effect is inspired by Islem Maboud https://github.com/ipenywis
 const BoxContainer = styled.div`
-  width: 500px;
-  min-height: 600px;
+  // width: 500px;
+  // min-height: 600px;
+  height: 40rem;
+  width: 34rem;
+  min-width: 28rem;
+  margin: 8rem auto;
   display: flex;
   flex-direction: column;
   //border-radius: 19px;
-  background-color: #FFF3ED;
-  box-shadow: 10px 8px 2px #FB5607;
+  // background-color: #FFF3ED;
+  // box-shadow: 10px 8px 2px #FB5607;
   position: relative;
   overflow: hidden;
+  background: none;
 `;
 
 const TopContainer = styled.div`
@@ -38,7 +43,7 @@ const BackDrop = styled(motion.div)`
   border-radius: 60%;
   top:-350px;
   left: -100px;
-  background: rgb(251,86,7);
+  // background: rgb(251,86,7);
   background: linear-gradient(90deg, rgba(251,86,7,1) 35%, rgba(249,250,7,1) 100%);
 `;
 
@@ -56,6 +61,7 @@ const HeaderText = styled.h2`
   z-index: 10;
   margin-bottom: 0;
   margin-left: 300px;
+  background: none;
 `;
 
 const SmallTittle = styled.h3`
@@ -66,6 +72,7 @@ const SmallTittle = styled.h3`
   margin-bottom: 115px;
   margin-left: 300px;
   z-index: 10;
+  background: none;
 `;
 
 const InnerContainer = styled.div`
@@ -101,7 +108,7 @@ const MiddleUI = () => {
     };
 
     return (
-        <BoxContainer>
+        <BoxContainer className="login-form">
             <TopContainer>
                 <BackDrop initial = {false} animate = {isExpanded ? "expanded" : "collapsed"} variants={backdropVariants}/>
                 <HeaderContainer>

@@ -1,18 +1,60 @@
 import React, { useState } from 'react';
+import {useSelector} from "react-redux";
+
 import {Link} from 'react-scroll';
 import './Profile.css';
 import CardList from './CardList'
 import SocialMedia from './SocialMedia'
 
+import styled, {ThemeProvider} from  "styled-components";
+import { lightTheme, darkTheme, GlobalStyles } from "../themes";
+
+import { PageContainer } from "../components/PageContainer";
+import { HeaderWrapper } from "../components/HeaderWrapper";
+import { ContentWrapper } from "../components/ContentWrapper";
+import { FooterWrapper } from "../components/FooterWrapper";
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Profile() {
 
+    let theme = "light";
+    // Check redux isDark state
+    const isDark = useSelector(state => state.isDark);
+    if(isDark) {
+
+        theme = "dark";
+    } else {
+        theme = "light";
+    }
+
     const [cardlist, setCardlist] = useState(SAMPLE_CARDS)
     return (
-        <div className="container">
-            <SocialMedia />
-            <CardList cardlist={cardlist}/>    
-        </div>
+        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+            <GlobalStyles />
+
+                <div className="container">
+                    <HeaderWrapper>
+                            <Header />
+                    </HeaderWrapper>
+                    {/* 
+                        Some style formatting issues here with display I think
+                        Which is why Footer is not pinned to the bottom.
+                    */} 
+
+                    {/* <ContentWrapper> */}
+                        <SocialMedia />
+                        <CardList cardlist={cardlist}/>
+                    {/* </ContentWrapper> */}
+
+                    <FooterWrapper>
+                        <Footer/>
+                    </FooterWrapper>
+
+                </div>
+
+        </ThemeProvider>
     )
 }
 

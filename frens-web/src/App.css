@@ -1,6 +1,6 @@
-.App {
+/* .App {
     text-align: center;
-}
+} */
 
 :root {
     --blue: #3a86ff;
@@ -11,40 +11,38 @@
     --black: #010101;
 }
 
-body {
+/* body {
     font-family: "Bradley Hand", sans-serif;
     background-color: var(--yellow);
-}
+} */
 
 .max-container {
     max-width: 1200px;
     margin: auto;
 }
-label {
-    color: var(--black);
-}
 
 h1 {
     font-weight: bold;
-    color: var(--black);
+    /* color: var(--black); */
 }
+
 input {
     border-radius: 5px;
     height: 2.3rem;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
 }
 
 a {
     text-decoration: none;
     font-weight: bold;
-    color: var(--orange);
+    /* color: var(--orange); */
 }
 
 p {
     color: white;
 }
 
-h3 {
+/* h3 {
     color: var(--yellow);
-}
+} */
 

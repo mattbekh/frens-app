@@ -13,7 +13,7 @@
 .socialMedia input {
   /* width: 50%; */
   text-align: center;
-  border: 1px solid #333;
+  /* border: 1px solid #333; */
   border-radius: 0.3rem;
   padding: 0.25rem;
   width: 20rem;
@@ -22,19 +22,19 @@
 }
 .socialMedia button {
   text-align: center;
-  background-color: var(--black);
-  color: var(--yellow);
-  border: 1px solid #333;
+  /* background-color: var(--black); */
+  /* color: var(--yellow); */
+  /* border: 1px solid #333; */
   border-radius: 0.3rem;
   padding: 0.25rem;
   width: 10rem;
   height: 3rem;
   margin: 0.5rem;
 }
-
+/* 
 .socialMedia h1 {
   color: var(--black);
-}
+} */
 
 .thumbsContainer {
   display: "flex";
@@ -46,7 +46,7 @@
 .thumbs {
   display: "inline-flex";
   border-radius: 2;
-  border: "1px solid #eaeaea";
+  /* border: "1px solid #eaeaea"; */
   margin-bottom: 8;
   margin-right: 8;
   width: 100;
