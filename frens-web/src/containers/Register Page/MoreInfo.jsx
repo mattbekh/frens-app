@@ -12,6 +12,7 @@ import {
 import {RegisterContext} from "./RegisterContext";
 import styled from "styled-components/macro";
 import {IconContext} from "react-icons";
+import Interests from "./Interests";
 
 
 const InterestBox = styled.div`
@@ -20,10 +21,6 @@ const InterestBox = styled.div`
   height: 4rem;
   width: 20rem;
   min-width: 28rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(20rem,1fr));
-  grid-auto-rows: minmax(200px, auto);
-  grid-gap: 1em;
   border: solid black;
   border-width: 5 5px;
   position: relative;
@@ -41,7 +38,9 @@ const MorInfo = () => {
                 <CgProfile> </CgProfile>
                 </IconContext.Provider>
                 <p> Upload your photo <br/> Pick your Interest</p>
-                <InterestBox></InterestBox>
+                <InterestBox>
+                    <Interests></Interests>
+                </InterestBox>
                 <SubmitButton onClick = {switchToInFo}> Back </SubmitButton>
                 <SubmitButton> I am ready! </SubmitButton>
                 <MutedLink>
@@ -57,3 +56,4 @@ const MorInfo = () => {
 };
 
 export default MorInfo;
+export {InterestBox};
