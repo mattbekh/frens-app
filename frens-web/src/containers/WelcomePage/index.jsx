@@ -49,7 +49,7 @@ export function WelcomePage(props) {
                     </div>
                 </HeaderWrapper> */}
                 <ImageWrapper/>
-                <ContentWrapper>
+                <ContentWrapper >
                     <TextContent theme={theme==="light" ? lightTheme : darkTheme}/>
                 </ContentWrapper>
 

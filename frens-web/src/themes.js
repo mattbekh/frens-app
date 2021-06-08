@@ -6,6 +6,7 @@ export const darkTheme = {
     accentColor: "#FB5607",
     highlightColor: "#000000",
     shadow: "0px 0px 1rem rgba(255, 230, 0, 0.8)",
+    shadowInset: "0px 10rem 10rem rgba(255, 230, 0, 0.8) inset",
 };
 
 export const lightTheme = {
@@ -14,6 +15,7 @@ export const lightTheme = {
     accentColor: "#FB5607",
     highlightColor: "#ffffff",
     shadow: "0px 0px 1rem rgba(0,0,0,0.8)",
+    shadowInset: "0px 10rem 10rem rgba(0,0,0,0.8) inset",
 };
 
 //global styles for theme switching
@@ -92,7 +94,7 @@ export const GlobalStyles = createGlobalStyle`
 
     .login-form {
         border: 1px solid ${props => props.theme.primaryColor};
-        box-shadow: ${props => props.theme.shadow};
+        box-shadow: ${props => props.theme.shadow} inset;
     }
 
 

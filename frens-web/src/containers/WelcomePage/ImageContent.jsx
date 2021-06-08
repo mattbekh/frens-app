@@ -26,7 +26,7 @@ const ImageWrapper = styled.div`
     background: url(${friends});
     background-position: top calc(200px - 29.5vw) right;
     background-size: cover;
-    box-shadow: 0px 10rem 10rem rgba(0,0,0,0.8) inset;
+    box-shadow: 0px 10rem 10rem rgba(0,0,0,0.8) inset, 0px 0px 1rem rgba(0,0,0,0.8);
     z-index: 0;
 `
 
