@@ -41,8 +41,8 @@ const ButtonWrapper = styled.div`
 `
 const LoginWrapper = styled.div`
     border-radius: 10px;
-    width: 16rem;
-    height: 8rem;
+    width: 10rem;
+    height: 4rem;
     margin: 0 1rem 0 0;
     display: flex;
     box-shadow: 0px 0px 1rem rgba(0,0,0,0.5);
@@ -59,8 +59,8 @@ const LoginWrapper = styled.div`
 
 const RegisterWrapper = styled.div`
     border-radius: 10px;
-    width: 16rem;
-    height: 8rem;
+    width: 10rem;
+    height: 4rem;
     margin: 0 0 0 1rem;
     align-self: center;
     // position: absolute;

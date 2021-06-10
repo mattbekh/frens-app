@@ -14,15 +14,38 @@ import SlipIn from "../../components/SlipIn";
 import ToggleNM from "../../components/ToggleNM";
 
 import friends from "../../images/friends.jpg";
+import logo from "../../images/Frens-2.png";
 import Header from "../../components/Header";
 
 const Container = styled.div`
     visibility: hidden;
 `
+const LogoWrapper = styled.img`
+    width: 180px;
+    height: 100px;
+    margin-top: 0;
+    position: relative;
+    object-fit: cover;
+`
+
+const Nav = styled.nav`
+    width: 100%;
+    height: 5rem;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    z-index: 1;
+    background: none;
+    position: absolute;
+    top: 0;
+    border-bottom: none;
+
+`
 
 const ImageWrapper = styled.div`
     width: 100%;
-    height: 70vh;
+    height: 80vh;
     background: url(${friends});
     background-position: top calc(200px - 29.5vw) right;
     background-size: cover;
@@ -49,7 +72,10 @@ function ImageContent(props) {
     return (
         <Container ref={el => content = el}>
             <div ref={el => head = el}>
-            <Header/>
+                <Nav>
+                    <LogoWrapper  src={logo} alt="logo" className="logo-img"/>
+                </Nav>
+            {/* <Header/> */}
             </div>
             <ImageWrapper ref={el => image = el}/>
         </Container>

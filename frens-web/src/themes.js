@@ -94,7 +94,7 @@ export const GlobalStyles = createGlobalStyle`
 
     .login-form {
         border: 1px solid ${props => props.theme.primaryColor};
-        box-shadow: ${props => props.theme.shadow} inset;
+        box-shadow: ${props => props.theme.shadow};
     }
 
 

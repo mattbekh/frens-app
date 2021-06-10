@@ -15,12 +15,8 @@ nav {
     align-items: center;
     display: flex;
     justify-content: space-around;
-    z-index: 1;
-    background: none;
-    position: absolute;
-    top: 0;
-    /* background-color: black;
-    border-bottom: 4px solid var(--yellow); */
+    background-color: black;
+    border-bottom: 4px solid var(--yellow);
 }
 nav ul {
     margin: 0;
