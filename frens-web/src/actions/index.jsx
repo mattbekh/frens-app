@@ -3,3 +3,11 @@ export const toggleDM = () => {
         type: "DARK"
     };
 };
+
+
+export const pickInterest = (id) => {
+    return {
+        type: 'PICK',
+        payload: id
+    };
+};

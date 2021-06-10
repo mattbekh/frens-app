@@ -42,7 +42,7 @@ export const Label = styled.label`
 export const SubmitButton = styled.button`
   width: 50%;
   padding: 20px;
-  margin-top: 3em;
+  margin-top: 1em;
   // color: #fff;
   font-size: 15px;
   font-weight: 600;
