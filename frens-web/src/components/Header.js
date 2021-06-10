@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "../images/Frens-2.png";
 import "../css/Header.css";
-import Profile from "./ProfilePage/Profile";
 
 function Header() {
   return (
@@ -17,8 +16,8 @@ function Header() {
           </Link>
         </li>
         <li>
-          <Link to="/about" className="header-links">
-            About
+          <Link to="/Main" className="header-links">
+            Main Page
           </Link>
         </li>
         <li>

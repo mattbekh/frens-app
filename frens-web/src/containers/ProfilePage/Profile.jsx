@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
-import { Link } from "react-scroll";
-import "./Profile.css";
-import CardList from "./CardList";
-import SocialMedia from "./SocialMedia";
-
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 
-import { PageContainer } from "../PageContainer";
-import { HeaderWrapper } from "../HeaderWrapper";
-import { ContentWrapper } from "../ContentWrapper";
-import { FooterWrapper } from "../FooterWrapper";
+import { PageContainer } from "../../components/PageContainer";
+import { HeaderWrapper } from "../../components/HeaderWrapper";
+import { ContentWrapper } from "../../components/ContentWrapper";
+import { FooterWrapper } from "../../components/FooterWrapper";
 
-import Header from "../Header";
-import Footer from "../Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import CardList from "./CardList";
+import SocialMedia from "./SocialMedia";
+
+const Container = styled.div`
+  margin: 1rem 2rem;
+`;
 
 function Profile() {
   let theme = "light";
@@ -31,8 +31,7 @@ function Profile() {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
-
-      <div className="container">
+      <Container>
         <HeaderWrapper>
           <Header />
         </HeaderWrapper>
@@ -49,7 +48,7 @@ function Profile() {
         <FooterWrapper>
           <Footer />
         </FooterWrapper>
-      </div>
+      </Container>
     </ThemeProvider>
   );
 }

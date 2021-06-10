@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header.js";
 import Main from "./components/Main.js";
 
-import Profile from "./components/ProfilePage/Profile.js";
+import Profile from "./containers/ProfilePage/Profile";
 import RegisterPage from "./containers/Register Page";
 import { WelcomePage } from "./containers/WelcomePage";
 import { SigninPage } from "./containers/SigninPage";
