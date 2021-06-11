@@ -1,9 +1,19 @@
-import Fren from "./Fren.js";
-import "../css/FrensList.css";
+import React from "react";
+import Fren from "./Fren";
+import styled from "styled-components";
+
+const FrensWrap = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+`;
 
 function FrensList(props) {
     return (
-        <div className="frens-list">
+        <FrensWrap className="frens-list">
             {props.frensList.map((fren) => {
                 return (
                     <Fren
@@ -11,11 +21,11 @@ function FrensList(props) {
                         name={fren.name}
                         imgURL={fren.imgURL}
                         contactInfo={fren.contactInfo}
-                        showModal={props.showModal}
+                        openModal={props.openModal}
                     />
                 );
             })}
-        </div>
+        </FrensWrap>
     );
 }
 
