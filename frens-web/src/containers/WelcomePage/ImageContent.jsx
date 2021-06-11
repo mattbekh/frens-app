@@ -1,21 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import {useSelector} from "react-redux";
 import styled, {ThemeProvider} from "styled-components/macro";
 import gsap, { Power3 } from "gsap";
-import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 
-import { PageContainer } from "../../components/PageContainer";
-import { HeaderWrapper } from "../../components/HeaderWrapper";
-import { ContentWrapper } from "../../components/ContentWrapper";
-import { FooterWrapper } from "../../components/FooterWrapper";
-
-import TextContent from "./TextContent";
-import SlipIn from "../../components/SlipIn";
-import ToggleNM from "../../components/ToggleNM";
 
 import friends from "../../images/friends.jpg";
 import logo from "../../images/Frens-2.png";
-import Header from "../../components/Header";
+
 
 const Container = styled.div`
     visibility: hidden;
