@@ -24,7 +24,7 @@ function Options(props) {
         type="checkbox"
         value={props.option}
         checked={check}
-        onClick={() => setCheck(!check)}
+        onChange={() => setCheck(!check)}
       />
       {props.option}
     </CardOption>
