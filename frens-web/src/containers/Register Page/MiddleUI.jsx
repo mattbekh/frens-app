@@ -1,12 +1,13 @@
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 // CSS for this section
-import React from 'react';
+import React from "react";
 import RegisterForm from "./RegisterForm";
-import {motion} from "framer-motion";
-import { useState } from 'react';
-
-
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { ReactReduxContext } from "react-redux";
+import { RegisterContext } from "./RegisterContext";
+import MoreInfo from "./MoreInfo";
 
 // the drop down effect is inspired by Islem Maboud https://github.com/ipenywis
 const BoxContainer = styled.div`
@@ -41,10 +42,15 @@ const BackDrop = styled(motion.div)`
   display: flex;
   flex-direction: column;
   border-radius: 60%;
-  top:-350px;
+  top: -350px;
   left: -100px;
   // background: rgb(251,86,7);
-  background: linear-gradient(90deg, rgba(251,86,7,1) 35%, rgba(249,250,7,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(251, 86, 7, 1) 35%,
+    rgba(249, 250, 7, 1) 100%
+  );
+  z-index: 5;
 `;
 
 const HeaderContainer = styled.div`
@@ -84,46 +90,70 @@ const InnerContainer = styled.div`
 `;
 
 const backdropVariants = {
-    expanded: {
-        width: "233%",
-        height: "1050px",
-        borderRadius: "20%",
-    },
-    collapsed: {
-        width: "160%",
-        height: "550px",
-        borderRadius: "50%",
-    },
+  expanded: {
+    width: "233%",
+    height: "1050px",
+    borderRadius: "20%",
+  },
+  collapsed: {
+    width: "160%",
+    height: "550px",
+    borderRadius: "50%",
+  },
 };
 
-
 const MiddleUI = () => {
-    const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setExpanded] = useState(false);
+  const [active, setActive] = useState("signUp");
 
-    const playExpand = () => {
-        setExpanded(true);
-        setTimeout(() => {
-            setExpanded(false);
-        }, 300);
-    };
+  const playExpand = () => {
+    setExpanded(true);
+    setTimeout(() => {
+      setExpanded(false);
+    }, 600);
+  };
 
-    return (
-        <BoxContainer className="login-form">
-            <TopContainer>
-                <BackDrop initial = {false} animate = {isExpanded ? "expanded" : "collapsed"} variants={backdropVariants}/>
-                <HeaderContainer>
-                    <HeaderText>
-                        Register
-                    </HeaderText>
-                    <SmallTittle>It's nice to meet you!</SmallTittle>
-                </HeaderContainer>
-            </TopContainer>
-            <InnerContainer>
-                <RegisterForm/>
-                <p onClick={playExpand}>hello</p>
-            </InnerContainer>
-        </BoxContainer>
-    );
+  const switchToSignup = () => {
+    playExpand();
+    setActive("signUp");
+  };
+
+  const switchToInFo = () => {
+    playExpand();
+    setActive("pfo");
+  };
+
+  const contextValue = { switchToInFo, switchToSignup };
+
+  return (
+    <RegisterContext.Provider value={contextValue}>
+      <BoxContainer className="login-form">
+        <TopContainer>
+          <BackDrop
+            initial={false}
+            animate={isExpanded ? "expanded" : "collapsed"}
+            variants={backdropVariants}
+          />
+          {active === "signUp" && (
+            <HeaderContainer>
+              <HeaderText>Register</HeaderText>
+              <SmallTittle>It's nice to meet you!</SmallTittle>
+            </HeaderContainer>
+          )}
+          {active === "pfo" && (
+            <HeaderContainer>
+              <HeaderText>More Info</HeaderText>
+              <SmallTittle>Tell us more about you!</SmallTittle>
+            </HeaderContainer>
+          )}
+        </TopContainer>
+        <InnerContainer>
+          {active === "signUp" && <RegisterForm />}
+          {active === "pfo" && <MoreInfo />}
+        </InnerContainer>
+      </BoxContainer>
+    </RegisterContext.Provider>
+  );
 };
 
 export default MiddleUI;
