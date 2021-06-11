@@ -11,6 +11,7 @@ import MoreInfo from "./MoreInfo";
 
 
 
+
 // the drop down effect is inspired by Islem Maboud https://github.com/ipenywis
 const BoxContainer = styled.div`
   // width: 500px;

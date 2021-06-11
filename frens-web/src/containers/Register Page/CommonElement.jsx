@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export const BoxContainer = styled.div`
   width: 100%;
   display: flex;
@@ -57,14 +57,14 @@ export const SubmitButton = styled.button`
 `;
 
 
-export const MutedLink = styled.a`
+export const MutedLink = styled.div`
   font-size: 13px;
   color: #8C2F00;
   font-weight: 500;
   text-decoration: none;
 `;
 
-export const BoldLink = styled.a`
+export const BoldLink = styled(Link)`
   font-size: 13px;
   color: #FA2B07;
   font-weight: 800;
