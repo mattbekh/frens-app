@@ -9,6 +9,9 @@ const Wrapper = styled.header`
     flex-direction: row;
     align-items: left;
     flex-grow: 0.5;
+    z-index: 2;
+    position: absolute:
+    top: 0;
 `;
 
 export function HeaderWrapper(props) {

@@ -35,7 +35,7 @@ const Nav = styled.nav`
 
 const ImageWrapper = styled.div`
     width: 100%;
-    height: 80vh;
+    height: 75vh;
     background: url(${friends});
     background-position: top calc(200px - 29.5vw) right;
     background-size: cover;
