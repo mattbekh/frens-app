@@ -45,7 +45,7 @@ const MorInfo = () => {
                 <SubmitButton> I am ready! </SubmitButton>
                 <MutedLink>
                     Already have an account?
-                    <BoldLink href = "#">
+                    <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>
                         Sign in!
                     </BoldLink>
                 </MutedLink>
