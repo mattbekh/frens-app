@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Main from "./containers/MainPage/Main";
 import Profile from "./containers/ProfilePage/Profile";
-import RegisterPage from "./containers/Register Page";
+import RegisterPage from "./containers/RegisterPage";
 import { WelcomePage } from "./containers/WelcomePage";
 import { SigninPage } from "./containers/SigninPage";
 
