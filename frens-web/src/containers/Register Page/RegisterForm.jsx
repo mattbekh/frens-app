@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {SubmitButton, Input, FormContainer, BoxContainer, Label, MutedLink, BoldLink} from "./CommonElement";
 import {RegisterContext} from "./RegisterContext";
 
+
 const RegisterForm = () => {
     const {switchToInFo} = useContext(RegisterContext);
     return (
@@ -14,7 +15,7 @@ const RegisterForm = () => {
                 <SubmitButton onClick = {switchToInFo}> Next </SubmitButton>
                 <MutedLink>
                     Already have an account?
-                    <BoldLink href = "#">
+                    <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>
                         Sign in!
                     </BoldLink>
                 </MutedLink>
