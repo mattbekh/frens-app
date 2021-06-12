@@ -57,6 +57,9 @@ const ButtonWrapper = styled.button`
     border-radius: 5px;
     height: 2.8rem;
     margin: 0 4px;
+    &:hover {
+        filter: brightness(1.5);
+    }
 `
 
 function MiddleSection(props) {

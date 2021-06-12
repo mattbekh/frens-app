@@ -14,7 +14,7 @@ import styled from "styled-components/macro";
 import {IconContext} from "react-icons";
 import Interests from "./Interests";
 
-
+import AddMargin from "../../components/AddMargin";
 const InterestBox = styled.div`
   // width: 500px;
   // min-height: 600px;
@@ -41,8 +41,11 @@ const MorInfo = () => {
                 <InterestBox>
                     <Interests></Interests>
                 </InterestBox>
+                <AddMargin direction="vertical" margin={10} />
                 <SubmitButton onClick = {switchToInFo}> Back </SubmitButton>
+                <AddMargin direction="vertical" margin={10} />
                 <SubmitButton> I am ready! </SubmitButton>
+                <AddMargin direction="vertical" margin={10} />
                 <MutedLink>
                     Already have an account?
                     <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>
