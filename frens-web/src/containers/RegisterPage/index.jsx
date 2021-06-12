@@ -14,7 +14,7 @@ import { FooterWrapper } from "../../components/FooterWrapper";
 import MiddleUI from "./MiddleUI";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
-
+import ToggleNM from "../../components/ToggleNM";
 const RegisterContainer = styled.div`
     visibility: hidden;
     //   width: 100%;
@@ -60,6 +60,7 @@ const RegisterPage = () => {
                         <div ref={(el) => (head = el)}>
                             <SlipIn name="Register" />
                         </div>
+                        {/* <ToggleNM/> */}
                     </HeaderWrapper>
 
                     <ContentWrapper>

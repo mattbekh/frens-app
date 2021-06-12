@@ -87,9 +87,9 @@ function Main() {
                     <h1>Come back tomorrow and get some new matches!</h1>
                     {/* </ContentWrapper> */}
 
-                    <FooterWrapper>
+                    {/* <FooterWrapper>
                         <Footer />
-                    </FooterWrapper>
+                    </FooterWrapper> */}
                 </div>
             </PageContainer>
         </ThemeProvider>

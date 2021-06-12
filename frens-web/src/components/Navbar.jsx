@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import ToggleNM from "./ToggleNM";
+
 const HeaderNavUl = styled.ul`
     margin: 0;
     padding: 0;
@@ -28,6 +30,7 @@ const HeaderLink = styled(Link)`
 function Navbar() {
     return (
         <HeaderNavUl id="menu-list">
+            
             <li>
                 <HeaderLink to="/" className="header-links">
                     Home
@@ -42,6 +45,9 @@ function Navbar() {
                 <HeaderLink to="/Profile" className="header-links">
                     Profile
                 </HeaderLink>
+            </li>
+            <li>
+                <ToggleNM/>
             </li>
         </HeaderNavUl>
     );

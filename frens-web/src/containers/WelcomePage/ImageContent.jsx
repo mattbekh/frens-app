@@ -6,6 +6,8 @@ import gsap, { Power3 } from "gsap";
 import friends from "../../images/friends.jpg";
 import logo from "../../images/Frens-2.png";
 
+import ToggleNM from "../../components/ToggleNM";
+
 
 const Container = styled.div`
     visibility: hidden;
@@ -27,6 +29,7 @@ const Nav = styled.nav`
     justify-content: space-around;
     z-index: 1;
     background: none;
+    // background-color: black;
     position: absolute;
     top: 0;
     border-bottom: none;
@@ -62,11 +65,13 @@ function ImageContent(props) {
     return (
         <Container ref={el => content = el}>
             <div ref={el => head = el}>
-                <Nav>
+                <Nav className="welcome-nav">
                     <LogoWrapper  src={logo} alt="logo" className="logo-img"/>
+                    {/* <ToggleNM/> */}
                 </Nav>
             {/* <Header/> */}
             </div>
+            
             <ImageWrapper ref={el => image = el}/>
         </Container>
     );

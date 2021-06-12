@@ -45,7 +45,7 @@ const LoginWrapper = styled.div`
     height: 4rem;
     margin: 0 1rem 0 0;
     display: flex;
-    box-shadow: 0px 0px 1rem rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 0.5rem rgba(0,0,0,0.5);
     &:hover {
         width: 14rem;
         height: 7rem;

@@ -11,11 +11,15 @@ import { Link } from "react-router-dom";
 const FormContainer = styled.form`
     height: 33rem;
     width: 34rem;
-    min-width: 28rem;
+    // min-width: 10rem;
     border-radius: 5px;
     margin: 8rem auto;
     display: flex;
     flex-direction: column;
+    @media screen and (max-width: 550px) {
+        width: 27rem;
+        min-width: 27rem;
+    }
 `
 
 const InputContainer = styled.div`
@@ -85,7 +89,7 @@ function MiddleSection(props) {
                     </Link>
                         <AddMargin direction="vertical" margin={10} />
                     <Link to="/register">
-                    <SpanWrapper><a href="">Register</a></SpanWrapper>
+                        <SpanWrapper>Register</SpanWrapper>
                     </Link>
                 </InputContainer>
             </FormContainer>

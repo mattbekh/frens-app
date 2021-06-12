@@ -4,39 +4,47 @@ import { toggleDM } from "../actions";
 
 import styled from "styled-components";
 
-import star from "../images/ic_star_half_24px@2x.png";
-
 // CSS for this section
 import "../App.css";
 
 const ToggleContainer = styled.div`
-    padding: 1rem;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    margin: auto 0;
+    padding: 0 2rem;
+    position: relative;
+    // bottom: 0;
+    // right: 0;
+    
 `;
-const ImgWrapper = styled.img`
-    float: right;
-    border-radius: 50%;
-    border: 3px solid;
-    padding: 0.2rem;
 
-    &:hover {
-        padding: 0.3rem;
-        transition: 0.2s;
-    }
-`;
+const OuterCircle = styled.div`
+    float: right;
+    border-radius: 10px;
+    width: 1rem;
+    height: 2rem;
+    border: 2px solid black;
+    padding: 0.2rem;
+    // box-shadow: 0px 0px 1rem rgba(255, 230, 0, 0.8);
+`
+
+const InnerCircle = styled.div`
+    height: 50%;
+    width: 100%;
+    position: relative;
+    border-radius: 50%;
+    background-color: black;
+`
 
 function ToggleNM(props) {
     const dispatch = useDispatch();
 
     // Check redux isDark state
     const isDark = useSelector((state) => state.isDark);
-    console.log(isDark);
 
     return (
         <ToggleContainer>
-            <ImgWrapper src={star} onClick={() => dispatch(toggleDM())} className="toggleWrapper" />
+            <OuterCircle className="toggle-body">
+                <InnerCircle onClick={() => dispatch(toggleDM())} className="toggle-knob"/>
+            </OuterCircle>
         </ToggleContainer>
     );
 }
