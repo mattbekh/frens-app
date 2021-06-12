@@ -143,7 +143,11 @@ function SocialMedia() {
         <section className="container">
           <div {...getRootProps({ className: "dropzone" })}>
             <SocialMediaInput {...getInputProps()} />
-            <SocialMediaInput type="text" value="Drop Here" />
+            <SocialMediaInput
+              type="text"
+              value="Drop Here"
+              onChange={handleChange}
+            />
           </div>
           <ThumbsContainer className="thumbsContainer">
             {thumbs}

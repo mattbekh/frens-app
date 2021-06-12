@@ -62,7 +62,7 @@ function Card(props) {
       </div>
       <div className="back" ref={backEl}>
         {props.card.options.map((option) => {
-          return <Options option={option} />;
+          return <Options option={option} key={option} />;
         })}
       </div>
     </div>
