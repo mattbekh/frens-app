@@ -5,7 +5,9 @@ import styled from 'styled-components'
 import '../App.css';
 
 const SlipInContainer = styled.div`
-    margin: 0 2rem;
+    margin: auto 0;
+    padding: 0 2rem;
+    min-width: 10rem;
 `
 
 

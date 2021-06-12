@@ -3,16 +3,32 @@ import {SubmitButton, Input, FormContainer, BoxContainer, Label, MutedLink, Bold
 import {RegisterContext} from "./RegisterContext";
 
 
+import AddMargin from "../../components/AddMargin";
+import styled from "styled-components/macro";
+
+const LabelWrapper = styled.label`
+    margin: 0 0 0 3.8rem;
+    align-self: start;
+`
+
 const RegisterForm = () => {
     const {switchToInFo} = useContext(RegisterContext);
     return (
         <BoxContainer>
             <FormContainer>
-                <Label>Email</Label>
-                <Input type= "email" placeholder = "Email"/>
-                <Label>Password</Label>
-                <Input type= "password" placeholder = "Password"/>
-                <SubmitButton onClick = {switchToInFo}> Next </SubmitButton>
+                    <LabelWrapper htmlFor="email">Email</LabelWrapper>
+                <AddMargin direction="vertical" margin={20} />
+                
+                    <Input type= "email"/>
+                <AddMargin direction="vertical" margin={10} />
+                <br/>
+                    <LabelWrapper htmlFor="password">Password</LabelWrapper>
+                <AddMargin direction="vertical" margin={20} />
+                 
+                    <Input type= "password"/>
+                <br/>
+                <SubmitButton onClick = {switchToInFo}>Next</SubmitButton>
+                <AddMargin direction="vertical" margin={10} />
                 <MutedLink>
                     Already have an account?
                     <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>

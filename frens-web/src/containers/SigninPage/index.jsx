@@ -14,17 +14,10 @@ import MiddleSection from "./MiddleSection";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
 
+import ToggleNM from "../../components/ToggleNM";
 
 const Container = styled.div`
     visibility: hidden;
-    // display: flex;
-    // // flex-direction: row;
-    // // justify-content: center;
-    // // flex-wrap: wrap;
-    // text-align: center;
-    // margin: auto;
-    // min-height: 100%;
-    // width: 100%;
 `
 
 

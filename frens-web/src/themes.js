@@ -7,6 +7,7 @@ export const darkTheme = {
     highlightColor: "#000000",
     shadow: "0px 0px 1rem rgba(255, 230, 0, 0.8)",
     shadowInset: "0px 10rem 10rem rgba(255, 230, 0, 0.8) inset",
+    knobPos: "0 0 0 0",
 };
 
 export const lightTheme = {
@@ -16,6 +17,7 @@ export const lightTheme = {
     highlightColor: "#ffffff",
     shadow: "0px 0px 1rem rgba(0,0,0,0.8)",
     shadowInset: "0px 10rem 10rem rgba(0,0,0,0.8) inset",
+    knobPos: "1rem 0 0 0",
 };
 
 //global styles for theme switching
@@ -55,6 +57,16 @@ export const GlobalStyles = createGlobalStyle`
         color: ${props => props.theme.primaryColor};
     }
 
+    .toggle-body {
+        background-color: ${props => props.theme.secondaryColor};
+        border-color: ${props => props.theme.primaryColor};
+    }
+
+    .toggle-knob {
+        background-color: ${props => props.theme.primaryColor};
+        margin: ${props => props.theme.knobPos};
+    }
+
 
 
     /*WELCOME PAGE CSS*/
@@ -75,12 +87,13 @@ export const GlobalStyles = createGlobalStyle`
         color: ${props => props.theme.secondaryColor};
     }
 
-    .toggleWrapper {
-        border-color: ${props => props.theme.primaryColor};
-    }
-
     .text-content-line {
         color: ${props => props.theme.primaryColor};
+    }
+
+    .welcome-nav {
+        background-color: ${props => props.theme.secondaryColor};
+        background: none;
     }
 
 
