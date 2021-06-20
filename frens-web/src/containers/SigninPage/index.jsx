@@ -14,8 +14,6 @@ import MiddleSection from "./MiddleSection";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
 
-import ToggleNM from "../../components/ToggleNM";
-
 const Container = styled.div`
     visibility: hidden;
 `
