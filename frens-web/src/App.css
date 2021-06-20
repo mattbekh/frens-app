@@ -11,10 +11,33 @@
   --black: #010101;
 }
 
-body {
-  background-color: var(--black);
+/* body {
+    font-family: "Bradley Hand", sans-serif;
+    background-color: var(--yellow);
+} */
+
+.max-container {
+  max-width: 1200px;
+  margin: auto;
 }
 
-h1 {
-  color: var(--blue);
+input {
+  border-radius: 5px;
+  height: 2.3rem;
+  /* border: 1px solid grey; */
 }
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  /* color: var(--orange); */
+}
+
+p {
+  color: white;
+}
+
+/* h3 {
+    color: var(--yellow);
+} */
+
