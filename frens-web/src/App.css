@@ -17,29 +17,24 @@
 } */
 
 .max-container {
-    max-width: 1200px;
-    margin: auto;
-}
-
-h1 {
-    font-weight: bold;
-    /* color: var(--black); */
+  max-width: 1200px;
+  margin: auto;
 }
 
 input {
-    border-radius: 5px;
-    height: 2.3rem;
-    /* border: 1px solid grey; */
+  border-radius: 5px;
+  height: 2.3rem;
+  /* border: 1px solid grey; */
 }
 
 a {
-    text-decoration: none;
-    font-weight: bold;
-    /* color: var(--orange); */
+  text-decoration: none;
+  font-weight: bold;
+  /* color: var(--orange); */
 }
 
 p {
-    color: white;
+  color: white;
 }
 
 /* h3 {
