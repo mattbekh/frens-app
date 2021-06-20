@@ -25,6 +25,7 @@ const OuterCircle = styled.div`
     padding: 0.2rem;
     &:hover {
         filter: brightness(1.5);
+        transition: 0.5s;
     }
     // box-shadow: 0px 0px 1rem rgba(255, 230, 0, 0.8);
 `
@@ -37,7 +38,8 @@ const InnerCircle = styled.div`
     background-color: black;
     &:hover {
         filter: brightness(1.5);
-    }
+        transition: 0.5s;
+      }
 `
 
 function ToggleNM(props) {

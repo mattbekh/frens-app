@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap, { Power3 } from "gsap";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";

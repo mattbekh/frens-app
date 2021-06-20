@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled, {ThemeProvider} from "styled-components/macro";
+import React, { useRef, useEffect } from "react";
+import styled from "styled-components/macro";
 import gsap, { Power3 } from "gsap";
 
 
 import friends from "../../images/friends.jpg";
 import logo from "../../images/Frens-2.png";
-
-import ToggleNM from "../../components/ToggleNM";
 
 
 const Container = styled.div`
