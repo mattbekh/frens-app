@@ -1,23 +1,23 @@
-import {createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export const darkTheme = {
-    secondaryColor: "#010101",
-    primaryColor: "#FFBE0B",
-    accentColor: "#FB5607",
-    highlightColor: "#000000",
-    shadow: "0px 0px 1rem rgba(255, 230, 0, 0.8)",
-    shadowInset: "0px 10rem 10rem rgba(255, 230, 0, 0.8) inset",
-    knobPos: "0 0 0 0",
+  secondaryColor: "#010101",
+  primaryColor: "#FFBE0B",
+  accentColor: "#FB5607",
+  highlightColor: "#000000",
+  shadow: "0px 0px 1rem rgba(255, 230, 0, 0.8)",
+  shadowInset: "0px 10rem 10rem rgba(255, 230, 0, 0.8) inset",
+  knobPos: "0 0 0 0",
 };
 
 export const lightTheme = {
-    secondaryColor: "#FFBE0B",
-    primaryColor: "#010101",
-    accentColor: "#FB5607",
-    highlightColor: "#ffffff",
-    shadow: "0px 0px 1rem rgba(0,0,0,0.8)",
-    shadowInset: "0px 10rem 10rem rgba(0,0,0,0.8) inset",
-    knobPos: "1rem 0 0 0",
+  secondaryColor: "#FFBE0B",
+  primaryColor: "#010101",
+  accentColor: "#FB5607",
+  highlightColor: "#ffffff",
+  shadow: "0px 0px 1rem rgba(0,0,0,0.8)",
+  shadowInset: "0px 10rem 10rem rgba(0,0,0,0.8) inset",
+  knobPos: "1rem 0 0 0",
 };
 
 //global styles for theme switching
@@ -27,9 +27,9 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        background-color: ${props => props.theme.secondaryColor};
-        color: ${props => props.theme.primaryColor};
-        border-color: ${props => props.theme.primaryColor};
+        background-color: ${(props) => props.theme.secondaryColor};
+        color: ${(props) => props.theme.primaryColor};
+        border-color: ${(props) => props.theme.primaryColor};
     }
 
     input {
@@ -41,30 +41,31 @@ export const GlobalStyles = createGlobalStyle`
     a {
         text-decoration: none;
         font-weight: bold;
-        color: ${props => props.theme.accentColor};
+        color: ${(props) => props.theme.accentColor};
     } 
 
     button {
-        color: ${props => props.theme.highlightColor};
-        background-color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.highlightColor};
+        background-color: ${(props) => props.theme.primaryColor};
     }
 
     h2 {
-        color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.primaryColor};
     }
 
     h3 {   
-        color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.primaryColor};
     }
 
     .toggle-body {
-        background-color: ${props => props.theme.secondaryColor};
-        border-color: ${props => props.theme.primaryColor};
+        background-color: ${(props) => props.theme.secondaryColor};
+        border-color: ${(props) => props.theme.primaryColor};
     }
 
     .toggle-knob {
-        background-color: ${props => props.theme.primaryColor};
-        margin: ${props => props.theme.knobPos};
+        background-color: ${(props) => props.theme.primaryColor};
+        margin: ${(props) => props.theme.knobPos};
+
     }
 
 
@@ -72,27 +73,27 @@ export const GlobalStyles = createGlobalStyle`
     /*WELCOME PAGE CSS*/
     .emptyContainer {
         background-color: none;
-        border: solid 1px ${props => props.theme.primaryColor};
+        border: solid 1px ${(props) => props.theme.primaryColor};
     }
 
     .emptyContainer-text {
-        color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.primaryColor};
     }
 
     .fullContainer {
-        background-color: ${props => props.theme.primaryColor};
+        background-color: ${(props) => props.theme.primaryColor};
     }
 
     .fullContainer-text {
-        color: ${props => props.theme.secondaryColor};
+        color: ${(props) => props.theme.secondaryColor};
     }
 
     .text-content-line {
-        color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.primaryColor};
     }
 
     .welcome-nav {
-        background-color: ${props => props.theme.secondaryColor};
+        background-color: ${(props) => props.theme.secondaryColor};
         background: none;
     }
 
@@ -100,48 +101,66 @@ export const GlobalStyles = createGlobalStyle`
 
     /*SIGN IN PAGE CSS*/
     .login-button {
-        color: ${props => props.theme.highlightColor};
-        background-color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.highlightColor};
+        background-color: ${(props) => props.theme.primaryColor};
         border: none;
     }
 
     .login-form {
-        border: 1px solid ${props => props.theme.primaryColor};
-        box-shadow: ${props => props.theme.shadow};
+        border: 1px solid ${(props) => props.theme.primaryColor};
+        box-shadow: ${(props) => props.theme.shadow};
     }
 
 
 
     /*PROFILE PAGE CSS*/
     .socialMedia {
-        box-shadow: ${props => props.theme.shadow};
+        box-shadow: ${(props) => props.theme.shadow};
       }
 
       .socialMedia input {
-        border: 1px solid ${props => props.theme.primaryColor};
+        border: 1px solid ${(props) => props.theme.primaryColor};
       }
 
       .socialMedia button {
-        border: 1px solid ${props => props.theme.primaryColor};
+        border: 1px solid ${(props) => props.theme.primaryColor};
       }
       
       .thumbs {
-        border: 1px solid ${props => props.theme.primaryColor};
+        border: 1px solid ${(props) => props.theme.primaryColor};
       }
       
       .card {
-        box-shadow: ${props => props.theme.shadow};
-        background-color: ${props => props.theme.primaryColor};
+        box-shadow: ${(props) => props.theme.shadow};
+        background-color: ${(props) => props.theme.primaryColor};
       }
       
       .card .front {
-        color: ${props => props.theme.secondaryColor};
-        background-color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.secondaryColor};
+        background-color: ${(props) => props.theme.primaryColor};
       }
       
       .card .back {
-        color: ${props => props.theme.secondaryColor};
-        background-color: ${props => props.theme.primaryColor};
+        color: ${(props) => props.theme.secondaryColor};
+        background-color: ${(props) => props.theme.primaryColor};
       }
 
-`
+      /*MAIN PAGE CSS*/
+      .arrow-down {
+        border: 3px solid ${(props) => props.theme.primaryColor};
+      }
+
+      .arrow-down:hover {
+        background: ${(props) => props.theme.primaryColor};
+      }
+
+      .frens-list {
+        background: ${(props) => props.theme.primaryColor};
+      }
+
+      hr {
+        border-color: ${(props) => props.theme.primaryColor};
+      }
+
+`;
+
