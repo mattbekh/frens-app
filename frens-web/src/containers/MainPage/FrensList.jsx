@@ -31,6 +31,7 @@ function FrensList(props) {
       })}
     </FrensWrap>
   );
+
 }
 
 export default FrensList;

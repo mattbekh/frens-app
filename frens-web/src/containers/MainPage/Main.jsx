@@ -10,6 +10,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
 
+
 import { PageContainer } from "../../components/PageContainer";
 import { HeaderWrapper } from "../../components/HeaderWrapper";
 import { ContentWrapper } from "../../components/ContentWrapper";
@@ -185,6 +186,7 @@ function Main() {
       </PageContainer>
     </ThemeProvider>
   );
+
 }
 
 export default Main;

@@ -65,6 +65,7 @@ export const GlobalStyles = createGlobalStyle`
     .toggle-knob {
         background-color: ${(props) => props.theme.primaryColor};
         margin: ${(props) => props.theme.knobPos};
+
     }
 
 
@@ -162,3 +163,4 @@ export const GlobalStyles = createGlobalStyle`
       }
 
 `;
+

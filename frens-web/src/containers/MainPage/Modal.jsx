@@ -113,6 +113,7 @@ function Modal(props) {
       ) : null}
     </>
   );
+
 }
 
 export default Modal;
