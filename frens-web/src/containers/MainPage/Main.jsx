@@ -176,7 +176,7 @@ function Main() {
 
           <RandomContent class="random-content">
             <div class="random-content-wrapper">
-              <h2>Want More Prices Matches?</h2>
+              <h2>Want More Precise Matches?</h2>
               <p>Go to the Profile Page to complete your information !</p>
               <hr />
             </div>
