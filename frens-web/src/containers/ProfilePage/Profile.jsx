@@ -51,9 +51,9 @@ function Profile() {
                 <CardList cardlist={cardlist} />
                 {/* </ContentWrapper> */}
 
-                <FooterWrapper>
+                {/* <FooterWrapper>
                     <Footer />
-                </FooterWrapper>
+                </FooterWrapper> */}
             </Container>
         </ThemeProvider>
     );

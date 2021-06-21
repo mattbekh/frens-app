@@ -59,6 +59,10 @@ const ButtonWrapper = styled.button`
     margin: 0 4px;
     &:hover {
         filter: brightness(1.5);
+<<<<<<< HEAD
+=======
+        transition: 0.5s;
+>>>>>>> 54a07e09c21e6ec695baa656cc9f70be69f0af2c
     }
 `
 
