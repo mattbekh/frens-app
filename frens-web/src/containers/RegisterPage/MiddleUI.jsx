@@ -103,6 +103,17 @@ const backdropVariants = {
   },
 };
 
+const newUser = {
+  email: undefined,
+  password: undefined,
+  interests: {
+    cooking: 0,
+    music: 0,
+    drawing: 0,
+    workout: 0,
+  }
+}
+
 const MiddleUI = () => {
   const [isExpanded, setExpanded] = useState(false);
   const [active, setActive] = useState("signUp");
@@ -149,8 +160,8 @@ const MiddleUI = () => {
           )}
         </TopContainer>
         <InnerContainer>
-          {active === "signUp" && <RegisterForm />}
-          {active === "pfo" && <MoreInfo />}
+          {active === "signUp" && <RegisterForm user = {newUser}/>}
+          {active === "pfo" && <MoreInfo user= {newUser}/>}
         </InnerContainer>
       </BoxContainer>
     </RegisterContext.Provider>

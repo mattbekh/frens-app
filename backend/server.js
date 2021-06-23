@@ -28,6 +28,10 @@ server.get("/", (req, res) => {
     res.send("Welcome to the home page!");
 });
 
+server.post("/user", (req, res) => {
+    res.send(req.body);
+});
+
 // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
 server.get("*", (req,res) => {
     res.send("I dont know this path");
