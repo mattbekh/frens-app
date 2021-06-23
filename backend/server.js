@@ -12,6 +12,16 @@ DELETE /users/:id - Delete one user
 const express = require("express");
 let cors = require("cors");
 const { v4: uuid } = require("uuid");
+const fs = require("fs")
+
+let users;
+fs.readFile("./db.json", "utf8", function (err, data) {
+    if (err) {
+        return console.log(err);
+    }
+    users = JSON.parse(data);
+    //   console.log(users);
+});
 
 // Get a server up and running
 const server = express();
@@ -29,7 +39,12 @@ server.get("/", (req, res) => {
 });
 
 server.post("/user", (req, res) => {
-    res.send(req.body);
+    users.push(req.body);
+    res.json(users);
+});
+
+server.get("/user", (req, res) => {
+    res.json(users);
 });
 
 // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
