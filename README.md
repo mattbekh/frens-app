@@ -41,3 +41,5 @@ A social app for students to meet new people with similar interests. Will store 
     -   **List** of "find friends" to display recommendations
     -   **Daily auto-updation** functionality with number of total matches or new matches
     -   **Clickable** names in "find friends" list to display contact info
+
+-   Treat "project_2" as "Development" branch

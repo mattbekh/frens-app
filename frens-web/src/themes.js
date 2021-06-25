@@ -25,102 +25,77 @@ export const GlobalStyles = createGlobalStyle`
     .App {
         text-align: center;
     }
-
     body {
         background-color: ${(props) => props.theme.secondaryColor};
         color: ${(props) => props.theme.primaryColor};
         border-color: ${(props) => props.theme.primaryColor};
     }
-
     input {
         border-radius: 5px;
         height: 2.3rem;
         border: 1px solid grey;
     }
-
     a {
         text-decoration: none;
         font-weight: bold;
         color: ${(props) => props.theme.accentColor};
     } 
-
     button {
         color: ${(props) => props.theme.highlightColor};
         background-color: ${(props) => props.theme.primaryColor};
     }
-
     h2 {
         color: ${(props) => props.theme.primaryColor};
     }
-
     h3 {   
         color: ${(props) => props.theme.primaryColor};
     }
-
     .toggle-body {
         background-color: ${(props) => props.theme.secondaryColor};
         border-color: ${(props) => props.theme.primaryColor};
     }
-
     .toggle-knob {
         background-color: ${(props) => props.theme.primaryColor};
         margin: ${(props) => props.theme.knobPos};
     }
-
-
-
     /*WELCOME PAGE CSS*/
     .emptyContainer {
         background-color: none;
         border: solid 1px ${(props) => props.theme.primaryColor};
     }
-
     .emptyContainer-text {
         color: ${(props) => props.theme.primaryColor};
     }
-
     .fullContainer {
         background-color: ${(props) => props.theme.primaryColor};
     }
-
     .fullContainer-text {
         color: ${(props) => props.theme.secondaryColor};
     }
-
     .text-content-line {
         color: ${(props) => props.theme.primaryColor};
     }
-
     .welcome-nav {
         background-color: ${(props) => props.theme.secondaryColor};
         background: none;
     }
-
-
-
     /*SIGN IN PAGE CSS*/
     .login-button {
         color: ${(props) => props.theme.highlightColor};
         background-color: ${(props) => props.theme.primaryColor};
         border: none;
     }
-
     .login-form {
         border: 1px solid ${(props) => props.theme.primaryColor};
         box-shadow: ${(props) => props.theme.shadow};
     }
-
-
-
     /*PROFILE PAGE CSS*/
     .socialMedia {
         box-shadow: ${(props) => props.theme.shadow};
       }
-
       .socialMedia input {
         border: 1px solid ${(props) => props.theme.primaryColor};
       }
-
       .socialMedia button {
         border: 1px solid ${(props) => props.theme.primaryColor};
       }
@@ -143,22 +118,17 @@ export const GlobalStyles = createGlobalStyle`
         color: ${(props) => props.theme.secondaryColor};
         background-color: ${(props) => props.theme.primaryColor};
       }
-
       /*MAIN PAGE CSS*/
       .arrow-down {
         border: 3px solid ${(props) => props.theme.primaryColor};
       }
-
       .arrow-down:hover {
         background: ${(props) => props.theme.primaryColor};
       }
-
       .frens-list {
         background: ${(props) => props.theme.primaryColor};
       }
-
       hr {
         border-color: ${(props) => props.theme.primaryColor};
       }
-
 `;

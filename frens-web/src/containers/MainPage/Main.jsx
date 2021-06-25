@@ -10,6 +10,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
 
+
 import { PageContainer } from "../../components/PageContainer";
 import { HeaderWrapper } from "../../components/HeaderWrapper";
 import { ContentWrapper } from "../../components/ContentWrapper";
@@ -26,11 +27,9 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-
   .user-account-info {
     width: 80%;
     margin: 0 auto;
-
     h1 {
       font-family: "Gill Sans", sans-serif;
       font-size: 48px;
@@ -38,7 +37,6 @@ const MainContainer = styled.div`
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     hr {
       border: none;
       padding-bottom: 2px;
@@ -49,7 +47,6 @@ const MainContainer = styled.div`
       );
     }
   }
-
   .arrow-down {
     display: block;
     width: 60px;
@@ -78,7 +75,6 @@ const ParallaxContainer = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
   .page-intermission {
     max-width: 680px;
     min-height: 60vh;
@@ -97,12 +93,10 @@ const ParallaxContainer = styled.section`
 
 const RandomContent = styled.section`
   /* random content */
-
   padding: 4rem 0 4rem;
   color: white;
   /*background: #1a191e;*/
   min-height: 100px;
-
   .random-content-wrapper {
     text-align: center;
     max-width: 680px;
@@ -185,6 +179,7 @@ function Main() {
       </PageContainer>
     </ThemeProvider>
   );
+
 }
 
 export default Main;

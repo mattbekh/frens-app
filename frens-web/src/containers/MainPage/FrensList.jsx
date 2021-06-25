@@ -8,7 +8,6 @@ const FrensWrap = styled.div`
   align-items: stretch;
   margin: 0 auto;
   justify-content: center;
-
   padding: 4rem 0 4rem;
 `;
 
@@ -31,6 +30,7 @@ function FrensList(props) {
       })}
     </FrensWrap>
   );
+
 }
 
 export default FrensList;

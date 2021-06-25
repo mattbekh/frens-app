@@ -1,14 +1,14 @@
-.App {
-  text-align: center;
-}
+/* .App {
+    text-align: center;
+} */
 
 :root {
-  --blue: #3A86FF;
-  --orange: #FB5607;
-  --yellow: #FFBE0B;
-  --pink: #ff006e;
-  --purple: #8338ec;
-  --black: #010101;
+    --blue: #3a86ff;
+    --orange: #fb5607;
+    --yellow: #ffbe0b;
+    --pink: #ff006e;
+    --purple: #8338ec;
+    --black: #010101;
 }
 
 /* body {
@@ -40,4 +40,3 @@ p {
 /* h3 {
     color: var(--yellow);
 } */
-
