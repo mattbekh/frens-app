@@ -37,6 +37,7 @@ const MorInfo = ({user}) => {
     console.log(user.email);
     console.log(user.password);
 
+    //fetch
     const onSubmit = async (event) => {
         event.preventDefault();
         await axios.post('http://localhost:5000/user',user)
