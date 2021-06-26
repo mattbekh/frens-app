@@ -56,20 +56,35 @@ server.post("/users", async (req, res) => {
   }
 });
 
-server.post("/users/login", async (req, res) => {
-  const user = users.find((user) => user.email === req.body.email);
-  if (user == null) {
-    return res.status(400).send("can't find the user");
-  }
-  try {
-    if (await bcrypt.compare(req.body.password, user.password)) {
-      res.send("Successfuly Login");
-    } else {
-      res.send("Password is wrong...");
+server.post("/login", (req, res) => {
+
+  users.map((fren) => {
+    const [user] = Object.entries(fren);
+    const currentUser = user[0];
+    const email = user[1].email;
+    if(email === req.body.email) {
+      if(user[1].password === req.body.password) {
+        return res.status(200).send(`${currentUser} Successfully logged in.`)
+      } else {
+        return res.status(401).send("Unauthorized");
+      }
     }
-  } catch {
-    res.status(500).send();
-  }
+  });
+  res.status(400).send("Bad Request");
+  // return res.status(400).send("can't find the user");
+  
+  // if (loginUser == null) {
+  //   return res.status(400).send("can't find the user");
+  // }
+  // try {
+  //   if (await bcrypt.compare(req.body.password, user.password)) {
+  //     res.send("Successfuly Login");
+  //   } else {
+  //     res.send("Password is wrong...");
+  //   }
+  // } catch {
+  //   res.status(500).send();
+  // }
 });
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
 server.get("*", (req, res) => {

@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components/macro";
+
+import axios from "axios";
 
 import AddMargin from "../../components/AddMargin";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // CSS for this section
 // import '../../App.css';
@@ -63,23 +65,66 @@ const ButtonWrapper = styled.button`
     }
 `
 
+
+
 function MiddleSection(props) {
+
+    const history = useHistory();
+
+    // Used to gather the info from user and to clear the inputs
+    const [userEmail, setEmail] = useState("");
+    const [userPassword, setPassword] = useState("");
+
+    function handleChangeEmail(event) {
+        setEmail(event.target.value);
+    }
+
+    function handleChangePassword(event) {
+        setPassword(event.target.value);
+    }
+
+    let reset = () => {
+        setEmail("");
+        setPassword("");
+    }
+
+    function handleLogin() {
+        if(userEmail && userPassword) {
+            // Create payload
+            let body = {email: userEmail, password: userPassword};
+    
+            // Make post request
+            axios.post(`http://localhost:5000/login`, body).then(response => {
+                console.log(response);
+                if(response.status === 200) {
+                    history.push("/main");
+                }}).catch((err) => {
+                    alert("Incorrect Credentials");
+                    console.log(`${err} Caught`);
+                })
+                reset();
+        } else {
+            // alert("Please fill out all inputs");
+        }
+        
+    }
+
     return (
         <div>
-            <FormContainer action="submit" className="login-form">
+            <FormContainer action="http://localhost:5000/users/login" method="post" className="login-form" id="login-form">
                 <InputContainer>
                         <AddMargin direction="vertical" margin={30} />
                     <h2>Sign in to your account</h2>
                     <LabelWrapper htmlFor="email">Email</LabelWrapper>
                         <AddMargin direction="vertical" margin={20} />
                     <br/>
-                    <InputWrapper type="text" required />
+                    <InputWrapper type="text" name="email" onChange={handleChangeEmail} value={userEmail} required />
                         <AddMargin direction="vertical" margin={10} />
                     <br/>
                     <LabelWrapper htmlFor="password">Password</LabelWrapper><SpanWrapper><a href="">Forgot your password?</a></SpanWrapper>
                         <AddMargin direction="vertical" margin={20} />
                     <br/>
-                    <InputWrapper type="password" required />
+                    <InputWrapper type="password" name="password" onChange={handleChangePassword} value={userPassword} required />
                         <AddMargin direction="vertical" margin={20} />
                     <CheckBoxWrapper type="checkbox" />
                         <AddMargin direction="vertical" margin={10} />
@@ -87,10 +132,9 @@ function MiddleSection(props) {
                     <br/>
                         <AddMargin direction="vertical" margin={30} />
                         
-                    {/*Temporary Link to Main*/}
-                    <Link to="/main">     
-                        <ButtonWrapper className="login-button">Login</ButtonWrapper>
-                    </Link>
+                    <ButtonWrapper className="login-button" onClick={() => {handleLogin()}}>Login</ButtonWrapper>
+                    {/* <ButtonWrapper type="submit" form="login-form" className="login-button" >Login</ButtonWrapper> */}
+                    
                         <AddMargin direction="vertical" margin={10} />
                     <Link to="/register">
                         <SpanWrapper>Register</SpanWrapper>

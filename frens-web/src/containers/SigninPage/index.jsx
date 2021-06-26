@@ -36,8 +36,8 @@ export function SigninPage(props) {
     let head = useRef(null);
     let tl = new gsap.timeline;
 
-    let data = useLocation();
-    console.log(data.state.theme);
+    // let data = useLocation();
+    // console.log(data.state.theme);
 
     useEffect( () => {
         // Wait for page to load, prevent glitches
