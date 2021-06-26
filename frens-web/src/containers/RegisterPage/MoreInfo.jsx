@@ -40,7 +40,7 @@ const MorInfo = ({user}) => {
     //fetch
     const onSubmit = async (event) => {
         event.preventDefault();
-        await axios.post('http://localhost:5000/user',user)
+        await axios.post('http://localhost:5000/users',user)
     }
 
     return (
