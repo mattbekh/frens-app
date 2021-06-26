@@ -11,13 +11,13 @@ const InterestBox = styled.div`
   grid-auto-rows: minmax(5px, auto);
   grid-gap: 2em;
 `;
-const Interests = () => {
+const Interests = ({user}) => {
 
     const interests = useSelector(state => state.interestManager)
     return (
         <InterestBox>
             {interests.map((interest)=>
-                (<Interest key = {interest.id} interest = {interest} />))}
+                (<Interest key = {interest.id} interest = {interest} user = {user}/>))}
         </InterestBox>
     );
 };

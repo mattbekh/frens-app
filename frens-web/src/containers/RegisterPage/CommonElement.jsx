@@ -39,23 +39,36 @@ export const Label = styled.label`
   float: left;
 `
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button.attrs({
+    type: 'submit',
+    value: 'Submit'
+})`
   width: 50%;
   padding: 20px;
   margin-top: 1em;
-  // color: #fff;
   font-size: 15px;
   font-weight: 600;
   border: none;
-  //border-radius: 100px 100px 100px 100px;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
-  // background: black;
   &:hover {
     filter: brightness(1.5);
   }
 `;
 
+export const NormalButton = styled.button`
+  width: 50%;
+  padding: 20px;
+  margin-top: 1em;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all, 240ms ease-in-out;
+  &:hover {
+    filter: brightness(1.5);
+  }
+`;
 
 export const MutedLink = styled.div`
   font-size: 13px;
