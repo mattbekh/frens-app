@@ -56,7 +56,8 @@ server.get("/users", (req, res) => {
 //   }
 // });
 
-server.post("/login", (req, res) => {
+
+server.post("/login", async (req, res) => {
   users.map((fren) => {
     const [user] = Object.entries(fren);
     const currentUser = user[0];
@@ -69,7 +70,8 @@ server.post("/login", (req, res) => {
       }
     }
   });
-  res.status(400).send("Bad Request");
+  res.status(400).send("Can't find user");
+  // FIGURE OUT HOW TO THROW 400 
 });
 
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!

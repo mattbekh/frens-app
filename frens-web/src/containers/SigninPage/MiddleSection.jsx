@@ -95,7 +95,7 @@ function MiddleSection(props) {
     
             // Make post request
             axios.post(`http://localhost:5000/login`, body).then(response => {
-                console.log(response);
+                // console.log(response);
                 if(response.status === 200) {
                     history.push("/main");
                 }}).catch((err) => {
