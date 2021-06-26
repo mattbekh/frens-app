@@ -41,23 +41,22 @@ server.get("/users", (req, res) => {
   res.json(users);
 });
 
-server.post("/users", async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    // console.log(hashedPassword);
-    const newUser = {
-      email: req.body.email,
-      password: hashedPassword,
-    };
-    users.push(newUser);
-    res.status(201).send();
-  } catch {
-    res.status(500).send();
-  }
-});
+// server.post("/users", async (req, res) => {
+//   try {
+//     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+//     // console.log(hashedPassword);
+//     const newUser = {
+//       email: req.body.email,
+//       password: hashedPassword,
+//     };
+//     users.push(newUser);
+//     res.status(201).send();
+//   } catch {
+//     res.status(500).send();
+//   }
+// });
 
 server.post("/login", (req, res) => {
-
   users.map((fren) => {
     const [user] = Object.entries(fren);
     const currentUser = user[0];
@@ -71,21 +70,8 @@ server.post("/login", (req, res) => {
     }
   });
   res.status(400).send("Bad Request");
-  // return res.status(400).send("can't find the user");
-  
-  // if (loginUser == null) {
-  //   return res.status(400).send("can't find the user");
-  // }
-  // try {
-  //   if (await bcrypt.compare(req.body.password, user.password)) {
-  //     res.send("Successfuly Login");
-  //   } else {
-  //     res.send("Password is wrong...");
-  //   }
-  // } catch {
-  //   res.status(500).send();
-  // }
 });
+
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
 server.get("*", (req, res) => {
   res.send("I dont know this path");
