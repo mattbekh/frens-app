@@ -1,34 +1,37 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {SubmitButton, Input, FormContainer, BoxContainer, Label, MutedLink, BoldLink} from "./CommonElement";
 import {RegisterContext} from "./RegisterContext";
 
 
-import AddMargin from "../../components/AddMargin";
-import styled from "styled-components/macro";
+const RegisterForm = ({user}) => {
 
-const LabelWrapper = styled.label`
-    margin: 0 0 0 3.8rem;
-    align-self: start;
-`
-
-const RegisterForm = () => {
     const {switchToInFo} = useContext(RegisterContext);
+    const setBasic = () => {
+        user.email = email
+        user.password = password
+    }
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        if (email && password) {
+            setBasic();
+            console.log(user.email);
+            console.log(user.password);
+        }
+        switchToInFo()
+    }
+
+    const [email, setEmail] = useState();
+    const [password,setPassword] = useState();
+
     return (
         <BoxContainer>
-            <FormContainer>
-                    <LabelWrapper htmlFor="email">Email</LabelWrapper>
-                <AddMargin direction="vertical" margin={20} />
-                
-                    <Input type= "email"/>
-                <AddMargin direction="vertical" margin={10} />
-                <br/>
-                    <LabelWrapper htmlFor="password">Password</LabelWrapper>
-                <AddMargin direction="vertical" margin={20} />
-                 
-                    <Input type= "password"/>
-                <br/>
-                <SubmitButton onClick = {switchToInFo}>Next</SubmitButton>
-                <AddMargin direction="vertical" margin={10} />
+            <FormContainer onSubmit = {onSubmit}>
+                <Label>Email</Label>
+                <Input type= "email" placeholder = "Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <Label>Password</Label>
+                <Input type= "password" placeholder = "Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <SubmitButton> Next </SubmitButton>
                 <MutedLink>
                     Already have an account?
                     <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>

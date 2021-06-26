@@ -11,6 +11,7 @@ DELETE /users/:id - Delete one user
 const express = require("express");
 let cors = require("cors");
 const { v4: uuid } = require("uuid");
+
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 
@@ -21,6 +22,7 @@ fs.readFile("./db.json", "utf8", function (err, data) {
   }
   users = JSON.parse(data);
   //   console.log(users);
+
 });
 
 // Get a server up and running
@@ -56,6 +58,10 @@ server.get("/users", (req, res) => {
 //   }
 // });
 
+server.post("/users", (req, res) => {
+  users.push(req.body);
+  res.json(users);
+});
 
 server.post("/login", async (req, res) => {
   users.map((fren) => {

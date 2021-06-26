@@ -16,10 +16,31 @@ const InterestTag = styled.div`
     filter: brightness(1.5);
   }`;
 
+
+const setUserInterest = (user, interest) => {
+    console.log(interest)
+    if(interest === "cooking") {
+        user.interests.cooking = 1
+    }
+    if(interest === "music") {
+        user.interests.music = 1
+    }
+    if(interest === "drawing") {
+        user.interests.drawing = 1
+    }
+    if(interest === "workout") {
+        console.log(user.interests.workout)
+        user.interests.workout = 1
+    }
+}
+
 const Interest = (props) => {
     const dispatch = useDispatch();
     return (
-            <InterestTag onClick={()=> dispatch(pickInterest(props.interest.id))}>
+            <InterestTag onClick={()=> {
+                dispatch(pickInterest(props.interest.id));
+                setUserInterest(props.user,props.interest.name);
+            }}>
                 {props.interest.name}
             </InterestTag>
     );

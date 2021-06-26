@@ -7,14 +7,14 @@ import {
     BoxContainer,
     Label,
     MutedLink,
-    BoldLink,
+    BoldLink, NormalButton,
 } from "./CommonElement";
 import {RegisterContext} from "./RegisterContext";
 import styled from "styled-components/macro";
 import {IconContext} from "react-icons";
 import Interests from "./Interests";
+import axios from "axios";
 
-import AddMargin from "../../components/AddMargin";
 const InterestBox = styled.div`
   // width: 500px;
   // min-height: 600px;
@@ -29,30 +29,40 @@ const InterestBox = styled.div`
 `;
 
 
-const MorInfo = () => {
-    const {switchToInFo} = useContext(RegisterContext);
+
+
+
+const MorInfo = ({user}) => {
+    const {switchToSignup} = useContext(RegisterContext);
+    console.log(user.email);
+    console.log(user.password);
+
+    //fetch
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        await axios.post('http://localhost:5000/user',user)
+    }
+
     return (
         <BoxContainer>
-            <FormContainer>
+            <FormContainer onSubmit = {onSubmit} >
                 <IconContext.Provider value={{size: '60px'}}>
                 <CgProfile> </CgProfile>
                 </IconContext.Provider>
                 <p> Upload your photo <br/> Pick your Interest</p>
                 <InterestBox>
-                    <Interests></Interests>
+                    <Interests user = {user}/>
                 </InterestBox>
-                <AddMargin direction="vertical" margin={10} />
-                <SubmitButton onClick = {switchToInFo}> Back </SubmitButton>
-                <AddMargin direction="vertical" margin={10} />
                 <SubmitButton> I am ready! </SubmitButton>
-                <AddMargin direction="vertical" margin={10} />
+            </FormContainer>
+            <NormalButton onClick = {switchToSignup}> Back </NormalButton>
                 <MutedLink>
                     Already have an account?
                     <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>
                         Sign in!
                     </BoldLink>
                 </MutedLink>
-            </FormContainer>
+
         </BoxContainer>
 
     );
