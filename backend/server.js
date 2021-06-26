@@ -43,15 +43,6 @@ server.get("/users", (req, res) => {
   res.json(users);
 });
 
-server.post("/users", (req, res) => {
-    users.push(req.body);
-    res.json(users);
-});
-
-// Important to go last, routes are matched in order. This matches everything so we wont make past this send!
-server.get("*", (req,res) => {
-    res.send("I dont know this path");
-
 // server.post("/users", async (req, res) => {
 //   try {
 //     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -67,21 +58,31 @@ server.get("*", (req,res) => {
 //   }
 // });
 
-// server.post("/users/login", async (req, res) => {
-//   const user = users.find((user) => user.email === req.body.email);
-//   if (user == null) {
-//     return res.status(400).send("can't find the user");
-//   }
-//   try {
-//     if (await bcrypt.compare(req.body.password, user.password)) {
-//       res.send("Successfuly Login");
-//     } else {
-//       res.send("Password is wrong...");
-//     }
-//   } catch {
-//     res.status(500).send();
-//   }
-// });
+server.post("/users", (req, res) => {
+  users.push(req.body);
+  res.json(users);
+});
+
+server.post("/login", async (req, res) => {
+  users.map((fren) => {
+    const [user] = Object.entries(fren);
+    const currentUser = user[0];
+    const email = user[1].email;
+    if(email === req.body.email) {
+      if(user[1].password === req.body.password) {
+        return res.status(200).send(`${currentUser} Successfully logged in.`)
+      } else {
+        return res.status(401).send("Unauthorized");
+      }
+    }
+  });
+  res.status(400).send("Can't find user");
+  // FIGURE OUT HOW TO THROW 400 
+});
+
+// // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
+server.get("*", (req, res) => {
+  res.send("I dont know this path");
 });
 
 // server needs a port to listen on, locally. This runs when server starts up!
