@@ -15,8 +15,19 @@ const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
+const mongoose = require("mongoose");
 
 const AppError = require("./AppError");
+
+// MongoDB Atlas Cloud
+mongoose.connect('mongodb+srv://admin:admin@cpsc455frensapp.kf2ad.mongodb.net/frensApp', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+    .then( () => {
+        console.log("MONGO CONNECTION OPEN");
+    })
+    .catch(error => {
+        console.log("##### MONGO ERROR");
+        console.log(error);
+    });
 
 let users;
 fs.readFile("./db.json", "utf8", function (err, data) {
