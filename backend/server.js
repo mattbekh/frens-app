@@ -14,6 +14,7 @@ const { v4: uuid } = require("uuid");
 
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const morgan = require("morgan");
 
 let users;
 fs.readFile("./db.json", "utf8", function (err, data) {
@@ -29,12 +30,26 @@ fs.readFile("./db.json", "utf8", function (err, data) {
 const server = express();
 const port = 5000;
 
-// Define the POST data format, using PARSING MIDDLEWARES
+// MIDDLEWARE
 // .use is a way to run a function on every request
 server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
+server.use(morgan('dev'));
 
+// CUSTOM MIDDLEWARE
+server.use((req,res,next) => {
+  req.requestTime = Date.now();
+  console.log("####" + req.method, req.path);
+  next();
+})
+
+// USED TO PROTECT A ROUTE
+// const verifyPassword = (req, res, next) => {
+
+// }
+
+// ROUTES
 server.get("/", (req, res) => {
   res.send("Welcome to the home page!");
 });
@@ -42,21 +57,6 @@ server.get("/", (req, res) => {
 server.get("/users", (req, res) => {
   res.json(users);
 });
-
-// server.post("/users", async (req, res) => {
-//   try {
-//     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-//     // console.log(hashedPassword);
-//     const newUser = {
-//       email: req.body.email,
-//       password: hashedPassword,
-//     };
-//     users.push(newUser);
-//     res.status(201).send();
-//   } catch {
-//     res.status(500).send();
-//   }
-// });
 
 server.post("/users", (req, res) => {
   users.push(req.body);
@@ -80,9 +80,15 @@ server.post("/login", async (req, res) => {
   // FIGURE OUT HOW TO THROW 400 
 });
 
+
+
+
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
-server.get("*", (req, res) => {
-  res.send("I dont know this path");
+// server.get("*", (req, res) => {
+//   res.send("I dont know this path");
+// });
+server.use((req,res) => {
+  res.status(404).send("Not Found.")
 });
 
 // server needs a port to listen on, locally. This runs when server starts up!
