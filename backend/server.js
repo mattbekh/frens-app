@@ -16,6 +16,8 @@ const fs = require("fs");
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
 
+const AppError = require("./AppError");
+
 let users;
 fs.readFile("./db.json", "utf8", function (err, data) {
   if (err) {
@@ -48,6 +50,13 @@ server.use((req,res,next) => {
 // const verifyPassword = (req, res, next) => {
 
 // }
+
+// CUSTOM ERROR HANDLER MIDDLEWARE
+server.use((err,req,res,next) => {
+  const { status = 500, message = "Error" } = err;
+  res.status(status).send(message);
+})
+
 
 // ROUTES
 server.get("/", (req, res) => {
