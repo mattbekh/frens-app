@@ -1,3 +1,6 @@
+// Gather user from action.payload??
+// NOT FINISHED
+
 const loggedReducer = (state = false, action) => {
     switch(action.type) {
         case "LOGIN":
