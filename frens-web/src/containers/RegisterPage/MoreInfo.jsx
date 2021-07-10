@@ -41,28 +41,25 @@ const MorInfo = ({ user }) => {
   };
 
   return (
-    <BoxContainer>
-      <FormContainer onSubmit={onSubmit}>
-        <IconContext.Provider value={{ size: "60px" }}>
-          <CgProfile> </CgProfile>
-        </IconContext.Provider>
-        <p>
-          {" "}
-          Upload your photo <br /> Pick your Interest
-        </p>
-        <InterestBox>
-          <Interests user={user} />
-        </InterestBox>
-        <SubmitButton> I am ready! </SubmitButton>
-      </FormContainer>
-      <NormalButton onClick={switchToSignup}> Back </NormalButton>
-      <MutedLink>
-        Already have an account?
-        <BoldLink to={{ pathname: "/signin", state: { theme: `poo` } }}>
-          Sign in!
-        </BoldLink>
-      </MutedLink>
-    </BoxContainer>
+      <BoxContainer>
+          <FormContainer onSubmit = {onSubmit} >
+              <IconContext.Provider value={{size: '60px'}}>
+              <CgProfile> </CgProfile>
+              </IconContext.Provider>
+              <p> Upload your photo <br/> Pick your Interest</p>
+              <InterestBox>
+                  <Interests user = {user}/>
+              </InterestBox>
+              <SubmitButton> I am ready! </SubmitButton>
+          </FormContainer>
+          <NormalButton onClick = {switchToSignup}> Back </NormalButton>
+              <MutedLink>
+                  Already have an account?
+                  <BoldLink to={{ pathname: '/signin', state: { theme: `poo`}}}>
+                      Sign in!
+                  </BoldLink>
+              </MutedLink>
+      </BoxContainer>
   );
 };
 

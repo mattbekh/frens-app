@@ -18,11 +18,12 @@ export const FormContainer = styled.form`
 
 
 export const Input = styled.input`
-  width: 50%;
-  height: 42px;
-  outline: none;
-  border: 1px solid rgba(200, 200, 200, 0.3);
-  border-bottom: 1.4px solid transparent;
+  width: 75%;
+  height: 2.8rem;
+  margin: 5px;
+  font-size: 24px;
+  text-align: center;
+
   font-size: 15px;
   &:focus {
     outline: none;
@@ -31,12 +32,9 @@ export const Input = styled.input`
 `
 
 export const Label = styled.label`
-  color: #010101;
-  align-items: start;
-  font-size: 25px;
-  font-weight: 600;
-  margin: 5px;
-  float: left;
+  
+  // align-items: start;
+  // float: left;
 `
 
 export const SubmitButton = styled.button.attrs({
@@ -71,14 +69,15 @@ export const NormalButton = styled.button`
 `;
 
 export const MutedLink = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   color: #8C2F00;
   font-weight: 500;
   text-decoration: none;
+  margin: 0 0 0 10rem;
 `;
 
 export const BoldLink = styled(Link)`
-  font-size: 13px;
+  font-size: 15px;
   color: #FA2B07;
   font-weight: 800;
   text-decoration: none;
