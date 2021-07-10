@@ -51,14 +51,14 @@ const login = async(password, hashedPassword) => {
   }
 };
 
-// let users;
-// fs.readFile("./db.json", "utf8", function (err, data) {
-//   if (err) {
-//     return console.log(err);
-//   }
-//   users = JSON.parse(data);
-//   //   console.log(users);
-// });
+let users;
+fs.readFile("./db.json", "utf8", function (err, data) {
+  if (err) {
+    return console.log(err);
+  }
+  users = JSON.parse(data);
+  //   console.log(users);
+});
 
 /* Get a server up and running */
 const server = express();
@@ -86,16 +86,29 @@ server.get("/", (req, res) => {
 });
 
 server.get("/users", (req, res) => {
-  // res.json(users);
+  res.json(users);
 });
 
 server.post("/users", (req, res) => {
-  // users.push(req.body);
-  // res.json(users);
+  users.push(req.body);
+  res.json(users);
 });
 
 server.post("/login", async (req, res, next) => {
-
+  users.map((fren) => {
+    const [user] = Object.entries(fren);
+    const currentUser = user[0];
+    const email = user[1].email;
+    if(email === req.body.email) {
+      if(user[1].password === req.body.password) {
+        return res.status(200).send(`${currentUser} Successfully logged in.`)
+      } else {
+        return res.status(401).send("Unauthorized");
+      }
+    }
+  });
+  res.status(400).send("Can't find user");
+  // FIGURE OUT HOW TO THROW 400 
 });
 
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
