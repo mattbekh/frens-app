@@ -1,17 +1,19 @@
+
 import React, {useContext, useState} from 'react';
 import { CgProfile } from "react-icons/cg";
 import {
-    SubmitButton,
-    Input,
-    FormContainer,
-    BoxContainer,
-    Label,
-    MutedLink,
-    BoldLink, NormalButton,
+  SubmitButton,
+  Input,
+  FormContainer,
+  BoxContainer,
+  Label,
+  MutedLink,
+  BoldLink,
+  NormalButton,
 } from "./CommonElement";
-import {RegisterContext} from "./RegisterContext";
+import { RegisterContext } from "./RegisterContext";
 import styled from "styled-components/macro";
-import {IconContext} from "react-icons";
+import { IconContext } from "react-icons";
 import Interests from "./Interests";
 import axios from "axios";
 import {useHistory} from "react-router-dom";
@@ -28,7 +30,6 @@ const InterestBox = styled.div`
   overflow: hidden;
   background: none;
 `;
-
 
 const MorInfo = ({user}) => {
     const {switchToSignup} = useContext(RegisterContext);
@@ -86,5 +87,3 @@ const MorInfo = ({user}) => {
 
 export default MorInfo;
 export {InterestBox};
-
-
