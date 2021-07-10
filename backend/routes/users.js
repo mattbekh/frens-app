@@ -1,3 +1,9 @@
+/*
+
+NOT YET HOOKED UP TO THE SERVER.JS
+
+*/
+
 const express = require("express");
 const router = express.Router();
 
