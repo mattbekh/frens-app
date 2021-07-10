@@ -111,7 +111,8 @@ const newUser = {
     music: 0,
     drawing: 0,
     workout: 0,
-  }
+  },
+  userName: undefined
 }
 
 const MiddleUI = () => {
