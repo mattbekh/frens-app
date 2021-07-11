@@ -15,6 +15,7 @@ import MiddleUI from "./MiddleUI";
 import SlipIn from "../../components/SlipIn";
 import Footer from "../../components/Footer";
 import ToggleNM from "../../components/ToggleNM";
+
 const RegisterContainer = styled.div`
     visibility: hidden;
     //   width: 100%;

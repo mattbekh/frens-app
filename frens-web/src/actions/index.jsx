@@ -11,3 +11,10 @@ export const pickInterest = (id) => {
         payload: id
     };
 };
+
+// export const loginUser = (user) => {
+//     return {
+//         type: 'LOGIN',
+//         payload: user
+//     };
+// };

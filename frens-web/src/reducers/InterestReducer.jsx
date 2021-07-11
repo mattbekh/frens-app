@@ -2,7 +2,6 @@ import React from 'react';
 
 
 
-
 let cooking =  JSON.parse('{"id": "1", "name": "cooking"}');
 let music = JSON.parse('{"id": "2", "name": "music"}');
 let drawing = JSON.parse('{"id": "3", "name": "drawing"}');

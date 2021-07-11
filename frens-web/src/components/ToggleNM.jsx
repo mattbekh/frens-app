@@ -23,11 +23,11 @@ const OuterCircle = styled.div`
     height: 2rem;
     border: 2px solid black;
     padding: 0.2rem;
-    // box-shadow: 0px 0px 1rem rgba(255, 230, 0, 0.8);
     &:hover {
         filter: brightness(1.5);
         transition: 0.5s;
-      }
+    }
+    // box-shadow: 0px 0px 1rem rgba(255, 230, 0, 0.8);
 `
 
 const InnerCircle = styled.div`
