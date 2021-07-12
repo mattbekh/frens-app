@@ -5,11 +5,11 @@ import Modal from "./Modal";
 import FrensList from "./FrensList";
 // import initialFrensList from "./database.json";
 import initialFrensList from "./db.js";
+import axios from "axios";
 
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
-
 
 import { PageContainer } from "../../components/PageContainer";
 import { HeaderWrapper } from "../../components/HeaderWrapper";
@@ -112,6 +112,7 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
+  const [loginUser, setLoginUser] = useState([]);
 
   const [modal, setModal] = useState({
     visible: false,
@@ -121,6 +122,7 @@ function Main() {
   });
 
   useEffect(() => {
+    getLoginUserInfo();
     setFrensList(initialFrensList); //set frensList with initialFrensList
   }, []); // on first refresh
 
@@ -140,6 +142,23 @@ function Main() {
     setModal(newModal);
   }
 
+  function getLoginUserInfo() {
+    const getUserInfo = async () => {
+      const token = JSON.parse(localStorage.getItem("profile")).token;
+
+      const userInfo = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.get("http://localhost:5000/posts", userInfo);
+
+      if (response?.data) setLoginUser(response.data);
+    };
+    getUserInfo();
+  }
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -150,7 +169,7 @@ function Main() {
 
           <MainContainer className="full-hight">
             <div className="user-account-info">
-              <h1>Hi, Monica! How you doin'~?</h1>
+              <h1>Hi, {loginUser.username}! How you doin'~?</h1>
               <hr />
             </div>
             <h2>Time to find your people!</h2>
@@ -179,7 +198,6 @@ function Main() {
       </PageContainer>
     </ThemeProvider>
   );
-
 }
 
 export default Main;
