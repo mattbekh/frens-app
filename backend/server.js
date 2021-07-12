@@ -7,13 +7,15 @@ PATCH /users/:id - Update one user
 DELETE /users/:id - Delete one user
 
 */
-
+require("dotenv").config();
 const express = require("express");
 let cors = require("cors");
 const { v4: uuid } = require("uuid");
 
 const fs = require("fs");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 
@@ -124,22 +126,103 @@ server.post("/users", (req, res) => {
     });
 });
 
-server.post("/login", async (req, res, next) => {
-  users.map((fren) => {
-    const [user] = Object.entries(fren);
-    const currentUser = user[0];
-    const email = user[1].email;
-    if (email === req.body.email) {
-      if (user[1].password === req.body.password) {
-        return res.status(200).send(`${currentUser} Successfully logged in.`);
-      } else {
-        return res.status(401).send("Unauthorized");
-      }
-    }
+server.post("/register", async (req, res) => {
+  // Matts Register basic idea
+  const { password, userName, email, interests } = req.body;
+
+  const existingUser = await User.findOne({ userName });
+  if (existingUser) {
+    return res
+      .status(404)
+      .send("User name already exist. Please try a different one.");
+  }
+
+  const hash = await bcrypt.hash(password, 12);
+  const user = await User({
+    username: userName,
+    email: email,
+    password: hash,
+    interests: interests,
   });
-  res.status(400).send("Can't find user");
-  // FIGURE OUT HOW TO THROW 400
+
+  const token = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h",
+  });
+
+  await user.save();
+  res.redirect("/");
 });
+
+server.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+  console.log(
+    "%c [ req.body ]",
+    "font-size:13px; background:pink; color:#bf2c9f;",
+    req.body
+  );
+
+  try {
+    console.log("begin try");
+    const existingUser = await User.findOne({ email });
+    console.log(
+      "%c [ existingUser ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      existingUser
+    );
+
+    if (!existingUser) {
+      return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
+    }
+
+    // NEED HELP: isPasswordCorrect always return false even though the passwords are the same
+    // const isPasswordCorrect = await bcrypt.compare(
+    //   password,
+    //   existingUser.password
+    // );
+
+    // if (!isPasswordCorrect) {
+    //   console.log("wrong ps");
+    //   return res
+    //     .status(400)
+    //     .send({ message: ">>>>>>>>>>>Invalid credentials" });
+    // }
+
+    const token = jwt.sign({ existingUser }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+    console.log(
+      "%c [ token after login ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      token
+    );
+
+    return res.status(200).send({ token: token });
+  } catch (err) {
+    res.status(500).send(err.toString());
+  }
+});
+
+/* Get login user info */
+server.get("/posts", authenticateToken, async (req, res) => {
+  const user = req.user.existingUser;
+
+  res.send(user);
+});
+
+/* Middleware to authenticate the token */
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    console.log(err);
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 // // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
 // server.get("*", (req, res) => {
