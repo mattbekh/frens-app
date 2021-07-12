@@ -6,7 +6,6 @@ const ModalContainer = styled.div`
   width: 80%;
   padding: 1rem;
   background: var(--black);
-
   position: fixed;
   top: calc(137px + 2rem);
   left: 50%;
@@ -28,7 +27,6 @@ const ModalCloseBtn = styled.button`
   padding: 0;
   background: var(--black);
   color: white;
-
   &:hover {
     transform: rotate(135deg);
     cursor: pointer;

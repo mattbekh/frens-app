@@ -5,11 +5,11 @@ import Modal from "./Modal";
 import FrensList from "./FrensList";
 // import initialFrensList from "./database.json";
 import initialFrensList from "./db.js";
+import axios from "axios";
 
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
-
 
 import { PageContainer } from "../../components/PageContainer";
 import { HeaderWrapper } from "../../components/HeaderWrapper";
@@ -27,11 +27,9 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-
   .user-account-info {
     width: 80%;
     margin: 0 auto;
-
     h1 {
       font-family: "Gill Sans", sans-serif;
       font-size: 48px;
@@ -39,7 +37,6 @@ const MainContainer = styled.div`
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-
     hr {
       border: none;
       padding-bottom: 2px;
@@ -50,7 +47,6 @@ const MainContainer = styled.div`
       );
     }
   }
-
   .arrow-down {
     display: block;
     width: 60px;
@@ -79,7 +75,6 @@ const ParallaxContainer = styled.section`
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
   .page-intermission {
     max-width: 680px;
     min-height: 60vh;
@@ -98,12 +93,10 @@ const ParallaxContainer = styled.section`
 
 const RandomContent = styled.section`
   /* random content */
-
   padding: 4rem 0 4rem;
   color: white;
   /*background: #1a191e;*/
   min-height: 100px;
-
   .random-content-wrapper {
     text-align: center;
     max-width: 680px;
@@ -119,6 +112,7 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
+  const [loginUser, setLoginUser] = useState([]);
 
   const [modal, setModal] = useState({
     visible: false,
@@ -128,6 +122,7 @@ function Main() {
   });
 
   useEffect(() => {
+    getLoginUserInfo();
     setFrensList(initialFrensList); //set frensList with initialFrensList
   }, []); // on first refresh
 
@@ -147,6 +142,23 @@ function Main() {
     setModal(newModal);
   }
 
+  function getLoginUserInfo() {
+    const getUserInfo = async () => {
+      const token = JSON.parse(localStorage.getItem("profile")).token;
+
+      const userInfo = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.get("http://localhost:5000/posts", userInfo);
+
+      if (response?.data) setLoginUser(response.data);
+    };
+    getUserInfo();
+  }
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -157,7 +169,7 @@ function Main() {
 
           <MainContainer className="full-hight">
             <div className="user-account-info">
-              <h1>Hi, Monica! How you doin'~?</h1>
+              <h1>Hi, {loginUser.username}! How you doin'~?</h1>
               <hr />
             </div>
             <h2>Time to find your people!</h2>
@@ -186,7 +198,6 @@ function Main() {
       </PageContainer>
     </ThemeProvider>
   );
-
 }
 
 export default Main;
