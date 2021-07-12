@@ -8,10 +8,15 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:5000/users/login
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-    "email": "w@W",
-    "password": "www"
+    "email": "rachel_green@gmail.com",
+    "password": "rgreen"
 }
+
+###
+
+GET http://localhost:5000/posts 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleGlzdGluZ1VzZXIiOnsic29jaWFsIjp7ImZhY2Vib29rIjoicmFjaGVsX2dyZWVuX2ZhY2Vib29rIiwiaW5zdGFncmFtIjoicmFjaGVsX2dyZWVuX2luc3RhZ3JhbSIsInBob3RvIjoiaHR0cHM6Ly9weXhpcy5ueW1hZy5jb20vdjEvaW1ncy80N2MvNzFhLzEzMGJmMWU1NTdlNTM0YjNmMmJlMzM1MWFmYzJlY2Y5NTItMTctcmFjaGVsLWdyZWVuLWpld2lzaC5yc3F1YXJlLnc3MDAuanBnIn0sImludGVyZXN0cyI6W3siY29va2luZyI6MCwibXVzaWMiOjEsImRyYXdpbmciOjAsIndvcmtvdXQiOjF9XSwiX2lkIjoiNjBlYjk4MTUwZDFlMTczYThjZGNkOTcwIiwidXNlcm5hbWUiOiJyZ3JlZW4iLCJmaXJzdE5hbWUiOiJSYWNoZWwiLCJsYXN0TmFtZSI6IkdyZWVuIiwiZW1haWwiOiJyYWNoZWxfZ3JlZW5AZ21haWwuY29tIiwicGFzc3dvcmQiOiJyZ3JlZW4ifSwiaWF0IjoxNjI2MTEzMzQyLCJleHAiOjE2MjYxMTY5NDJ9.daOQ8tbkDkyU5N1mCh3VuTl_JT5gPeFB9aK--JIFtt0

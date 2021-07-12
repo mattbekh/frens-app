@@ -5,14 +5,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
@@ -33,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
   },
   interests: {
-    type: [String],
+    type: [Object],
   },
 });
 
