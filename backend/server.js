@@ -55,6 +55,7 @@ const login = async (password, hashedPassword) => {
 };
 
 const User = require("./models/user");
+const Question = require("./models/question");
 // let users;
 // fs.readFile("./db.json", "utf8", function (err, data) {
 //   if (err) {
@@ -117,6 +118,38 @@ server.post("/users", (req, res) => {
     interest: {},
   });
   newUser
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+server.get("/questions", (req, res) => {
+  // res.json(users);
+  Question.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+server.post("/questions", (req, res) => {
+  // users.push(req.body);
+  // res.json(users);
+  const newQuestion = new Question({
+    _id: new mongoose.Types.ObjectId(),
+    question: "New Question",
+    choices: {
+      numberOfChoice: 2,
+      choice: ["True", "False"],
+    },
+  });
+  newQuestion
     .save()
     .then((result) => {
       res.send(result);

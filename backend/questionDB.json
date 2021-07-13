@@ -1,0 +1,76 @@
+[
+  {
+    "question": "what is your favourite anime?",
+    "choices": {
+      "numberOfChoice": 5,
+      "choice": [
+        "Attck on Titan",
+        "Demon Slayer",
+        "Tokoyo Ghoul",
+        "Naruto",
+        "Jujutsu Kaisen"
+      ]
+    }
+  },
+  {
+    "question": "what is your favourite animal?",
+    "choices": {
+      "numberOfChoice": 3,
+      "choice": ["Cat", "Dog", "I hate Animal :("]
+    }
+  },
+  {
+    "question": "what is your math level?",
+    "choices": {
+      "numberOfChoice": 4,
+      "choice": [
+        "Expert",
+        "Average",
+        "I am stupid, but I do not hate math",
+        "Hater"
+      ]
+    }
+  },
+  {
+    "question": "where do you go to school?",
+    "choices": {
+      "numberOfChoice": 5,
+      "choice": ["UBC", "SFU", "BCIT", "Langara", "Other"]
+    }
+  },
+  {
+    "question": "what is your preferrd food?",
+    "choices": {
+      "numberOfChoice": 5,
+      "choice": ["Sushi", "Hotpot", "Salad", "Piazza", "Pho"]
+    }
+  },
+  {
+    "question": "what year level are you in right now?",
+    "choices": {
+      "numberOfChoice": 6,
+      "choice": [
+        "High School",
+        "Year 1",
+        "Year 2",
+        "Year 3",
+        "Year 4",
+        "Graduated"
+      ]
+    }
+  },
+  {
+    "question": "what is your Faulty?",
+    "choices": {
+      "numberOfChoice": 5,
+      "choice": ["Art", "Science", "Engineering", "Business", "Undeclared"]
+    }
+  },
+  {
+    "question": "Are you funny?",
+    "choices": {
+      "numberOfChoice": 3,
+      "choice": ["Of course!!", "Nope", "I hate Jokes"]
+    }
+  }
+]
