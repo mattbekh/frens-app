@@ -10,7 +10,6 @@ DELETE /users/:id - Delete one user
 require("dotenv").config();
 const express = require("express");
 let cors = require("cors");
-const { v4: uuid } = require("uuid");
 
 const fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -37,33 +36,8 @@ mongoose
     console.log(error);
   });
 
-/* Authentication Functions */
-const hashPassword = async (password) => {
-  const salt = await bcrypt.genSalt(12);
-  const hash = await bcrypt.hash(password, salt);
-  console.log(salt);
-  console.log(hash);
-};
-
-const login = async (password, hashedPassword) => {
-  const result = await bcrypt.compare(password, hashedPassword);
-  if (result) {
-    console.log("Logged in. Success.");
-  } else {
-    console.log("Incorrect");
-  }
-};
-
 const User = require("./models/user");
 const Question = require("./models/question");
-// let users;
-// fs.readFile("./db.json", "utf8", function (err, data) {
-//   if (err) {
-//     return console.log(err);
-//   }
-//   users = JSON.parse(data);
-//   //   console.log(users);
-// });
 
 /* Get a server up and running */
 const server = express();
@@ -89,7 +63,6 @@ server.get("/", (req, res) => {
 });
 
 server.get("/users", (req, res) => {
-  // res.json(users);
   User.find()
     .then((result) => {
       res.send(result);
@@ -100,8 +73,6 @@ server.get("/users", (req, res) => {
 });
 
 server.post("/users", (req, res) => {
-  // users.push(req.body);
-  // res.json(users);
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
     username: "test1",
@@ -128,7 +99,6 @@ server.post("/users", (req, res) => {
 });
 
 server.get("/questions", (req, res) => {
-  // res.json(users);
   Question.find()
     .then((result) => {
       res.send(result);
@@ -139,8 +109,6 @@ server.get("/questions", (req, res) => {
 });
 
 server.post("/questions", (req, res) => {
-  // users.push(req.body);
-  // res.json(users);
   const newQuestion = new Question({
     _id: new mongoose.Types.ObjectId(),
     question: "New Question",
@@ -160,9 +128,7 @@ server.post("/questions", (req, res) => {
 });
 
 server.post("/register", async (req, res) => {
-  // Matts Register basic idea
 
-  console.log(req.body);
   const { password, userName, email, interests } = req.body;
 
   console.log(password,userName,email,interests);
@@ -211,18 +177,17 @@ server.post("/login", async (req, res, next) => {
       return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
     }
 
-    // NEED HELP: isPasswordCorrect always return false even though the passwords are the same
-    // const isPasswordCorrect = await bcrypt.compare(
-    //   password,
-    //   existingUser.password
-    // );
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
 
-    // if (!isPasswordCorrect) {
-    //   console.log("wrong ps");
-    //   return res
-    //     .status(400)
-    //     .send({ message: ">>>>>>>>>>>Invalid credentials" });
-    // }
+    if (!isPasswordCorrect) {
+      console.log("wrong ps");
+      return res
+        .status(400)
+        .send({ message: ">>>>>>>>>>>Invalid credentials" });
+    }
 
     const token = jwt.sign({ existingUser }, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "1h",
@@ -261,12 +226,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// // Important to go last, routes are matched in order. This matches everything so we wont make past this send!
-// server.get("*", (req, res) => {
-//   res.send("I dont know this path");
-// });
-
-/* CUSTOM ERROR HANDLER MIDDLEWARE */
+/* CUSTOM ERROR HANDLER MIDDLEWARE, RESPONDS TO THROWN AppErrors */
 server.use((err, req, res, next) => {
   const { status = 500, message = "Error" } = err;
   res.status(status).send(message);
