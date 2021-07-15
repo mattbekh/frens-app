@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import ReactSelect from "react-select"
 import {
   SubmitButton,
   Input,
@@ -30,11 +31,34 @@ const InterestBox = styled.div`
   background: none;
 `;
 
+const CustomSelect = styled(ReactSelect)`
+  //& .Select__indicator Select__dropdown-indicator {
+  //  border-color: transparent transparent red;
+  //  //width: 200px;
+  //}
+  
+  & .Select__placeholder {
+    color: #3a86ff;
+  }
+
+  & .Select__menu {
+  }
+  width: 500px;
+`;
+
 const MorInfo = ({ user }) => {
   const { switchToSignup } = useContext(RegisterContext);
   console.log(user.email);
   console.log(user.password);
   const [username, setUserName] = useState();
+  const [userNameErr, setUserNameErr] = useState({});
+  const [selectedOptions, setSelectedOptions] = useState([])
+  const options = [
+    { label: "cooking", value: "cooking" },
+    { label: "music", value: "music" },
+    { label: "drawing", value: "drawing"},
+    { label: "workout", value: "workout" },
+  ];
   let history = useHistory();
 
   //fetch
@@ -43,11 +67,36 @@ const MorInfo = ({ user }) => {
     const isValid = formValidation();
     if (isValid) {
       user.userName = username;
-      //   await axios.post("http://localhost:5000/users", user);
+      setInterest(selectedOptions);
+      console.log(user);
       await axios.post("http://localhost:5000/register", user);
-
       history.push("/profile");
     }
+  };
+
+  const setInterest = (interests) => {
+    for(let interest of interests) {
+      if(interest.value === "cooking") {
+        console.log("cooking")
+        user.interests.cooking = 1
+      }
+      if(interest.value === "music") {
+        console.log("music")
+        user.interests.music = 1
+      }
+      if(interest.value === "drawing") {
+        console.log("drawing")
+        user.interests.drawing = 1
+      }
+      if(interest.value === "workout") {
+        console.log("workout")
+        user.interests.workout = 1
+      }
+    }
+  }
+
+  const handleChange = (options) => {
+    setSelectedOptions(options);
   };
 
   const formValidation = () => {
@@ -57,6 +106,7 @@ const MorInfo = ({ user }) => {
       usernameErr.userNameEmpty = "userName can't be empty";
       isValid = false;
     }
+    setUserNameErr(usernameErr);
     return isValid;
   };
 
@@ -70,10 +120,9 @@ const MorInfo = ({ user }) => {
           value={username}
           onChange={(e) => setUserName(e.target.value)}
         />
+        {Object.keys(userNameErr).map((key)=>{return <div style={{color : "white"}}> {userNameErr[key]} </div> })}
         <p> Pick your Interest</p>
-        <InterestBox>
-          <Interests user={user} />
-        </InterestBox>
+        <CustomSelect  classNamePrefix={'Select'} isMulti options={options}  closeMenuOnSelect={false} onChange={handleChange} menuPortalTarget={document.body} menuPosition={'fixed'} />
         <SubmitButton> I am ready! </SubmitButton>
       </FormContainer>
       <NormalButton onClick={switchToSignup}> Back </NormalButton>

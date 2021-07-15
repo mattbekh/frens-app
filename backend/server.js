@@ -161,7 +161,11 @@ server.post("/questions", (req, res) => {
 
 server.post("/register", async (req, res) => {
   // Matts Register basic idea
+
+  console.log(req.body);
   const { password, userName, email, interests } = req.body;
+
+  console.log(password,userName,email,interests);
 
   const existingUser = await User.findOne({ userName });
   if (existingUser) {

@@ -73,13 +73,18 @@ export const MutedLink = styled.div`
   color: #8C2F00;
   font-weight: 500;
   text-decoration: none;
-  margin: 0 0 0 10rem;
+  //margin: 0 0 0 10rem;
+  align-items: center;
 `;
 
 export const BoldLink = styled(Link)`
   font-size: 15px;
+  line-height: 15px;
   color: #FA2B07;
   font-weight: 800;
   text-decoration: none;
   margin: 0 4px;
+  &:hover {
+    font-size: 17px;
+  }
 `;
