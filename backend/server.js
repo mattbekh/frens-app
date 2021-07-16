@@ -128,7 +128,10 @@ server.post("/questions", (req, res) => {
 });
 
 server.post("/register", async (req, res) => {
+
   const { password, userName, email, interests } = req.body;
+
+  console.log(password,userName,email,interests);
 
   const existingUser = await User.findOne({ userName });
   if (existingUser) {
