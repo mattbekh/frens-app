@@ -126,6 +126,11 @@ function Main() {
     setFrensList(initialFrensList); //set frensList with initialFrensList
   }, []); // on first refresh
 
+  // useEffect(() => {
+  //   getLoginUserInfo();
+  //   console.log("[ loginUser ]", loginUser);
+  // }, [loginUser]); // on first refresh
+
   // card click handler
   function openModal(name, imgURL, contactInfo) {
     let newModal = { ...modal };
@@ -153,6 +158,11 @@ function Main() {
         },
       };
       const response = await axios.get("http://localhost:5000/posts", userInfo);
+      console.log(
+        "%c [ response ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        response
+      );
 
       if (response?.data) setLoginUser(response.data);
     };

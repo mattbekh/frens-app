@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import ReactSelect from "react-select"
+import ReactSelect from "react-select";
 import {
   SubmitButton,
   Input,
@@ -36,7 +36,7 @@ const CustomSelect = styled(ReactSelect)`
   //  border-color: transparent transparent red;
   //  //width: 200px;
   //}
-  
+
   & .Select__placeholder {
     color: #3a86ff;
   }
@@ -52,11 +52,11 @@ const MorInfo = ({ user }) => {
   console.log(user.password);
   const [username, setUserName] = useState();
   const [userNameErr, setUserNameErr] = useState({});
-  const [selectedOptions, setSelectedOptions] = useState([])
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const options = [
     { label: "cooking", value: "cooking" },
     { label: "music", value: "music" },
-    { label: "drawing", value: "drawing"},
+    { label: "drawing", value: "drawing" },
     { label: "workout", value: "workout" },
   ];
   let history = useHistory();
@@ -69,31 +69,33 @@ const MorInfo = ({ user }) => {
       user.userName = username;
       setInterest(selectedOptions);
       console.log(user);
-      await axios.post("http://localhost:5000/register", user);
-      history.push("/profile");
+      const response = await axios.post("http://localhost:5000/register", user);
+      localStorage.setItem("profile", JSON.stringify({ ...response.data }));
+
+      history.push("/main");
     }
   };
 
   const setInterest = (interests) => {
-    for(let interest of interests) {
-      if(interest.value === "cooking") {
-        console.log("cooking")
-        user.interests.cooking = 1
+    for (let interest of interests) {
+      if (interest.value === "cooking") {
+        console.log("cooking");
+        user.interests.cooking = 1;
       }
-      if(interest.value === "music") {
-        console.log("music")
-        user.interests.music = 1
+      if (interest.value === "music") {
+        console.log("music");
+        user.interests.music = 1;
       }
-      if(interest.value === "drawing") {
-        console.log("drawing")
-        user.interests.drawing = 1
+      if (interest.value === "drawing") {
+        console.log("drawing");
+        user.interests.drawing = 1;
       }
-      if(interest.value === "workout") {
-        console.log("workout")
-        user.interests.workout = 1
+      if (interest.value === "workout") {
+        console.log("workout");
+        user.interests.workout = 1;
       }
     }
-  }
+  };
 
   const handleChange = (options) => {
     setSelectedOptions(options);
@@ -120,9 +122,19 @@ const MorInfo = ({ user }) => {
           value={username}
           onChange={(e) => setUserName(e.target.value)}
         />
-        {Object.keys(userNameErr).map((key)=>{return <div style={{color : "white"}}> {userNameErr[key]} </div> })}
+        {Object.keys(userNameErr).map((key) => {
+          return <div style={{ color: "white" }}> {userNameErr[key]} </div>;
+        })}
         <p> Pick your Interest</p>
-        <CustomSelect  classNamePrefix={'Select'} isMulti options={options}  closeMenuOnSelect={false} onChange={handleChange} menuPortalTarget={document.body} menuPosition={'fixed'} />
+        <CustomSelect
+          classNamePrefix={"Select"}
+          isMulti
+          options={options}
+          closeMenuOnSelect={false}
+          onChange={handleChange}
+          menuPortalTarget={document.body}
+          menuPosition={"fixed"}
+        />
         <SubmitButton> I am ready! </SubmitButton>
       </FormContainer>
       <NormalButton onClick={switchToSignup}> Back </NormalButton>
