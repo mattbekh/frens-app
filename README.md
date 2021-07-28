@@ -4,6 +4,8 @@
 
 ## Project Overview
 
+- [Project Demo](https://frens-app.herokuapp.com/)
+
 - Front Page
   ![Alt text](./frens-web/src/images/overview1.png?raw=true "Optional Title")
 
