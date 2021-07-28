@@ -31,7 +31,7 @@ function Profile() {
   const [cardlist, setCardlist] = useState([]);
 
   useEffect(() => {
-    api.get("questions").then((response) => {
+    axios.get("/questions").then((response) => {
       setCardlist(response.data);
       console.log(response.data);
     });
