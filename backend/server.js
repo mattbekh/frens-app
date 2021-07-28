@@ -128,10 +128,7 @@ server.post("/questions", (req, res) => {
 });
 
 server.post("/register", async (req, res) => {
-
   const { password, userName, email, interests } = req.body;
-
-  console.log(password,userName,email,interests);
 
   const existingUser = await User.findOne({ userName });
   if (existingUser) {
@@ -141,6 +138,7 @@ server.post("/register", async (req, res) => {
   }
 
   const hash = await bcrypt.hash(password, 12);
+
   const user = await User({
     username: userName,
     email: email,
@@ -153,25 +151,15 @@ server.post("/register", async (req, res) => {
   });
 
   await user.save();
-  res.redirect("/");
+  res.send({ token: token }).redirect("/");
 });
 
 server.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(
-    "%c [ req.body ]",
-    "font-size:13px; background:pink; color:#bf2c9f;",
-    req.body
-  );
 
   try {
     console.log("begin try");
     const existingUser = await User.findOne({ email });
-    console.log(
-      "%c [ existingUser ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      existingUser
-    );
 
     if (!existingUser) {
       return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
@@ -192,11 +180,6 @@ server.post("/login", async (req, res, next) => {
     const token = jwt.sign({ existingUser }, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "1h",
     });
-    console.log(
-      "%c [ token after login ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      token
-    );
 
     return res.status(200).send({ token: token });
   } catch (err) {
@@ -206,22 +189,28 @@ server.post("/login", async (req, res, next) => {
 
 /* Get login user info */
 server.get("/posts", authenticateToken, async (req, res) => {
-  const user = req.user.existingUser;
+  const user = req.user;
 
-  res.send(user);
+  //user from sign in
+  if (user?.existingUser) return res.send(user.existingUser);
+
+  //user from register
+  res.send(user.user);
 });
 
 /* Middleware to authenticate the token */
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
+
   const token = authHeader && authHeader.split(" ")[1];
 
-  if (token == null) return res.sendStatus(401);
+  if (token === null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     console.log(err);
     if (err) return res.sendStatus(403);
     req.user = user;
+
     next();
   });
 }
