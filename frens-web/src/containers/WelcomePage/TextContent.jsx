@@ -169,7 +169,7 @@ function TextContent(props) {
             ref={(el) => (loginRef = el)}
             className="emptyContainer"
           >
-            <LoginButton className="emptyContainer-text">Sign Innn</LoginButton>
+            <LoginButton className="emptyContainer-text">Sign In</LoginButton>
           </LoginWrapper>
         </Link>
 
