@@ -8,7 +8,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "server": "nodemon server.js",
     "heroku-postbuild": "cd frens-web && npm install && npm run build"
   },
   "author": "",
