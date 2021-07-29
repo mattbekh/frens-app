@@ -92,17 +92,7 @@ function MiddleSection(props) {
       axios
         .post(`http://localhost:5000/login`, body)
         .then((response) => {
-          console.log(
-            "%c [ response ]",
-            "font-size:13px; background:pink; color:#bf2c9f;",
-            response
-          );
           localStorage.setItem("profile", JSON.stringify({ ...response.data }));
-          console.log(
-            "%c [ localStorage.profile ]",
-            "font-size:13px; background:pink; color:#bf2c9f;",
-            localStorage.profile
-          );
           if (response.status === 200) {
             history.push("/main");
           }
