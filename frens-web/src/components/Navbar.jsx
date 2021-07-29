@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { logUserOut } from "../actions";
 
 import ToggleNM from "./ToggleNM";
 
@@ -29,6 +31,7 @@ const HeaderLink = styled(Link)`
 `;
 
 function Navbar() {
+  const dispatch = useDispatch();
   return (
     <HeaderNavUl id="menu-list">
       <li>
@@ -50,7 +53,10 @@ function Navbar() {
         <HeaderLink
           to="/"
           className="header-links"
-          onClick={() => localStorage.clear()}
+          onClick={() => {
+            dispatch(logUserOut());
+            localStorage.clear();
+          }}
         >
           Logout
         </HeaderLink>

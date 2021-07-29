@@ -8,7 +8,8 @@ const loggedReducer = (state = {}, action) => {
       state = { ...newUser };
       return state;
     case "LOGOUT":
-      return false;
+      state = {};
+      return state;
     default:
       return false;
   }

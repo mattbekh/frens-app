@@ -17,3 +17,9 @@ export const setLoginUser = (user) => {
     payload: user,
   };
 };
+
+export const logUserOut = () => {
+  return {
+    type: "LOGOUT",
+  };
+};
