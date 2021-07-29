@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginUser } from "../../actions";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
@@ -112,7 +113,8 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
-  const [loginUser, setLoginUser] = useState([]);
+  const loginUser = useSelector((state) => state.isLogged);
+  const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
     visible: false,
@@ -154,7 +156,7 @@ function Main() {
       };
       const response = await axios.get("http://localhost:5000/posts", userInfo);
 
-      if (response?.data) setLoginUser(response.data);
+      if (response?.data) dispatch(setLoginUser(response.data));
     };
     getUserInfo();
   }
