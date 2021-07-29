@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
+import {BsChat} from "react-icons/all";
 // import initialFrensList from "./database.json";
 import initialFrensList from "./db.js";
 import axios from "axios";
@@ -20,6 +21,7 @@ import { FooterWrapper } from "../../components/FooterWrapper";
 import DesktopNav from "../../components/DesktopNav";
 import MobileNav from "../../components/MobileNav";
 import Footer from "../../components/Footer";
+import Chat from "./Chat";
 
 const MainContainer = styled.div`
   margin-top: -3rem;
@@ -107,6 +109,21 @@ const RandomContent = styled.section`
   }
 `;
 
+const MainFooter = styled.footer`
+  position: fixed;
+  bottom: 0;
+  //left: 0;
+  width: 100%;
+  height: 50px;
+  background: #010101;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+`
+
+
 function Main() {
   // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
@@ -120,6 +137,7 @@ function Main() {
     imgURL: "",
     contactInfo: "",
   });
+
 
   useEffect(() => {
     getLoginUserInfo();
@@ -141,6 +159,7 @@ function Main() {
     newModal.visible = false;
     setModal(newModal);
   }
+
 
   function getLoginUserInfo() {
     const getUserInfo = async () => {
@@ -166,7 +185,6 @@ function Main() {
         <div className="max-container">
           <DesktopNav />
           <MobileNav />
-
           <MainContainer className="full-hight">
             <div className="user-account-info">
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>
@@ -195,6 +213,9 @@ function Main() {
             </div>
           </RandomContent>
         </div>
+        <MainFooter>
+         <Chat/>
+        </MainFooter>
       </PageContainer>
     </ThemeProvider>
   );
