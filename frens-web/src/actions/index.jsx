@@ -1,7 +1,7 @@
 export const toggleDM = () => {
-    return {
-        type: "DARK"
-    };
+  return {
+    type: "DARK",
+  };
 };
 
 
@@ -19,15 +19,21 @@ export const chatUser = (user) => {
 }
 
 export const pickInterest = (id) => {
-    return {
-        type: 'PICK',
-        payload: id
-    };
+  return {
+    type: "PICK",
+    payload: id,
+  };
 };
 
-// export const loginUser = (user) => {
-//     return {
-//         type: 'LOGIN',
-//         payload: user
-//     };
-// };
+export const setLoginUser = (user) => {
+  return {
+    type: "LOGIN",
+    payload: user,
+  };
+};
+
+export const logUserOut = () => {
+  return {
+    type: "LOGOUT",
+  };
+};

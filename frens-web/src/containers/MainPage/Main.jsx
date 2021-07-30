@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginUser } from "../../actions";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
@@ -13,9 +14,9 @@ import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
 
 import { PageContainer } from "../../components/PageContainer";
-import { HeaderWrapper } from "../../components/HeaderWrapper";
-import { ContentWrapper } from "../../components/ContentWrapper";
-import { FooterWrapper } from "../../components/FooterWrapper";
+// import { HeaderWrapper } from "../../components/HeaderWrapper";
+// import { ContentWrapper } from "../../components/ContentWrapper";
+// import { FooterWrapper } from "../../components/FooterWrapper";
 
 // import Header from "../../components/Header";
 import DesktopNav from "../../components/DesktopNav";
@@ -129,7 +130,8 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
-  const [loginUser, setLoginUser] = useState([]);
+  const loginUser = useSelector((state) => state.isLogged);
+  const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
     visible: false,
@@ -173,9 +175,22 @@ function Main() {
       };
       const response = await axios.get("http://localhost:5000/posts", userInfo);
 
-      if (response?.data) setLoginUser(response.data);
+      if (response?.data) dispatch(setLoginUser(response.data));
     };
     getUserInfo();
+  }
+
+  function handlePython() {
+    const getInfoFromPython = async () => {
+      const response = await axios.get("http://localhost:5000/python");
+
+      if (response?.data)
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
+          response.data
+        );
+    };
+    getInfoFromPython();
   }
 
   return (
@@ -191,6 +206,7 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
+            <button onClick={() => handlePython()}> Python Test</button>
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
               <img src={arrowDown} />
@@ -199,14 +215,14 @@ function Main() {
           <FrensList frensList={frensList} openModal={openModal} />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
-          <ParallaxContainer class="parallax">
-            <div class="page-intermission">
+          <ParallaxContainer className="parallax">
+            <div className="page-intermission">
               <h2>Come back tomorrow and get some new matches!</h2>
             </div>
           </ParallaxContainer>
 
-          <RandomContent class="random-content">
-            <div class="random-content-wrapper">
+          <RandomContent className="random-content">
+            <div className="random-content-wrapper">
               <h2>Want More Precise Matches?</h2>
               <p>Go to the Profile Page to complete your information !</p>
               <hr />
