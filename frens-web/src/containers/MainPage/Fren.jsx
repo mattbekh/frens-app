@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {BsChat} from "react-icons/all";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {chatPop} from "../../actions";
+import {chatPop, chatUser} from "../../actions";
 
 const FrensContainer = styled.div`
     height: 100%;
@@ -93,14 +93,20 @@ function Fren(props) {
         props.openModal(props.name, props.imgURL, props.contactInfo);
     }
 
-    const  isPop = useSelector(state => state.isPop)
-    const  dispatch = useDispatch()
+    function handleChatClick() {
+        dispatch(chatPop()); 
+        dispatch(chatUser(props.user));
+        console.log(props.user);
+    }
+
+    const  isPop = useSelector(state => state.isPop);
+    const  dispatch = useDispatch();
     return (
         <FrensContainer className="frens-container">
             <FrensWrapper className="frens-wrapper">
                 <FrensImg className="frens-img" src={props.imgURL} alt={props.name} />
                 <FrensName className="frens-name"onClick={handleClick}>{props.name}</FrensName>
-                <ChatButton onClick = {()=> dispatch(chatPop())}>  <BsChat size={38}/> </ChatButton>
+                <ChatButton onClick = {handleChatClick}>  <BsChat size={38}/> </ChatButton>
             </FrensWrapper>
         </FrensContainer>
     );

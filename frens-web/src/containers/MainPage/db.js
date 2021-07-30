@@ -1,6 +1,7 @@
 const initialFrensList = [
   {
     "Mike Hannigan": {
+      id: 1,
       email: "mike@gmail.com",
       password: "111", //dm5 encryption
 
@@ -74,6 +75,7 @@ const initialFrensList = [
   },
   {
     "Phoebe Buffay": {
+      id: 2,
       email: "phoebe_buffay@gmail.com",
       password: "222", //dm5 encryption
 
@@ -147,6 +149,7 @@ const initialFrensList = [
   },
   {
     "Rachel Green": {
+      id: 3,
       email: "rachel_green@gmail.com",
       password: "333", //dm5 encryption
 
@@ -220,6 +223,7 @@ const initialFrensList = [
   },
   {
     "Ross Geller": {
+      id: 4,
       email: "ross_geller@gmail.com",
       password: "444", //dm5 encryption
 
@@ -293,6 +297,7 @@ const initialFrensList = [
   },
   {
     "Carol Willick": {
+      id: 5,
       email: "carol_willick@gmail.com",
       password: "555", //dm5 encryption
 
@@ -366,6 +371,7 @@ const initialFrensList = [
   },
   {
     "Charlie Wheeler": {
+      id: 6,
       email: "charlie_wheeler@gmail.com",
       password: "666", //dm5 encryption
 
@@ -439,6 +445,7 @@ const initialFrensList = [
   },
   {
     "Joey Tribbiani": {
+      id: 7,
       email: "joey_tribbiani@gmail.com",
       password: "777", //dm5 encryption
 
@@ -512,6 +519,7 @@ const initialFrensList = [
   },
   {
     "Chandler Bing": {
+      id: 8,
       email: "chandler_bing@gmail.com",
       password: "888", //dm5 encryption
 
