@@ -21,6 +21,7 @@ function FrensList(props) {
         return (
           <Fren
             key={userId}
+            user={user}
             name={userId}
             imgURL={info.social.photo}
             contactInfo={info.social.facebook}

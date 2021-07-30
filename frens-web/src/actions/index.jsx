@@ -4,6 +4,20 @@ export const toggleDM = () => {
   };
 };
 
+
+export const chatPop = () => {
+    return {
+        type: "POP"
+    };
+};
+
+export const chatUser = (user) => {
+    return {
+        type: "CHATUSER",
+        payload: user
+    }
+}
+
 export const pickInterest = (id) => {
   return {
     type: "PICK",
