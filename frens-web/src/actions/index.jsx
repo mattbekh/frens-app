@@ -5,6 +5,13 @@ export const toggleDM = () => {
 };
 
 
+export const chatPop = () => {
+    return {
+        type: "POP"
+    };
+};
+
+
 export const pickInterest = (id) => {
     return {
         type: 'PICK',

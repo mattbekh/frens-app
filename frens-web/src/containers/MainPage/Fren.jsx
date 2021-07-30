@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import {BsChat} from "react-icons/all";
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {chatPop} from "../../actions";
 
 const FrensContainer = styled.div`
     height: 100%;
@@ -26,12 +30,33 @@ const FrensImg = styled.img`
     object-fit: cover;
 `;
 
-const FrensName = styled.div`
+const FrensName = styled.button`
     z-index: 1;
     opacity: 0;
     transition: 0.3s;
     color: white;
     font-weight: 400;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+`;
+
+const ChatButton = styled.button`
+  opacity: 0;
+  display: flex;
+  z-index: 1;
+  width: min-content;
+  border-style: hidden;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 60%;
+  &:hover {
+    border: 2px solid white;
+  }
 `;
 
 const FrensWrapper = styled.div`
@@ -52,7 +77,11 @@ const FrensWrapper = styled.div`
     &:hover ${FrensName} {
         opacity: 1;
     }
-
+  
+    &:hover ${ChatButton} {
+    opacity: 1;
+    }
+  
     @media only screen and (min-width: 768px) {
         height: 25vw;
         max-height: 340px;
@@ -64,11 +93,14 @@ function Fren(props) {
         props.openModal(props.name, props.imgURL, props.contactInfo);
     }
 
+    const  isPop = useSelector(state => state.isPop)
+    const  dispatch = useDispatch()
     return (
-        <FrensContainer className="frens-container" onClick={handleClick}>
+        <FrensContainer className="frens-container">
             <FrensWrapper className="frens-wrapper">
                 <FrensImg className="frens-img" src={props.imgURL} alt={props.name} />
-                <FrensName className="frens-name">{props.name}</FrensName>
+                <FrensName className="frens-name"onClick={handleClick}>{props.name}</FrensName>
+                <ChatButton onClick = {()=> dispatch(chatPop())}>  <BsChat size={38}/> </ChatButton>
             </FrensWrapper>
         </FrensContainer>
     );

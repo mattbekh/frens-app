@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {BsChat} from "react-icons/all";
 import styled from "styled-components";
 import ChatBlock from "./ChatBlock";
+import {useDispatch, useSelector} from "react-redux";
+import {chatPop} from "../../actions";
 
 
 
@@ -29,17 +31,12 @@ const ChatButton = styled.button`
 
 
 function Chat(props) {
-    const [popChat, setPopChat] = useState(false);
-
-    const openPopChat = () => {
-        console.log(popChat)
-        setPopChat(prev =>!prev);
-    }
-
+    const isPop = useSelector(state => state.isPop)
+    const dispatch = useDispatch();
     return (
         <ChatWrapper>
-            <ChatBlock popChat = {popChat} setPopChat = {setPopChat}/>
-            <ChatButton onClick= {()=> openPopChat()}>
+            <ChatBlock popChat = {isPop}/>
+            <ChatButton onClick= {()=> dispatch(chatPop())}>
                 <BsChat size={38}/>
             </ChatButton>
         </ChatWrapper>
