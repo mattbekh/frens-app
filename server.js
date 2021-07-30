@@ -12,8 +12,13 @@ const express = require("express");
 let cors = require("cors");
 
 const fs = require("fs");
+const fastcsv = require("fast-csv");
+const OUTPUT_FILE_NAME = "data-output.csv";
+const ws = fs.createWriteStream(OUTPUT_FILE_NAME);
 const bcrypt = require("bcrypt");
+const salt = "$2b$10$X4kv7j5ZcG39WgogSl16au"; //TODO make it secret if worked
 const jwt = require("jsonwebtoken");
+const { spawn } = require("child_process");
 
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -61,6 +66,65 @@ server.use((req, res, next) => {
 /* ROUTES */
 server.use(express.static(path.join(__dirname, "frens-web/build")));
 server.use(express.static("public"));
+
+/* Python Algorithm */
+server.get("/python", (req, res) => {
+  let largeDataSet = [];
+  console.log(">>>>>>>>>>>>>>>>>>> inside calling python <<<<<<<<<<<<<<<<<<<");
+
+  // current testing
+  let rows = []; // this is the data matrix
+  let header = ["username", "cooking", "music", "drawing", "workout"];
+  rows.push(header);
+
+  //get user data from mongoDB, create data matrix for .csv file
+  User.find({}, function (err, data) {
+    console.log(
+      "%c [ data ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      data
+    );
+    data.forEach((user) => {
+      rows.push([
+        user.username,
+        user.interests[0].cooking,
+        user.interests[0].music,
+        user.interests[0].drawing,
+        user.interests[0].workout,
+      ]);
+    });
+
+    console.log("***************** write into csv ***********************");
+    fastcsv
+      .write(rows, {
+        headers: false,
+      })
+      .on("finish", function () {
+        console.log("Writting Done !!!!!!!!!! ");
+      })
+      .pipe(ws);
+  });
+
+  // spawn new child process to call the python script
+  const python = spawn("python", ["kmodes-script.py"]);
+
+  // collect data from script
+  python.stdout.on("data", function (data) {
+    console.log("Pipe data from python script ...");
+    largeDataSet.push(data);
+  });
+  // in close event we are sure that stream is from child process is closed
+  python.on("close", (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    // send data to browser
+    res.send(largeDataSet.join(""));
+  });
+
+  // Takes stdout data from script which executed with arguments and send this data to res object
+  process.stdout.on("data", function (data) {
+    res.send(data.toString());
+  });
+});
 
 server.get("/", (req, res) => {
   res.send("Welcome to the home page!");
@@ -131,19 +195,18 @@ server.post("/questions", (req, res) => {
     });
 });
 
+/* User Register */
 server.post("/register", async (req, res) => {
   const { password, userName, email, interests } = req.body;
 
-  console.log(password, userName, email, interests);
-
   const existingUser = await User.findOne({ userName });
+
   if (existingUser) {
     return res
       .status(404)
       .send("User name already exist. Please try a different one.");
   }
-
-  const hash = await bcrypt.hash(password, 12);
+  const hash = await bcrypt.hash(password, salt);
 
   const user = await User({
     username: userName,
@@ -160,12 +223,18 @@ server.post("/register", async (req, res) => {
   res.send({ token: token }).redirect("/");
 });
 
+/* User Login */
 server.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
     console.log("begin try");
     const existingUser = await User.findOne({ email });
+    console.log(
+      "%c [ existingUser ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      existingUser
+    );
 
     if (!existingUser) {
       return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
