@@ -1,0 +1,6 @@
+.scrollMessages {
+    padding: 5% 0;
+    height: 80%;
+    overflow: auto;
+    flex: auto;
+  }
