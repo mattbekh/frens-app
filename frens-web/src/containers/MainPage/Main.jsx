@@ -161,6 +161,19 @@ function Main() {
     getUserInfo();
   }
 
+  function handlePython() {
+    const getInfoFromPython = async () => {
+      const response = await axios.get("http://localhost:5000/python");
+
+      if (response?.data)
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
+          response.data
+        );
+    };
+    getInfoFromPython();
+  }
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -175,6 +188,7 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
+            <button onClick={() => handlePython()}> Python Test</button>
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
               <img src={arrowDown} />
