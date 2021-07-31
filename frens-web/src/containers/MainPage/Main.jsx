@@ -49,23 +49,41 @@ const MainContainer = styled.div`
     }
   }
   .arrow-down {
-    display: block;
+    background: -webkit-linear-gradient(0deg, #5f978b, rgb(409, 82, 82));
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 60px;
     height: 60px;
     padding: 12px;
     border-radius: 50%;
+
     margin: 0 auto;
     transition: 0.3s;
+    position: relative;
+  }
+  .arrow-down::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
   }
   .arrow-down img {
-    width: 100%;
-    height: 100%;
+    // padding: 25px;
+    margin-top: 2px;
+    width: 45px;
+    height: 45px;
+    filter: brightness(1) invert(1);
   }
   .arrow-down:hover {
     transform: scale(1.1);
   }
   .arrow-down:hover img {
-    filter: brightness(1) invert(1);
   }
 `;
 
