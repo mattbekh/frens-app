@@ -21,7 +21,7 @@ plt.plot(K, cost, 'bx-')
 plt.xlabel('No. of clusters')
 plt.ylabel('Cost')
 plt.title('Elbow Method For Optimal k')
-plt.show()
+# plt.show()
 
 
 # Building the model with 3 clusters
