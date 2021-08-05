@@ -4,7 +4,7 @@ import { setLoginUser } from "../../actions";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
-import {BsChat} from "react-icons/all";
+import { BsChat } from "react-icons/all";
 // import initialFrensList from "./database.json";
 import initialFrensList from "./db.js";
 import axios from "axios";
@@ -122,8 +122,7 @@ const MainFooter = styled.footer`
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
-`
-
+`;
 
 function Main() {
   // Check redux isDark state
@@ -139,7 +138,6 @@ function Main() {
     imgURL: "",
     contactInfo: "",
   });
-
 
   useEffect(() => {
     getLoginUserInfo();
@@ -162,7 +160,6 @@ function Main() {
     setModal(newModal);
   }
 
-
   function getLoginUserInfo() {
     const getUserInfo = async () => {
       const token = JSON.parse(localStorage.getItem("profile")).token;
@@ -173,7 +170,7 @@ function Main() {
           Authorization: "Bearer " + token,
         },
       };
-      const response = await axios.get("http://localhost:5000/posts", userInfo);
+      const response = await axios.get("/posts", userInfo);
 
       if (response?.data) dispatch(setLoginUser(response.data));
     };
@@ -182,7 +179,7 @@ function Main() {
 
   function handlePython() {
     const getInfoFromPython = async () => {
-      const response = await axios.get("http://localhost:5000/python");
+      const response = await axios.get("/python");
 
       if (response?.data)
         console.log(
@@ -230,7 +227,7 @@ function Main() {
           </RandomContent>
         </div>
         <MainFooter>
-         <Chat/>
+          <Chat />
         </MainFooter>
       </PageContainer>
     </ThemeProvider>
