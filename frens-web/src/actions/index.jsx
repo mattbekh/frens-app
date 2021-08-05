@@ -13,7 +13,7 @@ export const chatPop = () => {
 
 export const chatUser = (user) => {
     return {
-        type: "CHATUSER",
+        type: "SET_CHAT_USER",
         payload: user
     }
 }

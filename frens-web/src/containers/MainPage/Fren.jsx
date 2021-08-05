@@ -96,6 +96,7 @@ function Fren(props) {
     function handleChatClick() {
         dispatch(chatPop()); 
         dispatch(chatUser(props.user));
+        console.log(">>>>> FROM FREN <<<<<")
         console.log(props.user);
     }
 

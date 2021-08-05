@@ -31,11 +31,11 @@ const ChatButton = styled.button`
 
 function Chat(props) {
     const isPop = useSelector(state => state.isPop)
-    const user = useSelector(state => state.chatUser);
+    const chatUser = useSelector(state => state.chatUser); 
     const dispatch = useDispatch();
     return (
         <ChatWrapper>
-            <ChatBlock popChat = {isPop} user={user}/>
+            <ChatBlock popChat = {isPop} user={chatUser}/>
             <ChatButton onClick= {()=> dispatch(chatPop())}>
                 <BsChat size={38}/>
             </ChatButton>

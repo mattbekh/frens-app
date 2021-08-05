@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import io from "socket.io-client";
+import {useDispatch, useSelector} from "react-redux";
 
 import InfoBar from "./Chat/InfoBar";
 import Input from "./Chat/Input";
@@ -37,11 +38,31 @@ const Block = styled.div`
 let socket;
 const ENDPOINT = "http://localhost:5000";
 
+function createRoom(mainUser, selectedUser) {
+    const mainId = mainUser._id.toString();
+    const selectedId = selectedUser._id.toString();
+    for( let i = 0; i < mainId.length; i++ ){
+        if(mainId.charAt(i) > selectedId.charAt(i)){
+            return mainId.concat(selectedId);
+        } else if(mainId.charAt(i) < selectedId.charAt(i)){
+            return selectedId.concat(mainId);
+        }
+    }
+}
+
 function ChatBlock(props) {
     const [user, setUser] = useState("");
-    
 
-    const name = "TempName"
+    const currentUser = useSelector((state) => state.isLogged);
+    console.log("#### FROM CHAT BLOCK ");
+    console.log(currentUser);
+    console.log("props.popChat :" + props.popChat);
+    console.log(props.user);
+    
+    const dispatch = useDispatch();
+    // When we have users
+    // const room = createRoom(currentUser, props.user);
+    const name = currentUser.username;
     const room = "TempRoom"
 
     const [message, setMessage] = useState("");
@@ -88,7 +109,7 @@ function ChatBlock(props) {
         <Block>
           <OuterContainer>
             <ChatContainer>
-                <InfoBar room={props.user[0]}/>
+                <InfoBar name={props.user.username} room={props.user[0]}/>
                 <Messages messages={messages} name={name}/>
                 <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
             </ChatContainer>
