@@ -1,11 +1,17 @@
 import sys
 import numpy as np
+print("success")
 import pandas as pd
 from kmodes.kmodes import KModes
+print("success after kmodes")
 import matplotlib.pyplot as plt
+print("success after mttplot")
 
+
+print("success before read data")
 data = pd.read_csv('./data-output.csv')
 data = data.set_index('username')
+print("success after read data")
 
 print(data.to_string())
 
@@ -21,7 +27,7 @@ plt.plot(K, cost, 'bx-')
 plt.xlabel('No. of clusters')
 plt.ylabel('Cost')
 plt.title('Elbow Method For Optimal k')
-# plt.show()
+plt.show()
 
 
 # Building the model with 3 clusters
@@ -31,3 +37,4 @@ clusters
 
 data.insert(0, "Cluster", clusters, True)
 print(data.to_string())
+print("success at the end")
