@@ -142,11 +142,11 @@ app.get("/python", (req, res) => {
 
   //get user data from mongoDB, create data matrix for .csv file
   User.find({}, function (err, data) {
-    console.log(
-      "%c [ data ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      data
-    );
+    // console.log(
+    //   "%c [ data ]",
+    //   "font-size:13px; background:pink; color:#bf2c9f;",
+    //   data
+    // );
     data.forEach((user) => {
       rows.push([
         user.username,
@@ -189,14 +189,15 @@ app.get("/python", (req, res) => {
 });
 
 app.get("/suggest_list/:sameClusterUsername", (req, res) => {
-  let filter = req.params.sameClusterUsername;
-  console.log(
-    "%c [ filter ]",
-    "font-size:13px; background:pink; color:#bf2c9f;",
-    filter
-  );
+  let filter = req.params.sameClusterUsername.split(",");
 
-  res.send("");
+  User.find({ username: filter })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/", (req, res) => {
