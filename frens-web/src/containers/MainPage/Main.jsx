@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoginUser } from "../../actions";
+import { Link } from "react-router-dom";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
@@ -51,23 +52,40 @@ const MainContainer = styled.div`
     }
   }
   .arrow-down {
-    display: block;
+    background: -webkit-linear-gradient(0deg, #5f978b, rgb(409, 82, 82));
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 60px;
     height: 60px;
     padding: 12px;
     border-radius: 50%;
     margin: 0 auto;
     transition: 0.3s;
+    position: relative;
+  }
+  .arrow-down::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
   }
   .arrow-down img {
-    width: 100%;
-    height: 100%;
+    // padding: 25px;
+    margin-top: 2px;
+    width: 45px;
+    height: 45px;
+    filter: brightness(1) invert(1);
   }
   .arrow-down:hover {
     transform: scale(1.1);
   }
   .arrow-down:hover img {
-    filter: brightness(1) invert(1);
   }
 `;
 
@@ -179,14 +197,27 @@ function Main() {
 
   function handlePython() {
     const getInfoFromPython = async () => {
-      const response = await axios.get("/python");
+      const response = await axios.get("http://localhost:5000/python");
 
-      if (response?.data)
-        console.log(
-          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
-          response.data
-        );
+      if (response?.data) console.log(response.data);
+      let loggedInUserCluster = response.data[loginUser.username];
+      console.log("[ loggedInUserCluster ]", loggedInUserCluster);
+
+      let sameClusterUsername = [];
+
+      for (const [username, Cluster] of Object.entries(response.data)) {
+        if (Cluster === loggedInUserCluster) sameClusterUsername.push(username);
+      }
+      console.log(
+        "%c [ sameClusterUsername ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        sameClusterUsername
+      );
+      const frens = await axios.get(
+        "http://localhost:5000/suggest_list" + sameClusterUsername
+      );
     };
+
     getInfoFromPython();
   }
 
@@ -221,7 +252,9 @@ function Main() {
           <RandomContent className="random-content">
             <div className="random-content-wrapper">
               <h2>Want More Precise Matches?</h2>
-              <p>Go to the Profile Page to complete your information !</p>
+              <p>Go to the <Link to="/profile">
+                Profile Page
+            </Link> to complete your information !</p>
               <hr />
             </div>
           </RandomContent>
