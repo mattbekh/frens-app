@@ -77,8 +77,8 @@ function SocialMedia(props) {
   // };
 
   const [data, setData] = useState({
-    facebook: props.social.email,
-    instagram: props.social.email,
+    facebook: props.social ? props.social.email : props.email,
+    instagram: props.social ? props.social.email : props.email,
   });
 
   const dispatch = useDispatch();
@@ -99,8 +99,8 @@ function SocialMedia(props) {
     console.log(data);
     console.log(props.social._id);
     setPrint(!print);
-    if (props.social._id) {
-      let id = props.social._id.toString();
+    if (props._id) {
+      let id = props._id.toString();
       axios
         .put("/users/" + id, data)
         .then((response) => {
@@ -152,8 +152,8 @@ function SocialMedia(props) {
   //Cite the code from Dropzone
 
   useEffect(() => {
-    if (props.social._id) {
-      let id = props.social._id.toString();
+    if (props._id) {
+      let id = props._id.toString();
       axios.get("/users/" + id).then((response) => {
         console.log("from axios");
         console.log(response.data);

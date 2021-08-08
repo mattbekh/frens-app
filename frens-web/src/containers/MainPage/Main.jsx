@@ -183,7 +183,7 @@ function Main() {
 
     //store frens that are in the same cluster as logged in user
     for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
-      if (Cluster === loggedInUserCluster && frenUsername !== username)
+      if (Cluster === loggedInUserCluster)
         sameClusterUsername.push(frenUsername);
     }
     console.log(
