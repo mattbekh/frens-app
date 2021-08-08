@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginUser } from "../../actions";
-
+import { socketOn,setLoginUser } from "../../actions";
+import io from "socket.io-client";
 import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
@@ -123,6 +123,8 @@ const MainFooter = styled.footer`
   justify-content: flex-end;
   flex-direction: row;
 `;
+let socket;
+const ENDPOINT = "http://localhost:5000";
 
 function Main() {
   // Check redux isDark state
@@ -141,7 +143,12 @@ function Main() {
 
   useEffect(() => {
     getLoginUserInfo();
-    setFrensList(initialFrensList); //set frensList with initialFrensList
+
+    socket = io(ENDPOINT);
+    let socketObj = {socket};
+    dispatch(socketOn(socketObj));
+    // setFrensList(initialFrensList); //set frensList with initialFrensList
+    getUsers();
   }, []); // on first refresh
 
   // card click handler
@@ -158,6 +165,14 @@ function Main() {
     let newModal = { ...modal };
     newModal.visible = false;
     setModal(newModal);
+  }
+
+  function getUsers() {
+    const getUsers = async () => {
+      const users = await axios.get("/users");
+      if (users?.data) setFrensList(users.data);
+    }
+    getUsers();
   }
 
   function getLoginUserInfo() {
@@ -209,7 +224,7 @@ function Main() {
               <img src={arrowDown} />
             </a>
           </MainContainer>
-          <FrensList frensList={frensList} openModal={openModal} />
+          <FrensList socket={socket} frensList={frensList} openModal={openModal} />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
           <ParallaxContainer className="parallax">
@@ -227,7 +242,7 @@ function Main() {
           </RandomContent>
         </div>
         <MainFooter>
-          <Chat />
+          <Chat socket={socket} />
         </MainFooter>
       </PageContainer>
     </ThemeProvider>

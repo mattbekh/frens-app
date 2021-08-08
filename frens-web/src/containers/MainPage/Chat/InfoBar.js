@@ -34,7 +34,7 @@ justify-content: flex-end;
 margin-right: 5%;
 `;
 
-const InfoBar = ({ room, name }) => {
+const InfoBar = ({ room, name, disconnectSocket }) => {
     let roomName;
     // Change this when we have actual users with usernames
     if(!name) {
@@ -45,6 +45,11 @@ const InfoBar = ({ room, name }) => {
     
     const dispatch = useDispatch();
 
+    function handleClick() {
+        dispatch(chatPop());
+        disconnectSocket();
+    }
+
     return (
         <InfoBarContainer>
             <LeftInner>
@@ -52,7 +57,7 @@ const InfoBar = ({ room, name }) => {
                 <h3>{roomName}</h3>
             </LeftInner>
             <RightInner>
-                <img src={closeIcon} alt="close image" onClick= {()=> dispatch(chatPop())}/>
+                <img src={closeIcon} alt="close image" onClick= {()=> handleClick()}/>
             </RightInner>
         </InfoBarContainer>
     );
