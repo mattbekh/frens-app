@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 const SocialMediaWrapper = styled.div`
   font-family: "Gill Sans", sans-serif;
@@ -63,15 +65,27 @@ const ThumbsInnerImg = styled.img`
   height: "100%";
 `;
 
-function SocialMedia() {
+function SocialMedia(props) {
+  // const setUserSocial = (user, social) => {
+  //   console.log(social);
+  //   if (social === "facebook") {
+  //     user.social.facebook = 1;
+  //   }
+  //   if (social === "instgram") {
+  //     user.social.instgram = 1;
+  //   }
+  // };
+
   const [data, setData] = useState({
-    facebook: "facebook",
-    instagram: "instagram",
+    facebook: props.social ? props.social.email : props.email,
+    instagram: props.social ? props.social.email : props.email,
   });
+
+  const dispatch = useDispatch();
+
   const handleChange = (e) => {
     setData({
       ...data,
-
       // Trimming any whitespace
       [e.target.name]: e.target.value.trim(),
     });
@@ -79,9 +93,28 @@ function SocialMedia() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+    // setUserSocial(props.user, props.social.name);
     // ... submit to API or something
+    console.log("send put request when submit");
+    console.log(data);
+    console.log(props.social._id);
     setPrint(!print);
+    if (props._id) {
+      let id = props._id.toString();
+      axios
+        .put("/users/" + id, data)
+        .then((response) => {
+          //  this.setState({ updatedAt: response.data.updatedAt });
+          // {[e.target.name]: e.target.value.trim()}
+          console.log("from axios put");
+          console.log(e.target.name);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          // this.setState({ errorMessage: error.message });
+          console.error("There was an error!", error);
+        });
+    }
   };
 
   const [print, setPrint] = useState(false);
@@ -117,6 +150,16 @@ function SocialMedia() {
     [files]
   );
   //Cite the code from Dropzone
+
+  useEffect(() => {
+    if (props._id) {
+      let id = props._id.toString();
+      axios.get("/users/" + id).then((response) => {
+        console.log("from axios");
+        console.log(response.data);
+      });
+    }
+  }, []);
 
   return (
     <SocialMediaWrapper>

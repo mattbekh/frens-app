@@ -12,7 +12,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
-const path = require('path');
+const path = require("path");
 
 const fs = require("fs");
 const fastcsv = require("fast-csv");
@@ -29,7 +29,12 @@ const mongoose = require("mongoose");
 /* Custom Error component to throw custom errors*/
 const AppError = require("./AppError");
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./chatUsers.js");
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+} = require("./chatUsers.js");
 
 /* MongoDB Atlas Cloud */
 mongoose
@@ -55,10 +60,10 @@ const port = process.env.PORT || 5000;
 
 const app = express();
 const server = http.createServer(app);
-corsOptions={
-    cors: true,
-    origins:["http://localhost:3000"],
-}
+corsOptions = {
+  cors: true,
+  origins: ["http://localhost:3000"],
+};
 const io = socketio(server, corsOptions);
 
 /* MIDDLEWARE */
@@ -75,58 +80,55 @@ app.use((req, res, next) => {
   next();
 });
 
-
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   console.log("######## New connection #########");
   console.log(socket.id);
 
-  socket.on('join', ({name, room}, callback) => {
+  socket.on("join", ({ name, room }, callback) => {
     console.log("!!!!! FROM SERVER !!!!!");
-      console.log(name, room);
-      const { error, user } = addUser({ id: socket.id, name, room });
+    console.log(name, room);
+    const { error, user } = addUser({ id: socket.id, name, room });
 
-      // if(error) return callback(error);
-      
-      socket.join(user.room);
+    // if(error) return callback(error);
 
-      //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
-      // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
+    socket.join(user.room);
 
-      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
+    //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
+    // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
 
-      // callback();
+    //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
+
+    // callback();
   });
 
   socket.on("sendMessage", (message, callback) => {
-      const user = getUser(socket.id);
+    const user = getUser(socket.id);
 
-      console.log("#### FROM SERVER : sendMessage")
-      console.log(user, message)
+    console.log("#### FROM SERVER : sendMessage");
+    console.log(user, message);
 
-      io.to(user.room).emit("message", {user: user.name, text: message});
+    io.to(user.room).emit("message", { user: user.name, text: message });
 
-      // Clears the input text field
-      callback();
+    // Clears the input text field
+    callback();
   });
 
+  socket.on("disconnect", () => {
+    const user = removeUser(socket.id);
 
-  socket.on('disconnect', () => {
-      const user = removeUser(socket.id);
-
-      if(user) {
-          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.`})
-          //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-      }
-  })
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
+      });
+      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  });
 });
-
-
-
 
 /* ROUTES */
 app.use(express.static(path.join(__dirname, "frens-web/build")));
 app.use(express.static("public"));
-
 
 /* Python Algorithm */
 app.get("/python", (req, res) => {
@@ -140,11 +142,11 @@ app.get("/python", (req, res) => {
 
   //get user data from mongoDB, create data matrix for .csv file
   User.find({}, function (err, data) {
-    console.log(
-      "%c [ data ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      data
-    );
+    // console.log(
+    //   "%c [ data ]",
+    //   "font-size:13px; background:pink; color:#bf2c9f;",
+    //   data
+    // );
     data.forEach((user) => {
       rows.push([
         user.username,
@@ -166,7 +168,6 @@ app.get("/python", (req, res) => {
       .pipe(ws);
   });
 
-  // spawn new child process to call the python script
   const python = spawn("python", ["kmodes-script.py"]);
 
   // collect data from script
@@ -178,13 +179,25 @@ app.get("/python", (req, res) => {
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
     // send data to browser
-    res.send(largeDataSet.join(""));
+    res.send(largeDataSet.toString());
   });
 
   // Takes stdout data from script which executed with arguments and send this data to res object
   process.stdout.on("data", function (data) {
-    res.send(data.toString());
+    // res.send(data.toString());
   });
+});
+
+app.get("/suggest_list/:sameClusterUsername", (req, res) => {
+  let filter = req.params.sameClusterUsername.split(",");
+
+  User.find({ username: filter })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/", (req, res) => {
@@ -199,6 +212,40 @@ app.get("/users", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+app.get("/users/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id) {
+    let id = req.params.id.toString();
+    console.log(id);
+    User.findById(id)
+      .then((result) => {
+        // console.log(result);
+        res.send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+});
+
+app.put("/users/:id", (req, res) => {
+  console.log(req.body.facebook);
+  if (req.params.id) {
+    let id = req.params.id.toString();
+    console.log(id);
+    User.findByIdAndUpdate(id, {
+      email: req.body.facebook,
+    })
+      .then((result) => {
+        // console.log(result);
+        res.send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 });
 
 app.post("/users", (req, res) => {
@@ -256,7 +303,6 @@ app.post("/questions", (req, res) => {
     });
 });
 
-
 app.post("/register", async (req, res) => {
   const { password, userName, email, interests } = req.body;
 
@@ -283,7 +329,6 @@ app.post("/register", async (req, res) => {
   await user.save();
   res.send({ token: token }).redirect("/");
 });
-
 
 app.post("/login", async (req, res, next) => {
   const { email, password } = req.body;

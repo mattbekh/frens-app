@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoginUser } from "../../actions";
+import { Link } from "react-router-dom";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
 // import initialFrensList from "./database.json";
+
 import initialFrensList from "./db.js";
 import axios from "axios";
 
@@ -147,7 +149,8 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
-  const loginUser = useSelector((state) => state.isLogged);
+  const loginUser = useSelector((state) => state.loginUser);
+
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
@@ -157,10 +160,44 @@ function Main() {
     contactInfo: "",
   });
 
-  useEffect(() => {
-    getLoginUserInfo();
-    setFrensList(initialFrensList); //set frensList with initialFrensList
-  }, []); // on first refresh
+  useEffect(async () => {
+    //get user authentication
+    const token = JSON.parse(localStorage.getItem("profile")).token;
+    const userInfo = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    const response = await axios.get("/posts/", userInfo);
+    if (response?.data) dispatch(setLoginUser(response.data));
+
+    //store the current logged in username
+    let username = response.data.username;
+    console.log("[ loginUser.username ]", username);
+
+    //generate frens
+    const pythonResponse = await axios.get("/python/");
+    if (pythonResponse?.data) console.log(pythonResponse.data);
+    let loggedInUserCluster = pythonResponse.data[username];
+    let sameClusterUsername = [];
+
+    //store frens that are in the same cluster as logged in user
+    for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
+      if (Cluster === loggedInUserCluster)
+        sameClusterUsername.push(frenUsername);
+    }
+    console.log(
+      "%c [ sameClusterUsername ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      sameClusterUsername
+    );
+
+    //set/print cluster frens
+    const frens = await axios.get("/suggest_list/" + sameClusterUsername);
+    if (frens?.data) setFrensList(frens.data);
+    console.log("[ frens.data ]", frens.data);
+  }, [dispatch]); // on first refresh
 
   // card click handler
   function openModal(name, imgURL, contactInfo) {
@@ -178,36 +215,6 @@ function Main() {
     setModal(newModal);
   }
 
-  function getLoginUserInfo() {
-    const getUserInfo = async () => {
-      const token = JSON.parse(localStorage.getItem("profile")).token;
-
-      const userInfo = {
-        headers: {
-          "content-type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      };
-      const response = await axios.get("/posts", userInfo);
-
-      if (response?.data) dispatch(setLoginUser(response.data));
-    };
-    getUserInfo();
-  }
-
-  function handlePython() {
-    const getInfoFromPython = async () => {
-      const response = await axios.get("/python");
-
-      if (response?.data)
-        console.log(
-          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
-          response.data
-        );
-    };
-    getInfoFromPython();
-  }
-
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -221,7 +228,7 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
-            <button onClick={() => handlePython()}> Python Test</button>
+            {/* <button onClick={() => handlePython()}> Python Test</button> */}
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
               <img src={arrowDown} />
@@ -239,7 +246,10 @@ function Main() {
           <RandomContent className="random-content">
             <div className="random-content-wrapper">
               <h2>Want More Precise Matches?</h2>
-              <p>Go to the Profile Page to complete your information !</p>
+              <p>
+                Go to the <Link to="/profile">Profile Page</Link> to complete
+                your information !
+              </p>
               <hr />
             </div>
           </RandomContent>
