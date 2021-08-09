@@ -52,40 +52,25 @@ A social app for students to meet new people with similar interests. Users will 
 
 ## Minimal Requirements
 
-- :white_check_mark: Welcome page (animation), then display logo (at the top) and "login(goto Login page)" & "register(goto Register page)" button, transition between pages
+- ✅ Welcome page (animation), then display logo (at the top) and "login(goto Login page)" & "register(goto Register page)" button, transition between pages
 
-  - :white_check_mark: Login page, with account name and password input
+  - ✅ Login page, with account name and password input
 
-- :white_check_mark: Register page, form with input for username, password, email, choose 3 interests from 10
-- :white_check_mark: Profile page (scrollable), user bio, profile picture, school and general account biography display info, pre-defined questions
-- :white_check_mark: Main page, display the account information of user (name, picture) as header, updating "find friends" list with suggested friends
-
-## Minimal Requirements Tasks Break Down
-
-- :white_check_mark: Register page:
-  - **Forms** for user "Basice Info" collection, including textbox, checkbox, radioboxes, etc. Define required fields.
-  - **Upload picture(s)** functionality
-- :white_check_mark: Main page:
-
-  - create JSON user, display their info on Main page later on
-  - **Header** to display user profile info
-  - **List** of "find friends" to display recommendations
-  - **Daily auto-updation** functionality with number of total matches or new matches
-  - **Clickable** names in "find friends" list to display contact info
-
-- Treat "project_2" as "Development" branch
+- ✅ Register page, form with input for username, password, email, choose 3 interests from 10
+- ✅ Profile page (scrollable), user bio, profile picture, school and general account biography display info, pre-defined questions
+- ✅ Main page, display the account information of user (name, picture) as header, updating "find friends" list with suggested friends
 
 ## Standard Requirements
 
-- :white_check_mark: Account page, displays information about user account and ability to change bio/ photo/ etc
-- :white_check_mark: Matches page, displays a page of current matches with clickable sections which display their accounts
-- :white_check_mark: Password reset functionality for login page
-- :white_check_mark: Add prompts which are displayed once you match with someone
+- ✅ Account page, displays information about user account and ability to change bio/ photo/ etc
+- ✅ Matches page, displays a page of current matches with clickable sections which display their accounts
+- ✅ Password reset functionality for login page
+- ✅ Add prompts which are displayed once you match with someone
 
 ## Stretch Requirements
 
-- :white_check_mark: "Remember me" data persistence for the app
-- :white_check_mark: Chat functionality between matches with chat persistence
+- ✅ "Remember me" data persistence for the app
+- ✅ Chat functionality between matches with chat persistence
 - ❌ Ability to send media
 - ❌ display mutual friends
 
