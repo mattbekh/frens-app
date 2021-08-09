@@ -4,11 +4,10 @@ export const toggleDM = () => {
   };
 };
 
-
 export const chatPop = () => {
-    return {
-        type: "POP"
-    };
+  return {
+    type: "POP",
+  };
 };
 
 export const chatUser = (user) => {
@@ -58,8 +57,29 @@ export const setLoginUser = (user) => {
   };
 };
 
+export const updateLoginUserSocial = (social) => {
+  return {
+    type: "UPDATE_LOGIN_SOCIAL",
+    payload: social,
+  };
+};
+
 export const logUserOut = () => {
   return {
     type: "LOGOUT",
+  };
+};
+
+export const updateQuestions = (questions) => {
+  return {
+    type: "UPDTE_QUESTIONS",
+    payload: questions,
+  };
+};
+
+export const insertQuestions = (question) => {
+  return {
+    type: "INSERT_QUESTIONS",
+    payload: question,
   };
 };

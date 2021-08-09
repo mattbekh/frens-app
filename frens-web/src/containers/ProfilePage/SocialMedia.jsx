@@ -1,4 +1,11 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateLoginUserSocial,
+} from "../../actions";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 
@@ -63,11 +70,20 @@ const ThumbsInnerImg = styled.img`
   height: "100%";
 `;
 
-function SocialMedia() {
+function SocialMedia(props) {
   const [data, setData] = useState({
     facebook: "facebook",
     instagram: "instagram",
   });
+
+
+  const dispatch = useDispatch();
+  const facebookInput = useRef();
+  const instagramInput = useRef();
+  // const profilePhoto = useRef();
+  const loginUser = useSelector((state) => state.loginUser);
+  const social = useSelector((state) => state.socialProfile);
+  const questions = useSelector((state) => state.questionsProfile);
   const handleChange = (e) => {
     setData({
       ...data,
@@ -79,9 +95,43 @@ function SocialMedia() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
+
+    // setUserSocial(props.user, props.social.name);
     // ... submit to API or something
+    console.log("send put request when submit");
+    console.log(loginUser.username);
     setPrint(!print);
+    // if (props._id) {
+    let id = loginUser._id;
+
+    let userCurrentInputs = {
+      facebook: facebookInput.current.value,
+      instagram: instagramInput.current.value,
+    };
+
+    console.log("[ userCurrentInputs ]", userCurrentInputs);
+
+    axios
+      .put("/users/" + id, userCurrentInputs)
+      .then((response) => {
+        console.log("[ response.data[0] ]", response.data[0]);
+        console.log(
+          "%c [ response.data[0] ]",
+          "font-size:13px; background:pink; color:#bf2c9f;",
+          response.data[0]
+        );
+
+        dispatch(updateLoginUserSocial(response.data[0].social));
+        dispatch(setLoginUser(response.data[0]));
+
+        console.log("[ loginUser ]", loginUser);
+      })
+      .catch((error) => {
+        // this.setState({ errorMessage: error.message });
+        console.error("There was an error!", error);
+      });
+    // }
+
   };
 
   const [print, setPrint] = useState(false);
@@ -118,6 +168,14 @@ function SocialMedia() {
   );
   //Cite the code from Dropzone
 
+  useEffect(() => {
+    console.log(
+      "%c [ Social Media ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      loginUser
+    );
+    console.log("[ questions ]", questions);
+  }, []);
   return (
     <SocialMediaWrapper>
       {/* <div className="socialMedia"> */}
@@ -127,6 +185,8 @@ function SocialMedia() {
           type="text"
           name="facebook"
           onChange={handleChange}
+          ref={facebookInput}
+          placeholder={social.facebook}
         ></SocialMediaInput>
 
         <h1>Instagram</h1>
@@ -135,6 +195,8 @@ function SocialMedia() {
           type="text"
           name="instagram"
           onChange={handleChange}
+          ref={instagramInput}
+          placeholder={social.instagram}
         ></SocialMediaInput>
 
         <h1>Photo</h1>

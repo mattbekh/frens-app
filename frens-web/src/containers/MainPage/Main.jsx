@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { socketOn,setLoginUser } from "../../actions";
+
 import io from "socket.io-client";
+import {
+  socketOn,
+  setLoginUser,
+  updateQuestions,
+  updateSocial,
+  updateUserSocial,
+} from "../../actions";
+import { Link } from "react-router-dom";
+
 import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
@@ -131,7 +140,10 @@ function Main() {
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
-  const loginUser = useSelector((state) => state.isLogged);
+
+  const loginUser = useSelector((state) => state.loginUser);
+  const social = useSelector((state) => state.socialProfile);
+  const questions = useSelector((state) => state.questionsProfile);
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
@@ -141,15 +153,64 @@ function Main() {
     contactInfo: "",
   });
 
+
   useEffect(() => {
-    getLoginUserInfo();
 
     socket = io(ENDPOINT);
     let socketObj = {socket};
     dispatch(socketOn(socketObj));
-    // setFrensList(initialFrensList); //set frensList with initialFrensList
-    getUsers();
+
   }, []); // on first refresh
+
+  useEffect(async () => {
+    //get user authentication
+    const token = JSON.parse(localStorage.getItem("profile")).token;
+    const userInfo = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    };
+    const response = await axios.get("/posts", userInfo);
+    if (response?.data) {
+      dispatch(setLoginUser(response.data));
+      console.log("[ @@@@@ RESPONSE @@@@ ]", response.data);
+      if (response.data.questions)
+        dispatch(updateQuestions(response.data.questions));
+      // if (response.data.social) dispatch(updateSocial({response.data.social}));
+    }
+
+    //store the current logged in username
+    let username = response.data.username;
+    console.log("[ loginUser.username ]", username);
+
+    //generate frens
+    const pythonResponse = await axios.get("/python/");
+    if (pythonResponse?.data)
+      console.log(
+        "%c [ pythonResponse.data ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        pythonResponse.data
+      );
+    let loggedInUserCluster = pythonResponse.data[username];
+    let sameClusterUsername = [];
+
+    //store frens that are in the same cluster as logged in user
+    for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
+      if (Cluster === loggedInUserCluster && frenUsername !== username)
+        sameClusterUsername.push(frenUsername);
+    }
+    console.log(
+      "%c [ sameClusterUsername ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      sameClusterUsername
+    );
+
+    //set/print cluster frens
+    const frens = await axios.get("/suggest_list/" + sameClusterUsername);
+    if (frens?.data) setFrensList(frens.data);
+    console.log("[ frens.data ]", frens.data);
+  }, [dispatch]); // on first refresh
 
   // card click handler
   function openModal(name, imgURL, contactInfo) {
@@ -165,6 +226,11 @@ function Main() {
     let newModal = { ...modal };
     newModal.visible = false;
     setModal(newModal);
+  }
+  function handleProfile() {
+    console.log("[ social ]", social);
+    console.log("[ questions ]", questions);
+    console.log("[ login user ]", loginUser);
   }
 
   function getUsers() {
