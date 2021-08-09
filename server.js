@@ -142,11 +142,11 @@ app.get("/python", (req, res) => {
 
   //get user data from mongoDB, create data matrix for .csv file
   User.find({}, function (err, data) {
-    console.log(
-      "%c [ data ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      data
-    );
+    // console.log(
+    //   "%c [ data ]",
+    //   "font-size:13px; background:pink; color:#bf2c9f;",
+    //   data
+    // );
     data.forEach((user) => {
       rows.push([
         user.username,
@@ -168,22 +168,6 @@ app.get("/python", (req, res) => {
       .pipe(ws);
   });
 
-  // var dataToSend = "hii";
-  // // spawn new child process to call the python script
-  // const python = spawn("python", ["kmodes-script.py"]);
-  // // collect data from script
-  // python.stdout.on("data", function (data) {
-  //   console.log("Pipe data from python script ...");
-  //   largeDataSet = data.toString();
-  // });
-  // // in close event we are sure that stream from child process is closed
-  // python.on("close", (code) => {
-  //   console.log(`child process close all stdio with code ${code}`);
-  //   // send data to browser
-  //   res.send(largeDataSet);
-  // });
-
-  // spawn new child process to call the python script
   const python = spawn("python", ["kmodes-script.py"]);
 
   // collect data from script
@@ -195,13 +179,25 @@ app.get("/python", (req, res) => {
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
     // send data to browser
-    res.send(largeDataSet.join(""));
+    res.send(largeDataSet.toString());
   });
 
   // Takes stdout data from script which executed with arguments and send this data to res object
   process.stdout.on("data", function (data) {
-    res.send(data.toString());
+    // res.send(data.toString());
   });
+});
+
+app.get("/suggest_list/:sameClusterUsername", (req, res) => {
+  let filter = req.params.sameClusterUsername.split(",");
+
+  User.find({ username: filter })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/", (req, res) => {
