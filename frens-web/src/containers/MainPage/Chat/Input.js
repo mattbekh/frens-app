@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const FormContainer = styled.form`
 display: flex;
-  border-top: 2px solid #D3D3D3;
+border-top: 1px solid #D3D3D3;
 `;
 
 const InputContainer = styled.input`
@@ -15,7 +15,7 @@ font-size: 1.2em;
 `;
 
 const SendButton = styled.button`
-color: #fff !important;
+color: #000 !important;
 text-transform: uppercase;
 text-decoration: none;
 background-color: #FFBE0B;
@@ -28,7 +28,8 @@ width: 20%;
 const Input = ({ message, setMessage, sendMessage }) => {
     return (
         <FormContainer>
-            <InputContainer 
+            <InputContainer
+            className="input-container" 
             type="text"
             placeholder="Send a message..."
             value={message} 

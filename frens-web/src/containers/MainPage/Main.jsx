@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import io from "socket.io-client";
 import {
+  socketOn,
   setLoginUser,
   updateQuestions,
   updateSocial,
@@ -12,7 +15,6 @@ import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
 // import initialFrensList from "./database.json";
-
 import initialFrensList from "./db.js";
 import axios from "axios";
 
@@ -58,40 +60,23 @@ const MainContainer = styled.div`
     }
   }
   .arrow-down {
-    background: -webkit-linear-gradient(0deg, #5f978b, rgb(409, 82, 82));
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
     width: 60px;
     height: 60px;
     padding: 12px;
     border-radius: 50%;
     margin: 0 auto;
     transition: 0.3s;
-    position: relative;
-  }
-  .arrow-down::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    height: 90%;
-    border-radius: 50%;
   }
   .arrow-down img {
-    // padding: 25px;
-    margin-top: 2px;
-    width: 45px;
-    height: 45px;
-    filter: brightness(1) invert(1);
+    width: 100%;
+    height: 100%;
   }
   .arrow-down:hover {
     transform: scale(1.1);
   }
   .arrow-down:hover img {
+    filter: brightness(1) invert(1);
   }
 `;
 
@@ -147,16 +132,18 @@ const MainFooter = styled.footer`
   justify-content: flex-end;
   flex-direction: row;
 `;
+let socket;
+const ENDPOINT = "http://localhost:5000";
 
 function Main() {
   // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
+
   const loginUser = useSelector((state) => state.loginUser);
   const social = useSelector((state) => state.socialProfile);
   const questions = useSelector((state) => state.questionsProfile);
-
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
@@ -165,6 +152,15 @@ function Main() {
     imgURL: "",
     contactInfo: "",
   });
+
+
+  useEffect(() => {
+
+    socket = io(ENDPOINT);
+    let socketObj = {socket};
+    dispatch(socketOn(socketObj));
+
+  }, []); // on first refresh
 
   useEffect(async () => {
     //get user authentication
@@ -237,6 +233,44 @@ function Main() {
     console.log("[ login user ]", loginUser);
   }
 
+  function getUsers() {
+    const getUsers = async () => {
+      const users = await axios.get("/users");
+      if (users?.data) setFrensList(users.data);
+    }
+    getUsers();
+  }
+
+  function getLoginUserInfo() {
+    const getUserInfo = async () => {
+      const token = JSON.parse(localStorage.getItem("profile")).token;
+
+      const userInfo = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.get("/posts", userInfo);
+
+      if (response?.data) dispatch(setLoginUser(response.data));
+    };
+    getUserInfo();
+  }
+
+  function handlePython() {
+    const getInfoFromPython = async () => {
+      const response = await axios.get("/python");
+
+      if (response?.data)
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
+          response.data
+        );
+    };
+    getInfoFromPython();
+  }
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -250,13 +284,13 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
-            {/* <button onClick={() => handlePython()}> Python Test</button> */}
+            <button onClick={() => handlePython()}> Python Test</button>
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
               <img src={arrowDown} />
             </a>
           </MainContainer>
-          <FrensList frensList={frensList} openModal={openModal} />
+          <FrensList socket={socket} frensList={frensList} openModal={openModal} />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
           <ParallaxContainer className="parallax">
@@ -268,16 +302,13 @@ function Main() {
           <RandomContent className="random-content">
             <div className="random-content-wrapper">
               <h2>Want More Precise Matches?</h2>
-              <p>
-                Go to the <Link to="/profile">Profile Page</Link> to complete
-                your information !
-              </p>
+              <p>Go to the Profile Page to complete your information !</p>
               <hr />
             </div>
           </RandomContent>
         </div>
         <MainFooter>
-          <Chat />
+          <Chat socket={socket} />
         </MainFooter>
       </PageContainer>
     </ThemeProvider>

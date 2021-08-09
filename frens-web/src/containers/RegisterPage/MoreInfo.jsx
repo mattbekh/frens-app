@@ -71,7 +71,7 @@ const MorInfo = ({ user }) => {
       console.log(user);
       const response = await axios.post("/register", user);
       localStorage.setItem("profile", JSON.stringify({ ...response.data }));
-
+      console.log("*** REGISTER : " + response);
       history.push("/main");
     }
   };

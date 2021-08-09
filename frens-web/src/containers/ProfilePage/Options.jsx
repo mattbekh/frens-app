@@ -26,6 +26,7 @@ const CardOptionInput = styled.input`
 
 function Options(props) {
   const [check, setCheck] = useState(false);
+
   const loginUser = useSelector((state) => state.loginUser);
   const questions = useSelector((state) => state.questionsProfile);
   const dispatch = useDispatch();
@@ -59,13 +60,12 @@ function Options(props) {
   return (
     <CardOption className="card-option">
       <CardOptionInput
-        id={props.option}
         type="checkbox"
+        id={props.option}
         checked={questions[props.option] === 1 ? true : false}
         onChange={handleChange}
       />
-      <label for={props.option}>{props.option}</label>
-      {/* {props.option} */}
+      {props.option}
     </CardOption>
   );
 }
