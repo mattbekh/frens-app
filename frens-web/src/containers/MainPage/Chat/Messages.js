@@ -6,9 +6,15 @@ import Message from "./Message";
 
 import './Messages.css';
 
+const MessagesContainer = styled.div`
+background-color: pink;
+height: 20%;
+`;
+
 
 const Messages = ({ messages, name }) => {
-
+    console.log("### INSIDE MESSAGES");
+    console.log(messages);
     return (
             <ScrollToBottom className="scrollMessages">
                 {messages.map((message,i) => 

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import { setLoginUser } from "../../actions";
 import { Link } from "react-router-dom";
 
-import { socketOn,setLoginUser } from "../../actions";
-import io from "socket.io-client";
 import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
@@ -145,8 +143,6 @@ const MainFooter = styled.footer`
   justify-content: flex-end;
   flex-direction: row;
 `;
-let socket;
-const ENDPOINT = "http://localhost:5000";
 
 function Main() {
   // Check redux isDark state
@@ -163,17 +159,8 @@ function Main() {
     imgURL: "",
     contactInfo: "",
   });
-  
-  useEffect(() => {
-    socket = io(ENDPOINT);
-    let socketObj = {socket};
-    dispatch(socketOn(socketObj));
-  }, []); // on first refresh
-
 
   useEffect(async () => {
-    
-    
     //get user authentication
     const token = JSON.parse(localStorage.getItem("profile")).token;
     const userInfo = {
@@ -228,46 +215,6 @@ function Main() {
     setModal(newModal);
   }
 
-
-//   function getUsers() {
-//     const getUsers = async () => {
-//       const users = await axios.get("/users");
-//       if (users?.data) setFrensList(users.data);
-//     }
-//     getUsers();
-//   }
-
-//   function getLoginUserInfo() {
-//     const getUserInfo = async () => {
-//       const token = JSON.parse(localStorage.getItem("profile")).token;
-
-//       const userInfo = {
-//         headers: {
-//           "content-type": "application/json",
-//           Authorization: "Bearer " + token,
-//         },
-//       };
-//       const response = await axios.get("/posts", userInfo);
-
-//       if (response?.data) dispatch(setLoginUser(response.data));
-//     };
-//     getUserInfo();
-//   }
-
-//   function handlePython() {
-//     const getInfoFromPython = async () => {
-//       const response = await axios.get("/python");
-
-//       if (response?.data)
-//         console.log(
-//           ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
-//           response.data
-//         );
-//     };
-//     getInfoFromPython();
-//   }
-
-
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -287,7 +234,7 @@ function Main() {
               <img src={arrowDown} />
             </a>
           </MainContainer>
-          <FrensList socket={socket} frensList={frensList} openModal={openModal} />
+          <FrensList frensList={frensList} openModal={openModal} />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
           <ParallaxContainer className="parallax">
@@ -308,7 +255,7 @@ function Main() {
           </RandomContent>
         </div>
         <MainFooter>
-          <Chat socket={socket} />
+          <Chat />
         </MainFooter>
       </PageContainer>
     </ThemeProvider>

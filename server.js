@@ -80,48 +80,50 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// CHAT FUNCTIONALITY
-io.on('connection', (socket) => {
-  console.log("@@@ NEW CONNECTION @@@");
+io.on("connection", (socket) => {
+  console.log("######## New connection #########");
   console.log(socket.id);
 
-  socket.on('join', ({id, name, room}, callback) => {
-      const { error, user } = addUser({ id, name, room });
-      console.log(`@@@ ${user.name} HAS JOINED THE ROOM : ${user.room} @@@`);
+  socket.on("join", ({ name, room }, callback) => {
+    console.log("!!!!! FROM SERVER !!!!!");
+    console.log(name, room);
+    const { error, user } = addUser({ id: socket.id, name, room });
 
-      socket.join(user.room);
+    // if(error) return callback(error);
 
-      // if(error) return callback(error);
-      
-      //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
-      //socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
+    socket.join(user.room);
 
+    //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
+    // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
 
     //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
 
-      callback();
+    // callback();
   });
 
-  socket.on("sendMessage", ({id, message}, callback) => {
-      const user = getUser(id);
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
 
-      io.to(user.room).emit("message", {user: user.name, text: message});
+    console.log("#### FROM SERVER : sendMessage");
+    console.log(user, message);
 
-      // Clears the input text field
-      callback();
+    io.to(user.room).emit("message", { user: user.name, text: message });
+
+    // Clears the input text field
+    callback();
   });
 
-  socket.on('leave', ({id, room}) => {
-      const user = removeUser(id, room);
+  socket.on("disconnect", () => {
+    const user = removeUser(socket.id);
 
-      if(user) {
-          console.log("@@@ USER DISCONNECTED @@@");
-          io.emit('clearMessages');
-          //io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.`})
-          //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-      }
-  })
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
+      });
+      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  });
 });
 
 /* ROUTES */
