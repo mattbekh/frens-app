@@ -66,6 +66,7 @@ const MainContainer = styled.div`
     height: 60px;
     padding: 12px;
     border-radius: 50%;
+
     margin: 0 auto;
     transition: 0.3s;
     position: relative;
