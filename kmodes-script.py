@@ -1,13 +1,18 @@
 import sys
 import os
 import numpy as np
+print("success")
 import pandas as pd
 from kmodes.kmodes import KModes
+print("success after kmodes")
 import matplotlib.pyplot as plt
 import json
 
+
+print("success before read data")
 data = pd.read_csv('./data-output.csv')
 data = data.set_index('username')
+print("success after read data")
 
 # print(data.to_string())
 
