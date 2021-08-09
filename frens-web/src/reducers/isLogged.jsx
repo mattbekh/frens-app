@@ -11,7 +11,7 @@ const loggedReducer = (state = {}, action) => {
       state = {};
       return state;
     default:
-      return false;
+      return state;
   }
 };
 

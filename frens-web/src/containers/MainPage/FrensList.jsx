@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Fren from "./Fren";
 import styled from "styled-components";
 
@@ -13,16 +13,22 @@ const FrensWrap = styled.div`
   padding: 4rem 0 4rem;
 `;
 
+
+
 function FrensList(props) {
+
+  
+
   return (
     <FrensWrap className="frens-list" id="frenslist">
       {props.frensList.map((fren) => {
-        // console.log("[ fren ]", fren);
+
         // const [user] = Object.entries(fren);
         // const userId = user[0];
         // const info = user[1];
 
         const userId = fren._id;
+        // const userId = fren._id.toString();
         const user = fren;
         const info = fren;
         const name = fren.username;
@@ -37,6 +43,7 @@ function FrensList(props) {
               info.social?.facebook ? info.social.facebook : info.email
             }
             openModal={props.openModal}
+            socket={props.socket}
           />
         );
       })}
