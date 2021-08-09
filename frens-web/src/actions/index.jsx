@@ -33,7 +33,7 @@ export const setLoginUser = (user) => {
 
 export const updateLoginUserSocial = (social) => {
   return {
-    type: "UPDATE_SOCIAL",
+    type: "UPDATE_LOGIN_SOCIAL",
     payload: social,
   };
 };
@@ -48,13 +48,6 @@ export const updateQuestions = (questions) => {
   return {
     type: "UPDTE_QUESTIONS",
     payload: questions,
-  };
-};
-
-export const updateSocial = (social) => {
-  return {
-    type: "UPDATE_SOCIAL",
-    payload: social,
   };
 };
 

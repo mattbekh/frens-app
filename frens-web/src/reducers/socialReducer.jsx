@@ -1,7 +1,8 @@
 const socialReducer = (state = {}, action) => {
-  let newSocial = action.payload;
+  let newSocial;
   switch (action.type) {
-    case "UPDATE_SOCIAL":
+    case "UPDATE_LOGIN_SOCIAL":
+      newSocial = action.payload;
       state = { ...newSocial };
       return state;
     default:

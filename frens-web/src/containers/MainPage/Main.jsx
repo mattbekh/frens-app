@@ -246,8 +246,6 @@ function Main() {
           <MobileNav />
           <MainContainer className="full-hight">
             <div className="user-account-info">
-              <button onClick={() => handleProfile()}> Main </button>
-
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>
               <hr />
             </div>

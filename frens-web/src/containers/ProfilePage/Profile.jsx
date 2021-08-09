@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginUser, updateQuestions, updateSocial } from "../../actions";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateLoginUserSocial,
+} from "../../actions";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import axios from "axios";
@@ -50,40 +54,16 @@ function Profile() {
         response.data
       );
       dispatch(setLoginUser(response.data));
-      dispatch(updateSocial(response.data.social));
+      dispatch(updateLoginUserSocial(response.data.social));
       dispatch(updateQuestions(response.data.questions));
 
       //reducer not getting server datat after refresh
     });
   }, []);
 
-  // function getLoginUserInfo() {
-  //   const getUserInfo = async () => {
-  //     const token = JSON.parse(localStorage.getItem("profile")).token;
-
-  //     const userInfo = {
-  //       headers: {
-  //         "content-type": "application/json",
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     };
-  //     const response = await axios.get("/posts", userInfo);
-
-  //   if (response?.data) {
-  //     dispatch(setLoginUser(response.data));
-  //     if (response.data.questions)
-  //       dispatch(updateQuestions(response.data.questions));
-  //     if (response.data.social) dispatch(updateSocial(response.data.social));
-  //   }
-  // };
-  //   getUserInfo();
-  // }
-
   function handleProfile() {
-    // console.log("[ social ]", social);
     console.log("[ questions ]", questions);
     console.log("[ login user ]", loginUser);
-    console.log("[ isDark ]", isDark);
   }
 
   return (
@@ -92,8 +72,6 @@ function Profile() {
       <Container>
         <DesktopNav />
         <MobileNav />
-        <button onClick={() => handleProfile()}> Profile !!! </button>
-
         <SocialMedia loginUser={loginUser} />
         <CardList cardlist={cardlist} />
       </Container>

@@ -34,7 +34,7 @@ function Options(props) {
     setCheck(!check); //not needed for updating and displaying checkboxes
     let questionName = e.target.id;
     console.log(
-      "%c [ name ]",
+      "%c [ user click question ]",
       "font-size:13px; background:pink; color:#bf2c9f;",
       questionName
     );
