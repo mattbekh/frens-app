@@ -97,8 +97,10 @@ function SocialMedia(props) {
     e.preventDefault();
     // setUserSocial(props.user, props.social.name);
     // ... submit to API or something
+    console.log("send put request when submit");
     console.log(loginUser.username);
     setPrint(!print);
+    // if (props._id) {
     let id = loginUser._id;
 
     let userCurrentInputs = {
@@ -111,6 +113,7 @@ function SocialMedia(props) {
     axios
       .put("/users/" + id, userCurrentInputs)
       .then((response) => {
+        console.log("[ response.data[0] ]", response.data[0]);
         console.log(
           "%c [ response.data[0] ]",
           "font-size:13px; background:pink; color:#bf2c9f;",
@@ -119,11 +122,14 @@ function SocialMedia(props) {
 
         dispatch(updateLoginUserSocial(response.data[0].social));
         dispatch(setLoginUser(response.data[0]));
+
+        console.log("[ loginUser ]", loginUser);
       })
       .catch((error) => {
         // this.setState({ errorMessage: error.message });
         console.error("There was an error!", error);
       });
+    // }
   };
 
   const [print, setPrint] = useState(false);
@@ -161,11 +167,11 @@ function SocialMedia(props) {
   //Cite the code from Dropzone
 
   useEffect(() => {
-    // console.log(
-    //   "%c [ Social Media ]",
-    //   "font-size:13px; background:pink; color:#bf2c9f;",
-    //   loginUser
-    // );
+    console.log(
+      "%c [ Social Media ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      loginUser
+    );
     console.log("[ questions ]", questions);
   }, []);
 

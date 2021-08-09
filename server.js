@@ -415,47 +415,27 @@ app.post("/login", async (req, res, next) => {
 app.get("/loginUser/:token", async (req, res) => {
   const user = req.user;
   const token = req.params.token;
-  console.log("[ I am login user server");
+  // console.log("[ I am login user server");
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  //auth & get the newest user info
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
     if (err) return res.sendStatus(403);
-    // req.user = user;console.log('[  ]', )
-    //TO CHECK
+    let id = user.existingUser._id;
+    let targetId = mongoose.Types.ObjectId(id);
 
-    res.send(user.existingUser);
+    try {
+      let targetUser = await User.findOne({ _id: targetId });
+      res.send(targetUser);
+    } catch (err) {
+      console.log(err);
+    }
   });
-
-  // //if user exists, send updated user info back
-  // if (user?.existingUser) {
-  //   let id = user.existingUser._id;
-  //   let targetId = mongoose.Types.ObjectId(id);
-
-  //   try {
-  //     let targetUser = await User.findOne({ _id: targetId });
-  //     console.log(
-  //       "%c [ !!!targetUser!!! ]",
-  //       "font-size:13px; background:pink; color:#bf2c9f;",
-  //       targetUser
-  //     );
-  //     res.send(targetUser);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // } else {
-  //   //user from register
-  //   res.send(user.user);
-  // }
 });
 
 /* Get login user info */
 app.get("/posts", authenticateToken, async (req, res) => {
   const user = req.user;
   console.log("[ Im here");
-
-  // //user from sign in
-  // if (user?.existingUser) res.send(user.existingUser);
-  // //user from register
-  // res.send(user.user);
 
   //if user exists, send updated user info back
   if (user?.existingUser) {
@@ -490,6 +470,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
+
     req.user = user;
     //TO CHECK
     console.log("[ req.user ]", req.user);
