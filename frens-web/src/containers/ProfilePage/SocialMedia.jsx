@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateLoginUserSocial,
+} from "../../actions";
+
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -66,22 +72,18 @@ const ThumbsInnerImg = styled.img`
 `;
 
 function SocialMedia(props) {
-  // const setUserSocial = (user, social) => {
-  //   console.log(social);
-  //   if (social === "facebook") {
-  //     user.social.facebook = 1;
-  //   }
-  //   if (social === "instgram") {
-  //     user.social.instgram = 1;
-  //   }
-  // };
-
   const [data, setData] = useState({
     facebook: props.social ? props.social.email : props.email,
     instagram: props.social ? props.social.email : props.email,
   });
 
   const dispatch = useDispatch();
+  const facebookInput = useRef();
+  const instagramInput = useRef();
+  // const profilePhoto = useRef();
+  const loginUser = useSelector((state) => state.loginUser);
+  const social = useSelector((state) => state.socialProfile);
+  const questions = useSelector((state) => state.questionsProfile);
 
   const handleChange = (e) => {
     setData({
@@ -96,25 +98,38 @@ function SocialMedia(props) {
     // setUserSocial(props.user, props.social.name);
     // ... submit to API or something
     console.log("send put request when submit");
-    console.log(data);
-    console.log(props.social._id);
+    console.log(loginUser.username);
     setPrint(!print);
-    if (props._id) {
-      let id = props._id.toString();
-      axios
-        .put("/users/" + id, data)
-        .then((response) => {
-          //  this.setState({ updatedAt: response.data.updatedAt });
-          // {[e.target.name]: e.target.value.trim()}
-          console.log("from axios put");
-          console.log(e.target.name);
-          console.log(response.data);
-        })
-        .catch((error) => {
-          // this.setState({ errorMessage: error.message });
-          console.error("There was an error!", error);
-        });
-    }
+    // if (props._id) {
+    let id = loginUser._id;
+
+    let userCurrentInputs = {
+      facebook: facebookInput.current.value,
+      instagram: instagramInput.current.value,
+    };
+
+    console.log("[ userCurrentInputs ]", userCurrentInputs);
+
+    axios
+      .put("/users/" + id, userCurrentInputs)
+      .then((response) => {
+        console.log("[ response.data[0] ]", response.data[0]);
+        console.log(
+          "%c [ response.data[0] ]",
+          "font-size:13px; background:pink; color:#bf2c9f;",
+          response.data[0]
+        );
+
+        dispatch(updateLoginUserSocial(response.data[0].social));
+        dispatch(setLoginUser(response.data[0]));
+
+        console.log("[ loginUser ]", loginUser);
+      })
+      .catch((error) => {
+        // this.setState({ errorMessage: error.message });
+        console.error("There was an error!", error);
+      });
+    // }
   };
 
   const [print, setPrint] = useState(false);
@@ -152,13 +167,12 @@ function SocialMedia(props) {
   //Cite the code from Dropzone
 
   useEffect(() => {
-    if (props._id) {
-      let id = props._id.toString();
-      axios.get("/users/" + id).then((response) => {
-        console.log("from axios");
-        console.log(response.data);
-      });
-    }
+    console.log(
+      "%c [ Social Media ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      loginUser
+    );
+    console.log("[ questions ]", questions);
   }, []);
 
   return (
@@ -170,6 +184,8 @@ function SocialMedia(props) {
           type="text"
           name="facebook"
           onChange={handleChange}
+          ref={facebookInput}
+          placeholder={social.facebook}
         ></SocialMediaInput>
 
         <h1>Instagram</h1>
@@ -178,6 +194,8 @@ function SocialMedia(props) {
           type="text"
           name="instagram"
           onChange={handleChange}
+          ref={instagramInput}
+          placeholder={social.instagram}
         ></SocialMediaInput>
 
         <h1>Photo</h1>

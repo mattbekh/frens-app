@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateLoginUserSocial,
+  insertQuestions,
+} from "../../actions";
 
 const CardOption = styled.div`
   font-family: "Gill Sans", sans-serif;
@@ -18,9 +26,34 @@ const CardOptionInput = styled.input`
 
 function Options(props) {
   const [check, setCheck] = useState(false);
+  const loginUser = useSelector((state) => state.loginUser);
+  const questions = useSelector((state) => state.questionsProfile);
+  const dispatch = useDispatch();
 
-  const handleChange = () => {
-    setCheck(!check);
+  const handleChange = (e) => {
+    setCheck(!check); //not needed for updating and displaying checkboxes
+    let questionName = e.target.id;
+    console.log(
+      "%c [ user click question ]",
+      "font-size:13px; background:pink; color:#bf2c9f;",
+      questionName
+    );
+
+    dispatch(
+      insertQuestions({ questionName: questionName, check: !check ? 1 : 0 })
+    );
+
+    console.log("[ questions ]", questions);
+
+    //axio update user question
+    axios
+      .put("/updateQuestions/" + loginUser._id, questions)
+      .then((response) => {
+        console.log("[ option ]", response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error setting user options", error);
+      });
   };
 
   return (
@@ -28,8 +61,7 @@ function Options(props) {
       <CardOptionInput
         id={props.option}
         type="checkbox"
-        value={props.option}
-        checked={check}
+        checked={questions[props.option] === 1 ? true : false}
         onChange={handleChange}
       />
       <label for={props.option}>{props.option}</label>

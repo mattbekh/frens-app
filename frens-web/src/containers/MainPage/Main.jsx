@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoginUser } from "../../actions";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateSocial,
+  updateUserSocial,
+} from "../../actions";
 import { Link } from "react-router-dom";
 
 import Modal from "./Modal";
@@ -150,6 +155,8 @@ function Main() {
 
   const [frensList, setFrensList] = useState([]);
   const loginUser = useSelector((state) => state.loginUser);
+  const social = useSelector((state) => state.socialProfile);
+  const questions = useSelector((state) => state.questionsProfile);
 
   const dispatch = useDispatch();
 
@@ -169,8 +176,14 @@ function Main() {
         Authorization: "Bearer " + token,
       },
     };
-    const response = await axios.get("/posts/", userInfo);
-    if (response?.data) dispatch(setLoginUser(response.data));
+    const response = await axios.get("/posts", userInfo);
+    if (response?.data) {
+      dispatch(setLoginUser(response.data));
+      console.log("[ @@@@@ RESPONSE @@@@ ]", response.data);
+      if (response.data.questions)
+        dispatch(updateQuestions(response.data.questions));
+      // if (response.data.social) dispatch(updateSocial({response.data.social}));
+    }
 
     //store the current logged in username
     let username = response.data.username;
@@ -178,13 +191,18 @@ function Main() {
 
     //generate frens
     const pythonResponse = await axios.get("/python/");
-    if (pythonResponse?.data) console.log(pythonResponse.data);
+    if (pythonResponse?.data)
+      console.log(
+        "%c [ pythonResponse.data ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        pythonResponse.data
+      );
     let loggedInUserCluster = pythonResponse.data[username];
     let sameClusterUsername = [];
 
     //store frens that are in the same cluster as logged in user
     for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
-      if (Cluster === loggedInUserCluster)
+      if (Cluster === loggedInUserCluster && frenUsername !== username)
         sameClusterUsername.push(frenUsername);
     }
     console.log(
@@ -213,6 +231,11 @@ function Main() {
     let newModal = { ...modal };
     newModal.visible = false;
     setModal(newModal);
+  }
+  function handleProfile() {
+    console.log("[ social ]", social);
+    console.log("[ questions ]", questions);
+    console.log("[ login user ]", loginUser);
   }
 
   return (
