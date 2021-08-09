@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setLoginUser,
+  updateQuestions,
+  updateLoginUserSocial,
+} from "../../actions";
+
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import axios from "axios";
@@ -21,7 +28,16 @@ const api = axios.create({
 function Profile() {
   let theme = "light";
   // Check redux isDark state
+
+  const loginUser = useSelector((state) => state.loginUser);
+  const social = useSelector((state) => state.socialProfile);
+  const questions = useSelector((state) => state.questionsProfile);
+
   const isDark = useSelector((state) => state.isDark);
+  const dispatch = useDispatch();
+
+  const [cardlist, setCardlist] = useState([]);
+
   if (isDark) {
     theme = "dark";
   } else {
@@ -33,9 +49,29 @@ function Profile() {
   useEffect(() => {
     axios.get("/questions").then((response) => {
       setCardlist(response.data);
-      console.log(response.data);
+    });
+
+    const token = JSON.parse(localStorage.getItem("profile")).token;
+
+    axios.get("/loginUser/" + token).then((response) => {
+      console.log(
+        "%c [ jsonfy ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        response.data
+      );
+      dispatch(setLoginUser(response.data));
+      dispatch(updateLoginUserSocial(response.data.social));
+      dispatch(updateQuestions(response.data.questions));
+
+      //reducer not getting server datat after refresh
     });
   }, []);
+
+  function handleProfile() {
+    console.log("[ questions ]", questions);
+    console.log("[ login user ]", loginUser);
+  }
+
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
@@ -43,7 +79,7 @@ function Profile() {
       <Container>
         <DesktopNav />
         <MobileNav />
-        <SocialMedia />
+        <SocialMedia loginUser={loginUser} />
         <CardList cardlist={cardlist} />
       </Container>
     </ThemeProvider>

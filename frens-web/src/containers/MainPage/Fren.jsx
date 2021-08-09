@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {BsChat} from "react-icons/all";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {chatPop, socketOff, chatUser, setChatRoom, clearChatRoom} from "../../actions";
+import {chatPop, chatUser} from "../../actions";
 
 const FrensContainer = styled.div`
     height: 100%;
@@ -63,7 +63,6 @@ const FrensWrapper = styled.div`
     width: 100%;
     height: 25vw;
     display: flex;
-    background-color: pink;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -89,72 +88,25 @@ const FrensWrapper = styled.div`
     }
 `;
 
-
-
-function createRoom(mainUser, selectedUser) {
-    if ((mainUser !== undefined) && (selectedUser !== undefined) && (selectedUser !== null)) {
-        const mainId = mainUser._id.toString();
-        const selectedId = selectedUser._id.toString();
-        for( let i = 0; i < mainId.length; i++ ){
-            if(mainId.charAt(i) > selectedId.charAt(i)){
-                return mainId.concat(selectedId);
-            } else if(mainId.charAt(i) < selectedId.charAt(i)){
-                return selectedId.concat(mainId);
-            }
-        }
-    }
-  }
-
 function Fren(props) {
-
-    let socket = props.socket;
-
-    const isPop = useSelector(state => state.isPop);
-    const currentUser = useSelector((state) => state.isLogged);
-    const chatRoom = useSelector((state) => state.chatRoom);
-    // const chatUser = useSelector(state => state.chatUser); 
-
-    const dispatch = useDispatch();
-
-    // When we have users
-    const name = currentUser.username;
-
-    // function handleClick() {
-    //     props.openModal(props.name, props.imgURL, props.contactInfo);
-    // }
+    function handleClick() {
+        props.openModal(props.name, props.imgURL, props.contactInfo);
+    }
 
     function handleChatClick() {
         dispatch(chatPop()); 
         dispatch(chatUser(props.user));
-        const room = createRoom(currentUser, props.user);
-
-        if(!chatRoom) {
-            console.log("SHUD MAKE NEW ROOM")
-            socket.emit('join', { id: currentUser._id, name, room }, () => {
-                // console.log(`%%%%%% ${name} JOINED ROOM ${room}`);
-                dispatch(setChatRoom(room));
-                //  alert(error);
-            });
-        } else {
-
-            // socket.disconnect()
-            // socket.off();
-            // await setRoom(createRoom(currentUser, chatUser));
-            dispatch(clearChatRoom())
-            socket.emit('leave', {id: currentUser._id, room})
-        }
+        console.log(props.user);
     }
 
+    const  isPop = useSelector(state => state.isPop);
+    const  dispatch = useDispatch();
     return (
         <FrensContainer className="frens-container">
             <FrensWrapper className="frens-wrapper">
-                {/* <FrensImg className="frens-img" src={props.imgURL} alt={props.name} /> */}
-                <FrensName className="frens-name">{props.name}</FrensName>
-
-                <ChatButton onClick = {handleChatClick}>
-                    <BsChat size={38}/> 
-                </ChatButton>
-
+                <FrensImg className="frens-img" src={props.imgURL} alt={props.name} />
+                <FrensName className="frens-name"onClick={handleClick}>{props.name}</FrensName>
+                <ChatButton onClick = {handleChatClick}>  <BsChat size={38}/> </ChatButton>
             </FrensWrapper>
         </FrensContainer>
     );

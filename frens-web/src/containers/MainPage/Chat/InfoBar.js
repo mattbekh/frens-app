@@ -22,7 +22,6 @@ align-items: center;
 margin-left: 5%;
 color: white;
 & > h3 {
-    color: black;
     margin-left: 5%;
 }
 `;
@@ -34,30 +33,17 @@ justify-content: flex-end;
 margin-right: 5%;
 `;
 
-const InfoBar = ({ room, name, disconnectSocket }) => {
-    let roomName;
-    // Change this when we have actual users with usernames
-    if(!name) {
-        roomName = "Test Name";
-    } else {
-        roomName = name;
-    }
-    
+const InfoBar = ({ room }) => {
     const dispatch = useDispatch();
-
-    function handleClick() {
-        dispatch(chatPop());
-        disconnectSocket();
-    }
 
     return (
         <InfoBarContainer>
             <LeftInner>
                 <img className="onlineIcon" src={onlineIcon} alt="online image" />
-                <h3>{roomName}</h3>
+                <h3>{room}</h3>
             </LeftInner>
             <RightInner>
-                <img src={closeIcon} alt="close image" onClick= {()=> handleClick()}/>
+                <img src={closeIcon} alt="close image" onClick= {()=> dispatch(chatPop())}/>
             </RightInner>
         </InfoBarContainer>
     );

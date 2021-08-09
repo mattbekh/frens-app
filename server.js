@@ -17,7 +17,8 @@ const path = require('path');
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 const OUTPUT_FILE_NAME = "data-output.csv";
-const ws = fs.createWriteStream(OUTPUT_FILE_NAME);
+// const ws = fs.createWriteStream(OUTPUT_FILE_NAME, { flags: "w+" });
+
 const bcrypt = require("bcrypt");
 const salt = "$2b$10$X4kv7j5ZcG39WgogSl16au"; //TODO make it secret if worked
 const jwt = require("jsonwebtoken");
@@ -75,47 +76,54 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // CHAT FUNCTIONALITY
 io.on('connection', (socket) => {
   console.log("@@@ NEW CONNECTION @@@");
   console.log(socket.id);
 
-  socket.on('join', ({id, name, room}, callback) => {
-      const { error, user } = addUser({ id, name, room });
-      console.log(`@@@ ${user.name} HAS JOINED THE ROOM : ${user.room} @@@`);
+  socket.on("join", ({ name, room }, callback) => {
+    console.log("!!!!! FROM SERVER !!!!!");
+    console.log(name, room);
+    const { error, user } = addUser({ id: socket.id, name, room });
 
-      socket.join(user.room);
+    // if(error) return callback(error);
 
-      // if(error) return callback(error);
-      
-      //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
-      //socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
+    socket.join(user.room);
 
-      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
+    //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
+    // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
 
-      callback();
+    //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
+
+    // callback();
   });
 
-  socket.on("sendMessage", ({id, message}, callback) => {
-      const user = getUser(id);
+  socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
 
-      io.to(user.room).emit("message", {user: user.name, text: message});
+    console.log("#### FROM SERVER : sendMessage");
+    console.log(user, message);
 
-      // Clears the input text field
-      callback();
+    io.to(user.room).emit("message", { user: user.name, text: message });
+
+    // Clears the input text field
+    callback();
   });
+
 
 
   socket.on('leave', ({id, room}) => {
       const user = removeUser(id, room);
 
-      if(user) {
-          console.log("@@@ USER DISCONNECTED @@@");
-          io.emit('clearMessages');
-          //io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.`})
-          //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
-      }
-  })
+    if (user) {
+      io.to(user.room).emit("message", {
+        user: "admin",
+        text: `${user.name} has left.`,
+      });
+      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+    }
+  });
 });
 
 
@@ -129,6 +137,7 @@ app.use(express.static("public"));
 /* Python Algorithm */
 app.get("/python", (req, res) => {
   let largeDataSet = [];
+  const ws = fs.createWriteStream(OUTPUT_FILE_NAME);
   console.log(">>>>>>>>>>>>>>>>>>> inside calling python <<<<<<<<<<<<<<<<<<<");
 
   // current testing
@@ -151,6 +160,11 @@ app.get("/python", (req, res) => {
         user.interests[0].drawing,
         user.interests[0].workout,
       ]);
+      console.log(
+        "%c [ user.username ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        user.username
+      );
     });
 
     console.log("***************** write into csv ***********************");
@@ -199,6 +213,56 @@ app.get("/users", (req, res) => {
     });
 });
 
+
+app.get("/users/:id", (req, res) => {
+  console.log(req.params.id);
+  if (req.params.id) {
+    let id = req.params.id.toString();
+    console.log(id);
+    User.findById(id)
+      .then((result) => {
+        // console.log(result);
+        res.send(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+});
+
+app.put("/users/:id", async (req, res) => {
+  // console.log(req.body.facebook);
+  // if (req.params.id) {
+  let id = req.params.id;
+  let targetId = mongoose.Types.ObjectId(id);
+
+  try {
+    await User.collection.findOneAndUpdate(
+      { _id: targetId },
+      { $set: { social: req.body } }
+    );
+    let data = await User.find({ _id: targetId });
+
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // console.log(id);
+  // User.collection
+  //   .findOneAndUpdate(
+  //     { _id: mongoose.Types.ObjectId(id) },
+  //     { $set: { social: req.body } }
+  //   )
+  //   .then((result) => {
+  //     let result = User.collection.find({ _id: id });
+  //     console.log(result);
+  //     res.send(result);
+  //   });
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+});
 app.post("/users", (req, res) => {
   const newUser = new User({
     _id: new mongoose.Types.ObjectId(),
@@ -228,6 +292,7 @@ app.post("/users", (req, res) => {
 app.get("/questions", (req, res) => {
   Question.find()
     .then((result) => {
+      // console.log("[ result ]", result);
       res.send(result);
     })
     .catch((err) => {
@@ -254,6 +319,29 @@ app.post("/questions", (req, res) => {
     });
 });
 
+//update user option checkbox
+app.put("/updateQuestions/:id", async (req, res) => {
+  let id = req.params.id;
+  let targetId = mongoose.Types.ObjectId(id);
+
+  let questionName = req.body;
+
+  console.log("[ targetId ]", targetId);
+  console.log("[ questionName ]", questionName);
+
+  // res.send("option hajelluva");
+  try {
+    await User.collection.findOneAndUpdate(
+      { _id: targetId },
+      { $set: { questions: questionName } }
+    );
+    let data = await User.find({ _id: targetId });
+
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.post("/register", async (req, res) => {
   const { password, userName, email, interests } = req.body;
@@ -287,13 +375,7 @@ app.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    console.log("begin try");
     const existingUser = await User.findOne({ email });
-    console.log(
-      "%c [ existingUser ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      existingUser
-    );
 
     if (!existingUser) {
       return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
@@ -321,19 +403,58 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
+//get login user data without middleware
+/* Get login user info */
+app.get("/loginUser/:token", async (req, res) => {
+  const user = req.user;
+  const token = req.params.token;
+  // console.log("[ I am login user server");
+
+  //auth & get the newest user info
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+    if (err) return res.sendStatus(403);
+    let id = user.existingUser._id;
+    let targetId = mongoose.Types.ObjectId(id);
+
+    try {
+      let targetUser = await User.findOne({ _id: targetId });
+      res.send(targetUser);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
 /* Get login user info */
 app.get("/posts", authenticateToken, async (req, res) => {
   const user = req.user;
+  console.log("[ Im here");
 
-  //user from sign in
-  if (user?.existingUser) return res.send(user.existingUser);
+  //if user exists, send updated user info back
+  if (user?.existingUser) {
+    let id = user.existingUser._id;
+    let targetId = mongoose.Types.ObjectId(id);
 
-  //user from register
-  res.send(user.user);
+    try {
+      let targetUser = await User.findOne({ _id: targetId });
+      console.log(
+        "%c [ !!!targetUser!!! ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        targetUser
+      );
+      res.send(targetUser);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    //user from register
+    res.send(user.user);
+  }
 });
 
 /* Middleware to authenticate the token */
 function authenticateToken(req, res, next) {
+  console.log("I'm annoying ]");
   const authHeader = req.headers["authorization"];
 
   const token = authHeader && authHeader.split(" ")[1];
@@ -341,10 +462,11 @@ function authenticateToken(req, res, next) {
   if (token === null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    console.log(err);
     if (err) return res.sendStatus(403);
-    req.user = user;
 
+    req.user = user;
+    //TO CHECK
+    console.log("[ req.user ]", req.user);
     next();
   });
 }

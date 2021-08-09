@@ -5,17 +5,19 @@ import InterestReducer from "./InterestReducer";
 import loggedReducer from "./isLogged";
 import popUpReducer from "./popUpReducer";
 import chatUserReducer from "./chatUserReducer";
-import socketReducer from "./socketReducer";
-import roomReducer from "./roomReducer";
+import socialReducer from "./socialReducer";
+import questionsReducer from "./questionsReducer";
 
 const allReducers = combineReducers({
-    isDark: darkReducer,
-    interestManager: InterestReducer,
-    isLogged: loggedReducer,
-    isPop: popUpReducer,
-    chatUser: chatUserReducer,
-    socket: socketReducer,
-    chatRoom: roomReducer
+  isDark: darkReducer,
+  interestManager: InterestReducer,
+  loginUser: loggedReducer,
+  isPop: popUpReducer,
+  chatUser: chatUserReducer,
+  socialProfile: socialReducer,
+  questionsProfile: questionsReducer,
+  socket: socketReducer,
+  chatRoom: roomReducer
 });
 
 export default allReducers;

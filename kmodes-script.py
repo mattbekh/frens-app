@@ -1,11 +1,16 @@
 import sys
 import numpy as np
+print("success")
 import pandas as pd
 from kmodes.kmodes import KModes
+print("success after kmodes")
 import matplotlib.pyplot as plt
 
+
+print("success before read data")
 data = pd.read_csv('./data-output.csv')
 data = data.set_index('username')
+print("success after read data")
 
 print(data.to_string())
 
@@ -30,4 +35,15 @@ clusters = kmode.fit_predict(data)
 clusters
 
 data.insert(0, "Cluster", clusters, True)
-print(data.to_string())
+
+# data = list(zip(data.index, data["Cluster"]))
+# data={'result':data.to_string()}
+
+sys.stdout = old_stdout
+# print(data)
+
+dict = dict(zip(data.index, data['Cluster']))
+data = json.dumps(dict, indent = 4)  
+print(data)
+# print('{"1":1,"2":2, "3":3}')
+

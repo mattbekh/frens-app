@@ -2,11 +2,19 @@
 // NOT FINISHED
 
 const loggedReducer = (state = {}, action) => {
-  let newUser = action.payload;
+  let newUser;
   switch (action.type) {
     case "LOGIN":
+      newUser = action.payload;
       state = { ...newUser };
+
+      if (newUser.social) {
+        state.social.facebook = newUser.social.facebook;
+        state.social.instagram = newUser.social.instagram;
+      }
+
       return state;
+
     case "LOGOUT":
       state = {};
       return state;

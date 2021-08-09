@@ -8,9 +8,6 @@ export const darkTheme = {
   shadow: "0px 0px 1rem rgba(255, 230, 0, 0.8)",
   shadowInset: "0px 10rem 10rem rgba(255, 230, 0, 0.8) inset",
   knobPos: "0 0 0 0",
-  chatColor: "#101010",
-  chatBoxColor: "#444444",
-  chatTextColor: "#ffffff"
 };
 
 export const lightTheme = {
@@ -21,9 +18,6 @@ export const lightTheme = {
   shadow: "0px 0px 1rem rgba(0,0,0,0.8)",
   shadowInset: "0px 10rem 10rem rgba(0,0,0,0.8) inset",
   knobPos: "1rem 0 0 0",
-  chatColor: "#ffffff",
-  chatBoxColor: "#bdbdbd",
-  chatTextColor: "#010101"
 };
 
 //global styles for theme switching
@@ -136,27 +130,5 @@ export const GlobalStyles = createGlobalStyle`
       }
       hr {
         border-color: ${(props) => props.theme.primaryColor};
-      }
-
-      /* CHAT FUNCTIONALITY */
-      .scrollMessages {
-        background-color: ${(props) => props.theme.chatColor};
-      }
-
-      .message-box {
-        background-color: ${(props) => props.theme.chatBoxColor};
-      }
-
-      .message-text {
-        color: ${(props) => props.theme.chatTextColor};
-      }
-
-      .message-text-current {
-        color: ${(props) => props.theme.chatTextColor};
-      }
-
-      .input-container {
-        background-color: ${(props) => props.theme.chatColor};
-        color: ${(props) => props.theme.chatTextColor};
       }
 `;

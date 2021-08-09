@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from 'react';
 import {BsChat} from "react-icons/all";
 import styled from "styled-components";
 import ChatBlock from "./ChatBlock";
 import {useDispatch, useSelector} from "react-redux";
 import {chatPop} from "../../actions";
+
+
+
 
 const ChatWrapper = styled.div`
   position: absolute;
@@ -25,25 +28,15 @@ const ChatButton = styled.button`
   }
 `;
 
+
 function Chat(props) {
-    const isPop = useSelector(state => state.isPop);
-    const currentUser = useSelector((state) => state.isLogged);
-    const chatUser = useSelector(state => state.chatUser); 
-
+    const isPop = useSelector(state => state.isPop)
+    const user = useSelector(state => state.chatUser);
     const dispatch = useDispatch();
-    // When we have users
-    const name = currentUser.username;
-
-
-    function handleClick() {
-      dispatch(chatPop());
-    }
-
-
     return (
         <ChatWrapper>
-            <ChatBlock passedSocket={props.socket} popChat = {isPop} name={name} user={chatUser} />
-            <ChatButton onClick= {()=> handleClick()}>
+            <ChatBlock popChat = {isPop} user={user}/>
+            <ChatButton onClick= {()=> dispatch(chatPop())}>
                 <BsChat size={38}/>
             </ChatButton>
         </ChatWrapper>

@@ -1,38 +1,33 @@
 import React from "react";
-import styled, {ThemeProvider} from "styled-components";
-import { useSelector} from "react-redux";
-import { lightTheme, darkTheme, GlobalStyles } from "../../../themes.js";
+import styled from "styled-components";
 import ReactEmoji from "react-emoji";
 
-const MessageContainerCurrent = styled.div`
+const MessageContainer = styled.div`
 display: flex;
-padding: 0 2%;
+justify-content: center;
+padding: 0 5%;
 margin-top: 3px;
-width: 96%;
-justify-content: flex-end;
-`;
 
-const MessageContainerOther = styled.div`
-display: flex;
-padding: 0 2%;
-margin-top: 3px;
-width: 96%;
-justify-content: flex-start;
 `;
 
 const MessageBoxCurrent = styled.div`
+background-color: #F3F3F3;
 border-radius: 20px;
-padding: 0px 20px;
+padding: 5px 20px;
+color: black;
 display: inline-block;
 max-width: 80%;
 background-color: #FFBE0B;
 `;
 
 const MessageBoxOther = styled.div`
+background: light grey;
 border-radius: 20px;
-padding: 0px 20px;
+padding: 5px 20px;
+color: black;
 display: inline-block;
 max-width: 80%;
+background-color: #b8b8b8;
 `;
 
 const MessageText = styled.p`
@@ -41,25 +36,11 @@ letter-spacing: 0;
 float: left;
 font-size: 1.1em;
 word-wrap: break-word;
-`;
-
-const UserName = styled.p`
-margin: 5px;
-letter-spacing: 0;
-color: grey;
+color: black;
 `;
 
 
 const Message = ({ message: { user, text}, name }) => {
-    let theme = "light";
-    // Check redux isDark state
-    const isDark = useSelector(state => state.isDark);
-    if(isDark) {
-        theme = "dark";
-    } else {
-        theme = "light";
-    }
-
     let isSentByCurrentUser = false;
     // const trimmedName = name.trim().toLowerCase();
     const trimmedName = name.trim();
@@ -67,30 +48,24 @@ const Message = ({ message: { user, text}, name }) => {
         isSentByCurrentUser = true;
     }
 
+    console.log(user, text, name);
     return (
-        
         isSentByCurrentUser
         ? (
-            <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-            <GlobalStyles />
-            <MessageContainerCurrent>
-                <UserName>{trimmedName}</UserName>
-                <MessageBoxCurrent >
-                    <MessageText className="message-text-current">{ReactEmoji.emojify(text)}</MessageText>
+            <MessageContainer>
+                <p>{trimmedName}</p>
+                <MessageBoxCurrent>
+                    <MessageText>{ReactEmoji.emojify(text)}</MessageText>
                 </MessageBoxCurrent>
-            </MessageContainerCurrent>
-            </ThemeProvider>
+            </MessageContainer>
         )
         : (
-            <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-            <GlobalStyles />
-            <MessageContainerOther>
-                <MessageBoxOther className="message-box">
-                    <MessageText className="message-text">{ReactEmoji.emojify(text)}</MessageText>
+            <MessageContainer>
+                <MessageBoxOther>
+                    <MessageText>{ReactEmoji.emojify(text)}</MessageText>
                 </MessageBoxOther>
-                <UserName>{user}</UserName>
-            </MessageContainerOther>
-            </ThemeProvider>
+                <p>{user}</p>
+            </MessageContainer>
         )
         
     );
