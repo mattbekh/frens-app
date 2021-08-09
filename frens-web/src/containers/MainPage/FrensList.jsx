@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Fren from "./Fren";
 import styled from "styled-components";
+import { BiSleepy } from "react-icons/bi";
 
 const FrensWrap = styled.div`
   display: flex;
@@ -11,11 +12,8 @@ const FrensWrap = styled.div`
   padding: 4rem 0 4rem;
 `;
 
-
-
 function FrensList(props) {
-
-  
+  console.log("sleepy sleep");
 
   return (
     <FrensWrap className="frens-list" id="frenslist">
