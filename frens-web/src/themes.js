@@ -125,11 +125,12 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${(props) => props.theme.primaryColor};
       }
       /*MAIN PAGE CSS*/
-      .arrow-down {
-        border: 3px solid ${(props) => props.theme.primaryColor};
+      .arrow-down::before {
+        
+        background: ${(props) => props.theme.primaryColor};
       }
       .arrow-down:hover {
-        background: ${(props) => props.theme.primaryColor};
+        background: ${(props) => props.theme.secondaryColor};
       }
       .frens-list {
         background: ${(props) => props.theme.primaryColor};
