@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 
 import darkReducer from "./isDark";
 import InterestReducer from "./InterestReducer";
@@ -9,7 +9,6 @@ import socketReducer from "./socketReducer";
 import roomReducer from "./roomReducer";
 
 const allReducers = combineReducers({
-
     isDark: darkReducer,
     interestManager: InterestReducer,
     isLogged: loggedReducer,
@@ -17,7 +16,6 @@ const allReducers = combineReducers({
     chatUser: chatUserReducer,
     socket: socketReducer,
     chatRoom: roomReducer
-
 });
 
 export default allReducers;

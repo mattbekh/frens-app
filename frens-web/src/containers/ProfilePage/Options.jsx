@@ -18,22 +18,15 @@ const CardOptionInput = styled.input`
 
 function Options(props) {
   const [check, setCheck] = useState(false);
-
-  const handleChange = () => {
-    setCheck(!check);
-  };
-
   return (
     <CardOption className="card-option">
       <CardOptionInput
-        id={props.option}
         type="checkbox"
         value={props.option}
         checked={check}
-        onChange={handleChange}
+        onChange={() => setCheck(!check)}
       />
-      <label for={props.option}>{props.option}</label>
-      {/* {props.option} */}
+      {props.option}
     </CardOption>
   );
 }
