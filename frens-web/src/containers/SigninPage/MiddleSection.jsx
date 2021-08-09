@@ -90,7 +90,7 @@ function MiddleSection(props) {
 
       // Make post request
       axios
-        .post(`http://localhost:5000/login`, body)
+        .post(`/login`, body)
         .then((response) => {
           localStorage.setItem("profile", JSON.stringify({ ...response.data }));
           if (response.status === 200) {
@@ -110,7 +110,7 @@ function MiddleSection(props) {
   return (
     <div>
       <FormContainer
-        action="http://localhost:5000/users/login"
+        action="/users/login"
         method="post"
         className="login-form"
         id="login-form"
