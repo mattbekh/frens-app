@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setLoginUser } from "../../actions";
+import { useSelector } from "react-redux";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import axios from "axios";
@@ -22,42 +21,21 @@ const api = axios.create({
 function Profile() {
   let theme = "light";
   // Check redux isDark state
-  const loginUser = useSelector((state) => state.isLogged);
   const isDark = useSelector((state) => state.isDark);
-  const dispatch = useDispatch();
-
-  const [cardlist, setCardlist] = useState([]);
-  const [social, setSocial] = useState([]);
   if (isDark) {
     theme = "dark";
   } else {
     theme = "light";
   }
 
+  const [cardlist, setCardlist] = useState([]);
+
   useEffect(() => {
     axios.get("/questions").then((response) => {
       setCardlist(response.data);
       console.log(response.data);
     });
-    getLoginUserInfo();
   }, []);
-
-  function getLoginUserInfo() {
-    const getUserInfo = async () => {
-      const token = JSON.parse(localStorage.getItem("profile")).token;
-
-      const userInfo = {
-        headers: {
-          "content-type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      };
-      const response = await axios.get("/posts", userInfo);
-
-      if (response?.data) dispatch(setLoginUser(response.data));
-    };
-    getUserInfo();
-  }
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
@@ -65,7 +43,7 @@ function Profile() {
       <Container>
         <DesktopNav />
         <MobileNav />
-        <SocialMedia social={loginUser} />
+        <SocialMedia />
         <CardList cardlist={cardlist} />
       </Container>
     </ThemeProvider>
