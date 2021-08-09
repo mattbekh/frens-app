@@ -1,17 +1,24 @@
 // Gather user from action.payload??
 // NOT FINISHED
 
-const loggedReducer = (state = {}, action) => {
+const loggedReducer = (state = { email: "" }, action) => {
+  let newState;
   let newUser = action.payload;
   switch (action.type) {
     case "LOGIN":
-      state = { ...newUser };
-      return state;
+      newState = { ...state };
+      newState = { ...newUser };
+      if (newUser.social) {
+        newState.social.facebook = newUser.social.facebook;
+        newState.social.instagram = newUser.social.instagram;
+      }
+      return newState;
+
     case "LOGOUT":
-      state = {};
-      return state;
+      newState = {};
+      return newState;
     default:
-      return false;
+      return state;
   }
 };
 
