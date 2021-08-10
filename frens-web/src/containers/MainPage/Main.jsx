@@ -152,8 +152,6 @@ const MainFooter = styled.footer`
 let socket;
 const ENDPOINT = "http://localhost:5000";
 
-
-
 // sleep = (milliseconds) => {
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
@@ -180,8 +178,8 @@ function Main() {
 
 
   useEffect(() => {
-
-    socket = io(ENDPOINT);
+    let origin = window.location.origin;
+    socket = io(origin);
     let socketObj = {socket};
     dispatch(socketOn(socketObj));
 
