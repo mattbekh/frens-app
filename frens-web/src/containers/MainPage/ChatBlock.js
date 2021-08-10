@@ -105,14 +105,14 @@ function ChatBlock(props) {
                     setMessages([...messages, message]);
                 })
 
-
-
-                
                 socket.on('clearMessages', () => {
                     setMessages([]);
                 })
-            }
-        }
+                return () => {
+                    socket.off("message");
+                  };
+            }    
+        }  
     });
 
 // Function for sending messages

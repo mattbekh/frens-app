@@ -43,13 +43,6 @@ export const clearChatRoom = () => {
   }
 }
 
-export const pickInterest = (id) => {
-  return {
-    type: "PICK",
-    payload: id,
-  };
-};
-
 export const setLoginUser = (user) => {
   return {
     type: "LOGIN",
