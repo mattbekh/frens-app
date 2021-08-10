@@ -61,7 +61,7 @@ function Options(props) {
       <CardOptionInput
         id={props.option}
         type="checkbox"
-        checked={questions[props.option] === 1 ? true : false}
+        checked={props.questions[props.option] === 1 ? true : false}
         onChange={handleChange}
       />
       <label for={props.option}>{props.option}</label>

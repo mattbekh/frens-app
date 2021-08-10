@@ -5,12 +5,17 @@ import styled from "styled-components";
 import defaultImg from "../../images/Frens-1.png";
 
 const FrensWrap = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   flex-wrap: wrap;
   align-items: stretch;
   margin: 0 auto;
   justify-content: center;
   padding: 4rem 0 4rem;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 function FrensList(props) {

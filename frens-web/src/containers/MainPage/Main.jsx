@@ -32,6 +32,7 @@ import Footer from "../../components/Footer";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
+  box-sizing: border-box;
   margin-top: -3rem;
   display: flex;
   flex-direction: column;
@@ -189,30 +190,42 @@ function Main() {
     console.log("[ loginUser.username ]", username);
 
     //generate frens
+    let sameClusterUsername = [];
     const pythonResponse = await axios.get("/python/");
-    if (pythonResponse?.data)
+    if (pythonResponse?.data) {
       console.log(
         "%c [ pythonResponse.data ]",
         "font-size:13px; background:pink; color:#bf2c9f;",
         pythonResponse.data
       );
-    let loggedInUserCluster = pythonResponse.data[username];
-    let sameClusterUsername = [];
+      let loggedInUserCluster = pythonResponse.data[username];
 
-    //store frens that are in the same cluster as logged in user
-    for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
-      if (Cluster === loggedInUserCluster && frenUsername !== username)
-        sameClusterUsername.push(frenUsername);
+      // let sameClusterUsername = [];
+
+      //store frens that are in the same cluster as logged in user
+      for (const [frenUsername, Cluster] of Object.entries(
+        pythonResponse.data
+      )) {
+        if (Cluster === loggedInUserCluster && frenUsername !== username)
+          sameClusterUsername.push(frenUsername);
+      }
+      console.log(
+        "%c [ sameClusterUsername ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        sameClusterUsername
+      );
     }
-    console.log(
-      "%c [ sameClusterUsername ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      sameClusterUsername
-    );
 
     //set/print cluster frens
     const frens = await axios.get("/suggest_list/" + sameClusterUsername);
-    if (frens?.data) setFrensList(frens.data);
+    if (frens?.data) {
+      setFrensList(frens.data);
+      console.log(
+        "%c [ frens.data ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        frens.data
+      );
+    }
     console.log("[ frens.data ]", frens.data);
   }, [dispatch]); // on first refresh
 
@@ -241,9 +254,9 @@ function Main() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
       <PageContainer>
+        <DesktopNav />
+        <MobileNav />
         <div className="max-container">
-          <DesktopNav />
-          <MobileNav />
           <MainContainer className="full-hight">
             <div className="user-account-info">
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>
