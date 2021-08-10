@@ -79,7 +79,7 @@ function ChatBlock(props) {
 
     const [socketObj, setSocketObj] = useState({});
 
-    const currentUser = useSelector((state) => state.isLogged);
+    const currentUser = useSelector((state) => state.loginUser);
     const chatUser = props.user.newUser;
 
 

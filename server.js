@@ -192,6 +192,18 @@ app.get("/python", (req, res) => {
   });
 });
 
+app.get("/suggest_list/:sameClusterUsername", (req, res) => {
+  let filter = req.params.sameClusterUsername.split(",");
+
+  User.find({ username: filter })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 app.get("/", (req, res) => {
   res.send("Welcome to the home page!");
 });

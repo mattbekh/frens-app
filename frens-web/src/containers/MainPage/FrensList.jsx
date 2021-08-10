@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Fren from "./Fren";
 import styled from "styled-components";
+
+import defaultImg from "../../images/Frens-1.png";
 
 const FrensWrap = styled.div`
   display: flex;
@@ -11,26 +13,31 @@ const FrensWrap = styled.div`
   padding: 4rem 0 4rem;
 `;
 
-
-
 function FrensList(props) {
 
-  
-
+  console.log(props.frensList);
   return (
     <FrensWrap className="frens-list" id="frenslist">
       {props.frensList.map((fren) => {
+        // console.log("[ fren ]", fren);
         // const [user] = Object.entries(fren);
         // const userId = user[0];
         // const info = user[1];
 
-        const userId = fren._id.toString();
-        const username = fren.username;
+        const userId = fren._id;
+        const user = fren;
+        const info = fren;
+        const name = fren.username;
+
         return (
           <Fren
             key={userId}
-            user={fren}
-            name={username}
+            user={user}
+            name={name}
+            imgURL={info.social?.photo ? info.social.photo : defaultImg}
+            contactInfo={
+              info.social?.facebook ? info.social.facebook : info.email
+            }
             openModal={props.openModal}
             socket={props.socket}
           />
@@ -38,7 +45,6 @@ function FrensList(props) {
       })}
     </FrensWrap>
   );
-
 }
 
 export default FrensList;

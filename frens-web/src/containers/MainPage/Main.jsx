@@ -60,23 +60,40 @@ const MainContainer = styled.div`
     }
   }
   .arrow-down {
-    display: block;
+    background: -webkit-linear-gradient(0deg, #5f978b, rgb(409, 82, 82));
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 60px;
     height: 60px;
     padding: 12px;
     border-radius: 50%;
     margin: 0 auto;
     transition: 0.3s;
+    position: relative;
+  }
+  .arrow-down::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
   }
   .arrow-down img {
-    width: 100%;
-    height: 100%;
+    // padding: 25px;
+    margin-top: 2px;
+    width: 45px;
+    height: 45px;
+    filter: brightness(1) invert(1);
   }
   .arrow-down:hover {
     transform: scale(1.1);
   }
   .arrow-down:hover img {
-    filter: brightness(1) invert(1);
   }
 `;
 
@@ -135,7 +152,15 @@ const MainFooter = styled.footer`
 let socket;
 const ENDPOINT = "http://localhost:5000";
 
+
+
+// sleep = (milliseconds) => {
+//   return new Promise(resolve => setTimeout(resolve, milliseconds))
+// }
+
+
 function Main() {
+  
   // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
 
@@ -185,31 +210,38 @@ function Main() {
     console.log("[ loginUser.username ]", username);
 
     //generate frens
+    let sameClusterUsername = [];
     const pythonResponse = await axios.get("/python/");
-    if (pythonResponse?.data)
+    if (pythonResponse?.data) {
       console.log(
         "%c [ pythonResponse.data ]",
         "font-size:13px; background:pink; color:#bf2c9f;",
         pythonResponse.data
       );
-    let loggedInUserCluster = pythonResponse.data[username];
-    let sameClusterUsername = [];
 
-    //store frens that are in the same cluster as logged in user
-    for (const [frenUsername, Cluster] of Object.entries(pythonResponse.data)) {
-      if (Cluster === loggedInUserCluster && frenUsername !== username)
-        sameClusterUsername.push(frenUsername);
+      let loggedInUserCluster = pythonResponse.data[username];
+
+      console.log('%c [ loggedInUserCluster ]', 'font-size:13px; background:pink; color:#bf2c9f;', loggedInUserCluster)
+      // let sameClusterUsername = [];
+      //store frens that are in the same cluster as logged in user
+      for (const [frenUsername, Cluster] of Object.entries(
+        pythonResponse.data
+      )) {
+        if (Cluster === loggedInUserCluster && frenUsername !== username)
+          sameClusterUsername.push(frenUsername);
+      }
+      console.log(
+        "%c [ sameClusterUsername ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        sameClusterUsername
+      );
     }
-    console.log(
-      "%c [ sameClusterUsername ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      sameClusterUsername
-    );
 
     //set/print cluster frens
     const frens = await axios.get("/suggest_list/" + sameClusterUsername);
     if (frens?.data) setFrensList(frens.data);
     console.log("[ frens.data ]", frens.data);
+
   }, [dispatch]); // on first refresh
 
   // card click handler
@@ -227,35 +259,11 @@ function Main() {
     newModal.visible = false;
     setModal(newModal);
   }
+
   function handleProfile() {
     console.log("[ social ]", social);
     console.log("[ questions ]", questions);
     console.log("[ login user ]", loginUser);
-  }
-
-  function getUsers() {
-    const getUsers = async () => {
-      const users = await axios.get("/users");
-      if (users?.data) setFrensList(users.data);
-    }
-    getUsers();
-  }
-
-  function getLoginUserInfo() {
-    const getUserInfo = async () => {
-      const token = JSON.parse(localStorage.getItem("profile")).token;
-
-      const userInfo = {
-        headers: {
-          "content-type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      };
-      const response = await axios.get("/posts", userInfo);
-
-      if (response?.data) dispatch(setLoginUser(response.data));
-    };
-    getUserInfo();
   }
 
   function handlePython() {
@@ -284,7 +292,7 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
-            <button onClick={() => handlePython()}> Python Test</button>
+            {/* <button onClick={() => handlePython()}> Python Test</button> */}
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
               <img src={arrowDown} />
@@ -302,13 +310,16 @@ function Main() {
           <RandomContent className="random-content">
             <div className="random-content-wrapper">
               <h2>Want More Precise Matches?</h2>
-              <p>Go to the Profile Page to complete your information !</p>
+              <p>
+                Go to the <Link to="/profile">Profile Page</Link> to complete
+                your information !
+              </p>
               <hr />
             </div>
           </RandomContent>
         </div>
         <MainFooter>
-          <Chat socket={socket} />
+          <Chat />
         </MainFooter>
       </PageContainer>
     </ThemeProvider>

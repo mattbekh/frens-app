@@ -27,7 +27,7 @@ const ChatButton = styled.button`
 
 function Chat(props) {
     const isPop = useSelector(state => state.isPop);
-    const currentUser = useSelector((state) => state.isLogged);
+    const currentUser = useSelector((state) => state.loginUser);
     const chatUser = useSelector(state => state.chatUser); 
 
     const dispatch = useDispatch();

@@ -13,7 +13,6 @@ const FrensContainer = styled.div`
         cursor: pointer;
         transform: scale(1.05);
     }
-
     @media only screen and (min-width: 768px) {
         width: 20%;
     }
@@ -63,18 +62,15 @@ const FrensWrapper = styled.div`
     width: 100%;
     height: 25vw;
     display: flex;
-    background-color: pink;
     text-align: center;
     justify-content: center;
     align-items: center;
     padding: 10px;
     position: relative;
     overflow: hidden;
-
     &:hover ${FrensImg} {
         filter: brightness(50%);
     }
-
     &:hover ${FrensName} {
         opacity: 1;
     }
@@ -108,9 +104,8 @@ function createRoom(mainUser, selectedUser) {
 function Fren(props) {
 
     let socket = props.socket;
-
     const isPop = useSelector(state => state.isPop);
-    const currentUser = useSelector((state) => state.isLogged);
+    const currentUser = useSelector((state) => state.loginUser);
     const chatRoom = useSelector((state) => state.chatRoom);
     // const chatUser = useSelector(state => state.chatUser); 
 
@@ -148,7 +143,7 @@ function Fren(props) {
     return (
         <FrensContainer className="frens-container">
             <FrensWrapper className="frens-wrapper">
-                {/* <FrensImg className="frens-img" src={props.imgURL} alt={props.name} /> */}
+                <FrensImg className="frens-img" src={props.imgURL} alt={props.name} />
                 <FrensName className="frens-name">{props.name}</FrensName>
 
                 <ChatButton onClick = {handleChatClick}>

@@ -8,6 +8,7 @@ import {
 } from "../../actions";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 const SocialMediaWrapper = styled.div`
   font-family: "Gill Sans", sans-serif;
