@@ -121,9 +121,9 @@ function Fren(props) {
   // When we have users
   const name = currentUser.username;
 
-  // function handleClick() {
-  //     props.openModal(props.name, props.imgURL, props.contactInfo);
-  // }
+  function handleClick() {
+    props.openModal(props.name, props.imgURL, props.contactInfo);
+  }
 
   function handleChatClick() {
     dispatch(chatPop());
@@ -150,7 +150,9 @@ function Fren(props) {
     <FrensContainer className="frens-container">
       <FrensWrapper className="frens-wrapper">
         <FrensImg className="frens-img" src={props.imgURL} alt={props.name} />
-        <FrensName className="frens-name">{props.name}</FrensName>
+        <FrensName className="frens-name" onClick={handleClick}>
+          {props.name}
+        </FrensName>
 
         <ChatButton onClick={handleChatClick}>
           <BsChat size={38} />
