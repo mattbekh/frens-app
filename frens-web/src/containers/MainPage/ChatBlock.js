@@ -75,6 +75,7 @@ function ChatBlock(props) {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
 
+    const [input, setInput] = useState(true);
     // let [defaultValues, setDefaultValues] = useState(0);
 
     const [socketObj, setSocketObj] = useState({});
@@ -106,8 +107,16 @@ function ChatBlock(props) {
                 })
 
                 socket.on('clearMessages', () => {
-                    // setMessages([]);
+                    setMessages([]);
                 })
+
+                // socket.on('blockInput', () => {
+                //     setInput(false);
+                // })
+
+                // socket.on('unblockInput', () => {
+                //     setInput(true);
+                // })
 
                 return () => {
                     socket.off("message");
@@ -154,7 +163,7 @@ async function disconnectSocket() {
                     <ChatContainer>
                         <InfoBar name={props.user.newUser.username} room={room} disconnectSocket={disconnectSocket}/>
                         <Messages messages={messages} name={currentUser.username}/>
-                        <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
+                        {input && <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>}
                     </ChatContainer>
                 </OuterContainer>
                 </Block>

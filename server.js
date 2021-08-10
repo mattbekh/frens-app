@@ -87,10 +87,24 @@ io.on('connection', (socket) => {
 
       socket.join(user.room);
 
+      // io.emit('unblockInput');
       // if(error) return callback(error);
       
-      socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
-      socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room ${user.room}.`});
+      // Check for people in room
+      const users = getUsersInRoom(user.room);
+      io.emit('clearMessages');
+      socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room.`});
+
+      if( users.length  === 2) {
+        // io.emit('unblockInput');
+        // io.to(user.room).emit("message", {user: user.name, text: message});
+        socket.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room. You can start your convo!`});
+      } else {
+        socket.emit('message', { user: "admin", text: `Please wait for other person to join.`});
+        socket.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room.`});
+      }
+
+      
 
       //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
 
@@ -102,6 +116,7 @@ io.on('connection', (socket) => {
 
       // Check for people in room
       const users = getUsersInRoom(user.room);
+
       if( users.length  === 2) {
         io.to(user.room).emit("message", {user: user.name, text: message});
       } else {
@@ -118,8 +133,10 @@ io.on('connection', (socket) => {
 
       if(user) {
           console.log("@@@ USER DISCONNECTED @@@");
-          //io.emit('clearMessages');
-          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room ${user.room}.`})
+          io.emit('clearMessages');
+
+          // io.emit('blockInput');
+          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room. You can't send messages anymore.`})
           //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
       }
   })
