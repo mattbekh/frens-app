@@ -11,6 +11,7 @@ import {
 } from "../../actions";
 
 const FrensContainer = styled.div`
+  box-sizing: border-box;
   height: 100%;
   position: relative;
   padding: 15px;
@@ -20,7 +21,7 @@ const FrensContainer = styled.div`
     transform: scale(1.05);
   }
   @media only screen and (min-width: 768px) {
-    width: 20%;
+    // width: 20%;
   }
 `;
 
@@ -66,7 +67,7 @@ const ChatButton = styled.button`
 
 const FrensWrapper = styled.div`
   width: 100%;
-  height: 25vw;
+  height: 50vw;
   display: flex;
   text-align: center;
   justify-content: center;
@@ -74,17 +75,16 @@ const FrensWrapper = styled.div`
   padding: 10px;
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
   &:hover ${FrensImg} {
     filter: brightness(50%);
   }
   &:hover ${FrensName} {
     opacity: 1;
   }
-
   &:hover ${ChatButton} {
     opacity: 1;
   }
-
   @media only screen and (min-width: 768px) {
     height: 25vw;
     max-height: 340px;

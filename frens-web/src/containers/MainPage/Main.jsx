@@ -34,6 +34,7 @@ import Footer from "../../components/Footer";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
+  box-sizing: border-box;
   margin-top: -3rem;
   display: flex;
   flex-direction: column;
@@ -280,9 +281,9 @@ function Main() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
       <PageContainer>
+        <DesktopNav />
+        <MobileNav />
         <div className="max-container">
-          <DesktopNav />
-          <MobileNav />
           <MainContainer className="full-hight">
             <div className="user-account-info">
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>

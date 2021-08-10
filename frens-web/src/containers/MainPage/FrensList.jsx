@@ -12,14 +12,12 @@ const FrensWrap = styled.div`
   margin: 0 auto;
   justify-content: center;
   padding: 4rem 0 4rem;
-
   @media only screen and (min-width: 768px) {
     grid-template-columns: repeat(4, 1fr);
   }
 `;
 
 function FrensList(props) {
-
   console.log(props.frensList);
   return (
     <FrensWrap className="frens-list" id="frenslist">
