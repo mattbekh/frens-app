@@ -19,6 +19,8 @@ const FrensWrap = styled.div`
 `;
 
 function FrensList(props) {
+
+  console.log(props.frensList);
   return (
     <FrensWrap className="frens-list" id="frenslist">
       {props.frensList.map((fren) => {
@@ -42,6 +44,7 @@ function FrensList(props) {
               info.social?.facebook ? info.social.facebook : info.email
             }
             openModal={props.openModal}
+            socket={props.socket}
           />
         );
       })}

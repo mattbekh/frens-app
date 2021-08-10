@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import io from "socket.io-client";
 import {
+  socketOn,
   setLoginUser,
   updateQuestions,
   updateSocial,
@@ -12,7 +15,6 @@ import Modal from "./Modal";
 import FrensList from "./FrensList";
 import { BsChat } from "react-icons/all";
 // import initialFrensList from "./database.json";
-
 import initialFrensList from "./db.js";
 import axios from "axios";
 
@@ -32,7 +34,6 @@ import Footer from "../../components/Footer";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
-  box-sizing: border-box;
   margin-top: -3rem;
   display: flex;
   flex-direction: column;
@@ -148,16 +149,22 @@ const MainFooter = styled.footer`
   justify-content: flex-end;
   flex-direction: row;
 `;
+let socket;
+const ENDPOINT = "http://localhost:5000";
+
+// sleep = (milliseconds) => {
+//   return new Promise(resolve => setTimeout(resolve, milliseconds))
+// }
 
 function Main() {
   // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
 
   const [frensList, setFrensList] = useState([]);
+
   const loginUser = useSelector((state) => state.loginUser);
   const social = useSelector((state) => state.socialProfile);
   const questions = useSelector((state) => state.questionsProfile);
-
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
@@ -166,6 +173,13 @@ function Main() {
     imgURL: "",
     contactInfo: "",
   });
+
+  useEffect(() => {
+    let origin = window.location.origin;
+    socket = io(origin);
+    let socketObj = { socket };
+    dispatch(socketOn(socketObj));
+  }, []); // on first refresh
 
   useEffect(async () => {
     //get user authentication
@@ -198,10 +212,15 @@ function Main() {
         "font-size:13px; background:pink; color:#bf2c9f;",
         pythonResponse.data
       );
+
       let loggedInUserCluster = pythonResponse.data[username];
 
+      console.log(
+        "%c [ loggedInUserCluster ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        loggedInUserCluster
+      );
       // let sameClusterUsername = [];
-
       //store frens that are in the same cluster as logged in user
       for (const [frenUsername, Cluster] of Object.entries(
         pythonResponse.data
@@ -218,14 +237,7 @@ function Main() {
 
     //set/print cluster frens
     const frens = await axios.get("/suggest_list/" + sameClusterUsername);
-    if (frens?.data) {
-      setFrensList(frens.data);
-      console.log(
-        "%c [ frens.data ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        frens.data
-      );
-    }
+    if (frens?.data) setFrensList(frens.data);
     console.log("[ frens.data ]", frens.data);
   }, [dispatch]); // on first refresh
 
@@ -244,19 +256,33 @@ function Main() {
     newModal.visible = false;
     setModal(newModal);
   }
+
   function handleProfile() {
     console.log("[ social ]", social);
     console.log("[ questions ]", questions);
     console.log("[ login user ]", loginUser);
   }
 
+  function handlePython() {
+    const getInfoFromPython = async () => {
+      const response = await axios.get("/python");
+
+      if (response?.data)
+        console.log(
+          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
+          response.data
+        );
+    };
+    getInfoFromPython();
+  }
+
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
       <PageContainer>
-        <DesktopNav />
-        <MobileNav />
         <div className="max-container">
+          <DesktopNav />
+          <MobileNav />
           <MainContainer className="full-hight">
             <div className="user-account-info">
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>
@@ -269,7 +295,11 @@ function Main() {
               <img src={arrowDown} />
             </a>
           </MainContainer>
-          <FrensList frensList={frensList} openModal={openModal} />
+          <FrensList
+            socket={socket}
+            frensList={frensList}
+            openModal={openModal}
+          />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
           <ParallaxContainer className="parallax">

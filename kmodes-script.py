@@ -1,13 +1,17 @@
 import sys
 import os
 import numpy as np
+
 import pandas as pd
+
 from kmodes.kmodes import KModes
+
 import matplotlib.pyplot as plt
 import json
 
 data = pd.read_csv('./data-output.csv')
 data = data.set_index('username')
+
 
 # print(data.to_string())
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import io from "socket.io-client";
+import styled, {ThemeProvider} from "styled-components";
+import { useSelector, useDispatch, connect} from "react-redux";
+import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
+import {clearChatRoom} from "../../actions";
 
 import InfoBar from "./Chat/InfoBar";
 import Input from "./Chat/Input";
@@ -11,14 +13,13 @@ const OuterContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    background-color: #FFF;
+    border-radius: 8px;
 `;
 
 const ChatContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: #FFFFFF;
     border-radius: 8px;
     border: 1px solid grey;
     height: 100%;
@@ -31,70 +32,143 @@ const Block = styled.div`
   width: min-content;
   height:600px;
   width: 400px;
-  background: white;
+  border-radius: 8px;
 `
 
 let socket;
-const ENDPOINT = "http://localhost:5000";
+
+function createRoom(mainUser, selectedUser) {
+    if ((mainUser !== undefined) && (selectedUser !== undefined) && (selectedUser !== null)) {
+        const mainId = mainUser._id.toString();
+        const selectedId = selectedUser._id.toString();
+        for( let i = 0; i < mainId.length; i++ ){
+            if(mainId.charAt(i) > selectedId.charAt(i)){
+                return mainId.concat(selectedId);
+            } else if(mainId.charAt(i) < selectedId.charAt(i)){
+                return selectedId.concat(mainId);
+            }
+        }
+    }
+}
+
+const mapStateToProps = state => {
+    return {
+        socket: state.socket,
+        chatRoom: state.chatRoom
+    }
+}
 
 function ChatBlock(props) {
-    const [user, setUser] = useState("");
-    
+    let theme = "light";
+    // Check redux isDark state
+    const isDark = useSelector(state => state.isDark);
+    if(isDark) {
+        theme = "dark";
+    } else {
+        theme = "light";
+    }
 
-    const name = "TempName"
-    const room = "TempRoom"
+    const dispatch = useDispatch();
 
+    const [name, setName] = useState("");
+    const [room, setRoom] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-      socket = io(ENDPOINT);
-      setUser(props.user);
-      // setName(name);
-      // setRoom(room);
+    const [input, setInput] = useState(true);
+    // let [defaultValues, setDefaultValues] = useState(0);
 
-       socket.emit('join', { name, room }, () => {
-           console.log("%%%%% NEW USER JOIN %%%%%%")
-          //  alert(error);
-       });
+    const [socketObj, setSocketObj] = useState({});
 
-       return () => {
-            socket.disconnect()
-            socket.off();
-       }
-    }, []);
+    const currentUser = useSelector((state) => state.loginUser);
+    const chatUser = props.user.newUser;
 
-  useEffect( ()=> {
-      socket.on('message', (message) => {
-          setMessages([...messages, message]);
-      })
-  }, [messages]);
 
-  // Function for sending messages
-  const sendMessage = (event) => {
-      event.preventDefault();
+    useEffect( () => {
+        let mRoom = "none";
+        if(chatUser && currentUser) {
+            if(chatUser._id && currentUser._id) {
+                mRoom = createRoom(currentUser, chatUser);
+            }
+        }
+        setRoom(mRoom);
+    });
+    
+    useEffect( ()=> {
+        // setDefaultValues(2);
+        if(props.socket) {
+            setSocketObj(props.socket);
+            if(socketObj.socket) {
+                
+                socket = socketObj.socket;
 
-      if(message) {
-          socket.emit('sendMessage', message, () => {
-              setMessage("");
-          })
+                socket.on('message', (message) => {
+                    setMessages([...messages, message]);
+                })
+
+                socket.on('clearMessages', () => {
+                    setMessages([]);
+                })
+
+                // socket.on('blockInput', () => {
+                //     setInput(false);
+                // })
+
+                // socket.on('unblockInput', () => {
+                //     setInput(true);
+                // })
+
+                return () => {
+                    socket.off("message");
+                  };
+            }    
+        }  
+    });
+
+// Function for sending messages
+const sendMessage = (event) => {
+    event.preventDefault();
+
+    if(message) {
+        setSocketObj(props.socket);
+      // Emit message to server
+      if(socketObj && socketObj.socket) {
+
+        socket = socketObj.socket;
+        socket.emit('sendMessage', {id: currentUser._id, message}, () => {
+            setMessage("");
+        })
       }
+    }
+}
 
-      console.log(message, messages);
-  }
+async function disconnectSocket() {
 
+    // Clear chat window... find work around
+    // setMessages([]);
+
+    if(socketObj && socketObj.socket) {
+        await setRoom(createRoom(currentUser, chatUser));
+        dispatch(clearChatRoom())
+        socket = socketObj.socket;
+        socket.emit('leave', {id: currentUser._id, room})
+    }
+}
 
     return (props.popChat && props.user) ? (
-        <Block>
-          <OuterContainer>
-            <ChatContainer>
-                <InfoBar room={props.user[0]}/>
-                <Messages messages={messages} name={name}/>
-                <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
-            </ChatContainer>
-          </OuterContainer>
-        </Block>
+        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+            <GlobalStyles />
+                <Block>
+                <OuterContainer>
+                    <ChatContainer>
+                        <InfoBar name={props.user.newUser.username} room={room} disconnectSocket={disconnectSocket}/>
+                        <Messages messages={messages} name={currentUser.username}/>
+                        {input && <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>}
+                    </ChatContainer>
+                </OuterContainer>
+                </Block>
+        </ThemeProvider>
     ) : "";
 }
 
-export default ChatBlock;
+export default connect(mapStateToProps)(ChatBlock);

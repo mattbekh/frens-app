@@ -14,7 +14,6 @@ import {
 import { RegisterContext } from "./RegisterContext";
 import styled from "styled-components/macro";
 import { IconContext } from "react-icons";
-import Interests from "./Interests";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -71,7 +70,7 @@ const MorInfo = ({ user }) => {
       console.log(user);
       const response = await axios.post("/register", user);
       localStorage.setItem("profile", JSON.stringify({ ...response.data }));
-
+      console.log("*** REGISTER : " + response);
       history.push("/main");
     }
   };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setLoginUser,
@@ -26,6 +27,7 @@ const api = axios.create({
 function Profile() {
   let theme = "light";
   // Check redux isDark state
+
   const loginUser = useSelector((state) => state.loginUser);
   const social = useSelector((state) => state.socialProfile);
   const questions = useSelector((state) => state.questionsProfile);
@@ -34,6 +36,7 @@ function Profile() {
   const dispatch = useDispatch();
 
   const [cardlist, setCardlist] = useState([]);
+
   if (isDark) {
     theme = "dark";
   } else {
@@ -66,10 +69,9 @@ function Profile() {
     console.log("[ questions ]", questions);
     console.log("[ login user ]", loginUser);
   }
-
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
-      <button onClick={() => handleProfile()}>handle</button>
+      {/* <button onClick={() => handleProfile()}>handle</button> */}
       <GlobalStyles />
       <Container>
         <DesktopNav />

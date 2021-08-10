@@ -26,6 +26,7 @@ const CardOptionInput = styled.input`
 
 function Options(props) {
   const [check, setCheck] = useState(false);
+
   const loginUser = useSelector((state) => state.loginUser);
   const questions = useSelector((state) => state.questionsProfile);
   const dispatch = useDispatch();

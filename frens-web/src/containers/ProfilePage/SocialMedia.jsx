@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -5,7 +6,6 @@ import {
   updateQuestions,
   updateLoginUserSocial,
 } from "../../actions";
-
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -73,9 +73,10 @@ const ThumbsInnerImg = styled.img`
 
 function SocialMedia(props) {
   const [data, setData] = useState({
-    facebook: props.social ? props.social.email : props.email,
-    instagram: props.social ? props.social.email : props.email,
+    facebook: "facebook",
+    instagram: "instagram",
   });
+
 
   const dispatch = useDispatch();
   const facebookInput = useRef();
@@ -84,10 +85,10 @@ function SocialMedia(props) {
   const loginUser = useSelector((state) => state.loginUser);
   const social = useSelector((state) => state.socialProfile);
   const questions = useSelector((state) => state.questionsProfile);
-
   const handleChange = (e) => {
     setData({
       ...data,
+
       // Trimming any whitespace
       [e.target.name]: e.target.value.trim(),
     });
@@ -95,6 +96,7 @@ function SocialMedia(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     // setUserSocial(props.user, props.social.name);
     // ... submit to API or something
     console.log("send put request when submit");
@@ -130,6 +132,7 @@ function SocialMedia(props) {
         console.error("There was an error!", error);
       });
     // }
+
   };
 
   const [print, setPrint] = useState(false);
@@ -174,7 +177,6 @@ function SocialMedia(props) {
     );
     console.log("[ questions ]", questions);
   }, []);
-
   return (
     <SocialMediaWrapper>
       {/* <div className="socialMedia"> */}
