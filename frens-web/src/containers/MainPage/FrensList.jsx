@@ -2,7 +2,7 @@ import React from "react";
 import Fren from "./Fren";
 import styled from "styled-components";
 
-import defaultImg from "../../images/Frens-1.png";
+import defaultImg from "../../images/default-background.jpg";
 
 const FrensWrap = styled.div`
   display: grid;

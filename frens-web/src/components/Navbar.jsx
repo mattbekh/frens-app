@@ -35,11 +35,6 @@ function Navbar() {
   return (
     <HeaderNavUl id="menu-list">
       <li>
-        <HeaderLink to="/" className="header-links">
-          Home
-        </HeaderLink>
-      </li>
-      <li>
         <HeaderLink to="/Main" className="header-links">
           Main Page
         </HeaderLink>
