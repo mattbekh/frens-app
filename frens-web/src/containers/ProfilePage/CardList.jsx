@@ -12,8 +12,8 @@ const CardGrid = styled.div`
 function CardList(props) {
   return (
     <CardGrid className="card-grid">
-      {props.cardlist.map((card) => {
-        return <Card card={card} key={card.id} />;
+      {props.cardlist.map((card, index) => {
+        return <Card card={card} key={index} questions={props.questions} />;
       })}
     </CardGrid>
   );

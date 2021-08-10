@@ -34,6 +34,7 @@ import Footer from "../../components/Footer";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
+  box-sizing: border-box;
   margin-top: -3rem;
   display: flex;
   flex-direction: column;
@@ -156,9 +157,7 @@ const ENDPOINT = "http://localhost:5000";
 //   return new Promise(resolve => setTimeout(resolve, milliseconds))
 // }
 
-
 function Main() {
-  
   // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
 
@@ -176,13 +175,11 @@ function Main() {
     contactInfo: "",
   });
 
-
   useEffect(() => {
     let origin = window.location.origin;
     socket = io(origin);
-    let socketObj = {socket};
+    let socketObj = { socket };
     dispatch(socketOn(socketObj));
-
   }, []); // on first refresh
 
   useEffect(async () => {
@@ -219,7 +216,11 @@ function Main() {
 
       let loggedInUserCluster = pythonResponse.data[username];
 
-      console.log('%c [ loggedInUserCluster ]', 'font-size:13px; background:pink; color:#bf2c9f;', loggedInUserCluster)
+      console.log(
+        "%c [ loggedInUserCluster ]",
+        "font-size:13px; background:pink; color:#bf2c9f;",
+        loggedInUserCluster
+      );
       // let sameClusterUsername = [];
       //store frens that are in the same cluster as logged in user
       for (const [frenUsername, Cluster] of Object.entries(
@@ -239,7 +240,6 @@ function Main() {
     const frens = await axios.get("/suggest_list/" + sameClusterUsername);
     if (frens?.data) setFrensList(frens.data);
     console.log("[ frens.data ]", frens.data);
-
   }, [dispatch]); // on first refresh
 
   // card click handler
@@ -281,9 +281,9 @@ function Main() {
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
       <PageContainer>
+        <DesktopNav />
+        <MobileNav />
         <div className="max-container">
-          <DesktopNav />
-          <MobileNav />
           <MainContainer className="full-hight">
             <div className="user-account-info">
               <h1>Hi, {loginUser.username}! How you doin'~?</h1>
@@ -296,7 +296,11 @@ function Main() {
               <img src={arrowDown} />
             </a>
           </MainContainer>
-          <FrensList socket={socket} frensList={frensList} openModal={openModal} />
+          <FrensList
+            socket={socket}
+            frensList={frensList}
+            openModal={openModal}
+          />
           <Modal modal={modal} setModal={setModal} closeModal={closeModal} />
 
           <ParallaxContainer className="parallax">

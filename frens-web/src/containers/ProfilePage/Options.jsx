@@ -60,12 +60,13 @@ function Options(props) {
   return (
     <CardOption className="card-option">
       <CardOptionInput
-        type="checkbox"
         id={props.option}
-        checked={questions[props.option] === 1 ? true : false}
+        type="checkbox"
+        checked={props.questions[props.option] === 1 ? true : false}
         onChange={handleChange}
       />
-      {props.option}
+      <label for={props.option}>{props.option}</label>
+      {/* {props.option} */}
     </CardOption>
   );
 }

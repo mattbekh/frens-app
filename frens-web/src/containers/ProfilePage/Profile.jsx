@@ -48,7 +48,6 @@ function Profile() {
       setCardlist(response.data);
     });
 
-
     const token = JSON.parse(localStorage.getItem("profile")).token;
 
     axios.get("/loginUser/" + token).then((response) => {
@@ -61,6 +60,7 @@ function Profile() {
       dispatch(updateLoginUserSocial(response.data.social));
       dispatch(updateQuestions(response.data.questions));
 
+      console.log("[ questions ]", questions);
       //reducer not getting server datat after refresh
     });
   }, []);
@@ -71,12 +71,13 @@ function Profile() {
   }
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+      {/* <button onClick={() => handleProfile()}>handle</button> */}
       <GlobalStyles />
       <Container>
         <DesktopNav />
         <MobileNav />
         <SocialMedia loginUser={loginUser} />
-        <CardList cardlist={cardlist} />
+        <CardList cardlist={cardlist} questions={questions} />
       </Container>
     </ThemeProvider>
   );

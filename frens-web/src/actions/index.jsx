@@ -65,7 +65,7 @@ export const logUserOut = () => {
 
 export const updateQuestions = (questions) => {
   return {
-    type: "UPDTE_QUESTIONS",
+    type: "UPDATE_QUESTIONS",
     payload: questions,
   };
 };
