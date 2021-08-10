@@ -69,8 +69,8 @@ A social app for students to meet new people with similar interests. Users will 
 
 ## Stretch Requirements
 
-- ✅ "Remember me" data persistence for the app
 - ✅ Chat functionality between matches with chat persistence
+- ❌ "Remember me" data persistence for the app
 - ❌ Ability to send media
 - ❌ display mutual friends
 
@@ -80,11 +80,11 @@ A social app for students to meet new people with similar interests. Users will 
 
 ## Unit 1 - HTML CSS JS
 
-We use JSX syntax, which allows us to directly write HTML in React, instead of seperating markup and logic in selerated files. We also decided to use styled components so that we can support dynamic styling, because of that, we can save more time and essentially write less CSS. When first enter to the app, we used GSAP animations to create an appealing look to the welcome page.
+We use JSX syntax, which allows us to directly write HTML in React, instead of seperating markup and logic in selerated files. We also decided to use styled components so that we can support dynamic styling, and because of using styled components, we can save more time and essentially write less CSS. When first enter to the app, we used GSAP animations to create an appealing look to the welcome page.
 
 ## Unit 2 - React Redux
 
-We integrated Redux into React, for example, we created a themes toggle which used Redux to maintain a global state for a light and dark theme that was able to switch using an action. We also combined jwt, localStorage and Redux so the logged in user info can be easily accessed between web pages.
+We integrated Redux into React, for example, we created a themes toggle which used Redux to maintain a global state for a light and dark theme that was able to switch using an action. We also combined jwt, localStorage and Redux so that the logged in user info can be easily accessed between web pages.
 
 ## Unit 3 - MongoDB
 
@@ -100,34 +100,56 @@ We deployed our project on Heroku and set up the CI/CD pipeline with Github. The
 
 # Above and Beyond
 
-1. user authentication
-2. local storage
-3. web sockets
+## user authentication
+
+we set up the authentication using Bcrypt, since we do not want to store users' password staright into our database, we using Bcrypt to add "salt" to encrypt     the password, so that the app will be more secure.
+  
+## local storage
+
+since we have total of 4 pages, and we need to keep track of the login user information, we created a local storage to store the entire login user info, such as their interests, answers to the questions, and generated friends list. With the local storage, we can access, modify  the user info via redux.
+
+## websockets
+
+we added web sockets mainly for our chat funcionality, which is a computer communications protocol, providing full-duplex communication channels over a single TCP connection. And we used it to facilitate message passing between a client and server.
+
+## Algorithm 
+
+we did our reseach on machine leaning clustering algorithm, and compared the advantage and disadvantage between K-Means, DBScan and others, and eventually chose K-Modes, which is the categorized version of K-means.
 
 # Next Steps
 
-- Ability to send media
+## "Remember Me" function
+  Because of the time constraint, we did not have time to implement this functionality. We plan to have a similar effect as Chrome "remember password" 
+
+## Ability to send media
 
   Since we already supported the chat functionality in out app, the next step is to enhance the variety of information to send via chat. Such as voice massage, video, picture.
 
-- display mutual friends
+## Display mutual friends
 
   We plan in the future, to establish a community for friends with similar interests. So our app will not only recommand the friends based on their interests, we will also put mutual friends as one of friend-recommend factors.
 
 # List of Contributions
 
-- Matt Bekhterev
+## Matt Bekhterev
 
-  welcome animation, login page, user authentication, chat,
+  - Implemented the welcome animation
+  - Built the login page and user authentication
+  - Designed the chat functionality 
 
-- Danny Deng
+## Danny Deng
 
-  register page, redux user interest
+  - Set up the register page
+  - Helped to build the redux 
 
-- Ivy He
+## Ivy He
 
-  profile page, algo reserach, database connet
+  - Created the profile page
+  - Reseached the machine leaning clustering algorithm 
+  - Connected to the database and Heroku
 
-- Michaux Sun
+## Michaux Sun
 
-  main page, redux distribute user info, python integration
+  - Created the main page
+  - Implemented the redux to distribute login user
+  - Integrated the python script, generated recommended friends list
