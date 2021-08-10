@@ -106,8 +106,9 @@ function ChatBlock(props) {
                 })
 
                 socket.on('clearMessages', () => {
-                    setMessages([]);
+                    // setMessages([]);
                 })
+
                 return () => {
                     socket.off("message");
                   };
@@ -135,7 +136,7 @@ const sendMessage = (event) => {
 async function disconnectSocket() {
 
     // Clear chat window... find work around
-    setMessages([]);
+    // setMessages([]);
 
     if(socketObj && socketObj.socket) {
         await setRoom(createRoom(currentUser, chatUser));

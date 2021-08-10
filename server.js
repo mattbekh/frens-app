@@ -89,8 +89,8 @@ io.on('connection', (socket) => {
 
       // if(error) return callback(error);
       
-      //socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
-      //socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined.`});
+      socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room ${user.room}`});
+      socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room ${user.room}.`});
 
       //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
 
@@ -100,7 +100,13 @@ io.on('connection', (socket) => {
   socket.on("sendMessage", ({id, message}, callback) => {
       const user = getUser(id);
 
-      io.to(user.room).emit("message", {user: user.name, text: message});
+      // Check for people in room
+      const users = getUsersInRoom(user.room);
+      if( users.length  === 2) {
+        io.to(user.room).emit("message", {user: user.name, text: message});
+      } else {
+        // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `You lonely dog.`});
+      }
 
       // Clears the input text field
       callback();
@@ -112,8 +118,8 @@ io.on('connection', (socket) => {
 
       if(user) {
           console.log("@@@ USER DISCONNECTED @@@");
-          io.emit('clearMessages');
-          //io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left.`})
+          //io.emit('clearMessages');
+          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room ${user.room}.`})
           //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
       }
   })
