@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [master, michaux-matt]
+    branches: [master, michaux-matt, final_project]
 
 jobs:
   build:
