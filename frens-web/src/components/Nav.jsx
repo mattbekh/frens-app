@@ -33,7 +33,6 @@ const LiWrapper = styled.li`
     }
 `;
 
-
 function Nav(props) {
     return <NavContainer>
         <UlWrapper>

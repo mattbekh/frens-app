@@ -10,6 +10,7 @@ const HeaderNavUl = styled.ul`
   padding: 0;
   list-style: none;
   display: flex;
+
   & > li {
     &:hover {
       transform: scale(1.3);
@@ -31,7 +32,6 @@ const HeaderLink = styled(NavLink)`
   font-weight: 400;
   padding: "5px"
 
-  
 `;
 
 let activeStyle = {

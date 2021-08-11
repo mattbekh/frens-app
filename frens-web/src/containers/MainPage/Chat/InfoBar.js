@@ -36,7 +36,6 @@ margin-right: 5%;
 
 const InfoBar = ({ room, name, disconnectSocket }) => {
     let roomName;
-    // Change this when we have actual users with usernames
     if(!name) {
         roomName = "Test Name";
     } else {

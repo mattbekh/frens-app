@@ -8,9 +8,6 @@ const ToggleContainer = styled.div`
     margin: auto 0;
     padding: 0 2rem;
     position: relative;
-    // bottom: 0;
-    // right: 0;
-    
 `;
 
 const OuterCircle = styled.div`
@@ -24,7 +21,6 @@ const OuterCircle = styled.div`
         filter: brightness(1.5);
         transition: 0.5s;
     }
-    // box-shadow: 0px 0px 1rem rgba(255, 230, 0, 0.8);
 `
 
 const InnerCircle = styled.div`
@@ -39,7 +35,7 @@ const InnerCircle = styled.div`
       }
 `
 
-function ToggleNM(props) {
+function ToggleNM() {
     const dispatch = useDispatch();
 
     return (

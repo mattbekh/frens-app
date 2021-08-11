@@ -8,7 +8,6 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     flex-grow: 10;
-
 `
 
 export function ContentWrapper(props) {

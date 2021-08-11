@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-
 import gsap, { Power3 } from "gsap";
-
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 
@@ -17,8 +15,6 @@ import Footer from "../../components/Footer";
 
 const RegisterContainer = styled.div`
     visibility: hidden;
-    //   width: 100%;
-    //   height: 100vh;
     padding: 0;
     margin: 0;
     min-height: 100%;
@@ -26,12 +22,10 @@ const RegisterContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    //   background-color: var(--black);
 `;
 
 const RegisterPage = () => {
     let theme = "light";
-    // Check redux isDark state
     const isDark = useSelector((state) => state.isDark);
     if (isDark) {
         theme = "dark";
@@ -45,9 +39,7 @@ const RegisterPage = () => {
     let tl = new gsap.timeline();
 
     useEffect(() => {
-        // Wait for page to load, prevent glitches
         gsap.to(content, 0, { css: { visibility: "visible" } });
-
         tl.from(head, 1, { x: -1000, ease: Power3.easeOut }).from(middleSection, 1.2, { y: -1080, ease: Power3.easeOut }, 0.2);
     });
 
@@ -60,7 +52,6 @@ const RegisterPage = () => {
                         <div ref={(el) => (head = el)}>
                             <SlipIn name="Register" />
                         </div>
-                        {/* <ToggleNM/> */}
                     </HeaderWrapper>
 
                     <ContentWrapper>
@@ -68,7 +59,6 @@ const RegisterPage = () => {
                             <MiddleUI />
                         </div>
                     </ContentWrapper>
-
                     <FooterWrapper>
                         <Footer />
                     </FooterWrapper>

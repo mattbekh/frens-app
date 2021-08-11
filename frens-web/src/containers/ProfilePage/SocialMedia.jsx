@@ -75,7 +75,6 @@ function SocialMedia(props) {
     instagram: "instagram",
   });
 
-
   const dispatch = useDispatch();
   const facebookInput = useRef();
   const instagramInput = useRef();
@@ -84,16 +83,12 @@ function SocialMedia(props) {
   const handleChange = (e) => {
     setData({
       ...data,
-
-      // Trimming any whitespace
       [e.target.name]: e.target.value.trim(),
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // ... submit to API or something
     setPrint(!print);
     let id = loginUser._id;
 
@@ -116,8 +111,6 @@ function SocialMedia(props) {
   };
 
   const [print, setPrint] = useState(false);
-
-  //Cite the code from Dropzone
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/*",
@@ -142,12 +135,10 @@ function SocialMedia(props) {
 
   useEffect(
     () => () => {
-      // Make sure to revoke the data uris to avoid memory leaks
       files.forEach((file) => URL.revokeObjectURL(file.preview));
     },
     [files]
   );
-  //Cite the code from Dropzone
 
   return (
     <SocialMediaWrapper>
@@ -172,8 +163,6 @@ function SocialMedia(props) {
         ></SocialMediaInput>
 
         <h1>Photo</h1>
-
-        {/* cite the code from Dropzone */}
         <section className="container">
           <div {...getRootProps({ className: "dropzone" })}>
             <SocialMediaInput {...getInputProps()} />
@@ -187,8 +176,6 @@ function SocialMedia(props) {
             {thumbs}
           </ThumbsContainer>
         </section>
-        {/* cite the code from Dropzone */}
-
         <SocialMediaButton onClick={handleSubmit}>Submit</SocialMediaButton>
         {print && (
           <div>

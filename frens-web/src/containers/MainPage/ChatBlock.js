@@ -65,7 +65,6 @@ const mapStateToProps = state => {
 
 function ChatBlock(props) {
     let theme = "light";
-    // Check redux isDark state
     const isDark = useSelector(state => state.isDark);
     if(isDark) {
         theme = "dark";
@@ -74,14 +73,10 @@ function ChatBlock(props) {
     }
 
     const dispatch = useDispatch();
-
     const [room, setRoom] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
-
-
     const [socketObj, setSocketObj] = useState({});
-
     const currentUser = useSelector((state) => state.loginUser);
     const chatUser = props.user.newUser;
 
@@ -115,14 +110,6 @@ function ChatBlock(props) {
                     setMessages([]);
                 })
 
-                // socket.on('blockInput', () => {
-                //     setInput(false);
-                // })
-
-                // socket.on('unblockInput', () => {
-                //     setInput(true);
-                // })
-
                 return () => {
                     socket.off("message");
                   };
@@ -130,15 +117,12 @@ function ChatBlock(props) {
         }  
     },[props.socket, socketObj.socket, messages]);
 
-// Function for sending messages
 const sendMessage = (event) => {
     event.preventDefault();
 
     if(message) {
         setSocketObj(props.socket);
-      // Emit message to server
       if(socketObj && socketObj.socket) {
-
         socket = socketObj.socket;
         socket.emit('sendMessage', {id: currentUser._id, message}, () => {
             setMessage("");
@@ -148,10 +132,6 @@ const sendMessage = (event) => {
 }
 
 async function disconnectSocket() {
-
-    // Clear chat window... find work around
-    // setMessages([]);
-
     if(socketObj && socketObj.socket) {
         await setRoom(createRoom(currentUser, chatUser));
         dispatch(clearChatRoom())

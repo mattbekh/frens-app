@@ -18,7 +18,6 @@ function Card(props) {
   useEffect(setMaxHeight, [props.card.options, props.card.question]);
 
   return (
-    //dynamic class
     <div
       className={`card${flip ? "flip" : ""}`}
       style={{ height: height }}

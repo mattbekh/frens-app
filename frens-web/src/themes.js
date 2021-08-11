@@ -1,3 +1,5 @@
+/* Inspired by Will Code For View from youtube : https://www.youtube.com/watch?v=G00V4tRx1ME */
+
 import { createGlobalStyle } from "styled-components";
 
 export const darkTheme = {

@@ -11,6 +11,7 @@ const DisclaimerContainer = styled.div`
     height: 90vh;
     text-align: center;
     font-size: xx-large;
+    
     & > h1 {
         padding: 18rem 0;
     }
@@ -22,6 +23,7 @@ const ButtonWrapper = styled.button`
   border-radius: 5px;
   height: 2.8rem;
   margin: 0 2.8rem;
+
   &:hover {
     filter: brightness(1.5);
     transition: 0.5s;

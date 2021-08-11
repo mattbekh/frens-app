@@ -1,9 +1,7 @@
 import React from "react";
-
 import ToggleNM from "./ToggleNM";
 
-function Footer(props) {
-
+function Footer() {
     return (
         <ToggleNM/>
     )

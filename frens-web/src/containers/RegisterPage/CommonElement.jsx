@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+
 export const BoxContainer = styled.div`
   width: 100%;
   display: flex;
@@ -8,14 +9,12 @@ export const BoxContainer = styled.div`
   margin-top: 10px;
 `;
 
-
 export const FormContainer = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
-
 
 export const Input = styled.input`
   width: 75%;
@@ -32,9 +31,6 @@ export const Input = styled.input`
 `
 
 export const Label = styled.label`
-  
-  // align-items: start;
-  // float: left;
 `
 
 export const SubmitButton = styled.button.attrs({
@@ -49,6 +45,7 @@ export const SubmitButton = styled.button.attrs({
   border: none;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
+
   &:hover {
     filter: brightness(1.5);
   }
@@ -63,6 +60,7 @@ export const NormalButton = styled.button`
   border: none;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
+
   &:hover {
     filter: brightness(1.5);
   }
@@ -73,7 +71,6 @@ export const MutedLink = styled.div`
   color: #8C2F00;
   font-weight: 500;
   text-decoration: none;
-  //margin: 0 0 0 10rem;
   align-items: center;
 `;
 
