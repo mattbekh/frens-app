@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 import Message from "./Message";

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { logUserOut } from "../redux/actions";
@@ -11,11 +11,15 @@ const HeaderNavUl = styled.ul`
   list-style: none;
   display: flex;
   & > li {
-    
+    &:hover {
+      transform: scale(1.3);
+      text-shadow: 2px 2px 5px orange, 0 0 35px rgb(250, 171, 97),
+        0 0 5px rgb(250, 223, 68);
+    }
   }
 `;
 
-const HeaderLink = styled(Link)`
+const HeaderLink = styled(NavLink)`
   display: inline-block;
   margin-left: 2rem;
   display: block;
@@ -25,25 +29,29 @@ const HeaderLink = styled(Link)`
   text-align: center;
   transition: 0.3s ease-out;
   font-weight: 400;
+  padding: "5px"
 
-  &:hover {
-    transform: scale(1.3);
-    text-shadow: 2px 2px 5px orange, 0 0 35px rgb(250, 171, 97),
-      0 0 5px rgb(250, 223, 68);
-  }
+  
 `;
+
+let activeStyle = {
+  backgroundColor: "#FFBE0B",
+  color: "#000",
+  borderRadius: "8px",
+  padding: "5px"
+}
 
 function Navbar() {
   const dispatch = useDispatch();
   return (
     <HeaderNavUl id="menu-list">
       <li>
-        <HeaderLink to="/Main" className="header-links">
+        <HeaderLink to="/Main" className="header-links" activeStyle={activeStyle}>
           Main Page
         </HeaderLink>
       </li>
       <li>
-        <HeaderLink to="/Profile" className="header-links">
+        <HeaderLink to="/Profile" className="header-links" activeStyle={activeStyle}>
           Profile
         </HeaderLink>
       </li>

@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import {
-  setLoginUser,
-  updateQuestions,
-  updateLoginUserSocial,
-  insertQuestions,
-} from "../../redux/actions";
+import { insertQuestions } from "../../redux/actions";
 
 const CardOption = styled.div`
   font-family: "Gill Sans", sans-serif;
@@ -34,23 +29,16 @@ function Options(props) {
   const handleChange = (e) => {
     setCheck(!check); //not needed for updating and displaying checkboxes
     let questionName = e.target.id;
-    console.log(
-      "%c [ user click question ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      questionName
-    );
+
 
     dispatch(
       insertQuestions({ questionName: questionName, check: !check ? 1 : 0 })
     );
 
-    console.log("[ questions ]", questions);
-
     //axio update user question
     axios
       .put("/updateQuestions/" + loginUser._id, questions)
       .then((response) => {
-        console.log("[ option ]", response.data);
       })
       .catch((error) => {
         console.error("There was an error setting user options", error);
@@ -66,7 +54,6 @@ function Options(props) {
         onChange={handleChange}
       />
       <label for={props.option}>{props.option}</label>
-      {/* {props.option} */}
     </CardOption>
   );
 }

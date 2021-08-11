@@ -202,6 +202,7 @@ app.get("/python", (req, res) => {
     console.log("Pipe data from python script ...");
     largeDataSet.push(data);
   });
+
   // in close event we are sure that stream is from child process is closed
   python.on("close", (code) => {
     console.log(`child process close all stdio with code ${code}`);
@@ -276,46 +277,6 @@ app.put("/users/:id", async (req, res) => {
     console.log(err);
   }
 
-  // console.log(id);
-  // User.collection
-  //   .findOneAndUpdate(
-  //     { _id: mongoose.Types.ObjectId(id) },
-  //     { $set: { social: req.body } }
-  //   )
-  //   .then((result) => {
-  //     let result = User.collection.find({ _id: id });
-  //     console.log(result);
-  //     res.send(result);
-  //   });
-  // .catch((err) => {
-  //   console.log(err);
-  // });
-});
-
-app.post("/users", (req, res) => {
-  const newUser = new User({
-    _id: new mongoose.Types.ObjectId(),
-    username: "test1",
-    firstName: "testFirst",
-    lastName: "testLast",
-    email: "test1@gmail.com",
-    password: "test1",
-    social: {
-      facebook: "test1_facebook",
-      instagram: "test1_instagram",
-      photo:
-        "https://pyxis.nymag.com/v1/imgs/47c/71a/130bf1e557e534b3f2be3351afc2ecf952-17-rachel-green-jewish.rsquare.w700.jpg",
-    },
-    interest: {},
-  });
-  newUser
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 });
 
 app.get("/questions", (req, res) => {

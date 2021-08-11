@@ -53,11 +53,11 @@ const InfoBar = ({ room, name, disconnectSocket }) => {
     return (
         <InfoBarContainer>
             <LeftInner>
-                <img className="onlineIcon" src={onlineIcon} alt="online image" />
+                <img className="onlineIcon" src={onlineIcon} alt="online" />
                 <h3>{roomName}</h3>
             </LeftInner>
             <RightInner>
-                <img src={closeIcon} alt="close image" onClick= {()=> handleClick()}/>
+                <img src={closeIcon} alt="close" onClick= {()=> handleClick()}/>
             </RightInner>
         </InfoBarContainer>
     );

@@ -6,16 +6,11 @@ import {
   socketOn,
   setLoginUser,
   updateQuestions,
-  updateSocial,
-  updateUserSocial,
 } from "../../redux/actions";
 import { Link } from "react-router-dom";
 
 import Modal from "./Modal";
 import FrensList from "./FrensList";
-import { BsChat } from "react-icons/all";
-// import initialFrensList from "./database.json";
-import initialFrensList from "./db.js";
 import axios from "axios";
 
 import styled, { ThemeProvider } from "styled-components";
@@ -23,14 +18,9 @@ import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
 
 import { PageContainer } from "../../components/PageContainer";
-// import { HeaderWrapper } from "../../components/HeaderWrapper";
-// import { ContentWrapper } from "../../components/ContentWrapper";
-// import { FooterWrapper } from "../../components/FooterWrapper";
 
-// import Header from "../../components/Header";
 import DesktopNav from "../../components/DesktopNav";
 import MobileNav from "../../components/MobileNav";
-import Footer from "../../components/Footer";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
@@ -151,11 +141,6 @@ const MainFooter = styled.footer`
   flex-direction: row;
 `;
 let socket;
-const ENDPOINT = "http://localhost:5000";
-
-// sleep = (milliseconds) => {
-//   return new Promise(resolve => setTimeout(resolve, milliseconds))
-// }
 
 function Main() {
   // Check redux isDark state
@@ -164,8 +149,6 @@ function Main() {
   const [frensList, setFrensList] = useState([]);
 
   const loginUser = useSelector((state) => state.loginUser);
-  const social = useSelector((state) => state.socialProfile);
-  const questions = useSelector((state) => state.questionsProfile);
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState({
@@ -180,66 +163,49 @@ function Main() {
     socket = io(origin);
     let socketObj = { socket };
     dispatch(socketOn(socketObj));
-  }, []); // on first refresh
+  }, [dispatch]); // on first refresh
 
-  useEffect(async () => {
-    //get user authentication
-    const token = JSON.parse(localStorage.getItem("profile")).token;
-    const userInfo = {
-      headers: {
-        "content-type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    };
-    const response = await axios.get("/posts", userInfo);
-    if (response?.data) {
-      dispatch(setLoginUser(response.data));
-      console.log("[ @@@@@ RESPONSE @@@@ ]", response.data);
-      if (response.data.questions)
-        dispatch(updateQuestions(response.data.questions));
-      // if (response.data.social) dispatch(updateSocial({response.data.social}));
-    }
-
-    //store the current logged in username
-    let username = response.data.username;
-    console.log("[ loginUser.username ]", username);
-
-    //generate frens
-    let sameClusterUsername = [];
-    const pythonResponse = await axios.get("/python/");
-    if (pythonResponse?.data) {
-      console.log(
-        "%c [ pythonResponse.data ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        pythonResponse.data
-      );
-
-      let loggedInUserCluster = pythonResponse.data[username];
-
-      console.log(
-        "%c [ loggedInUserCluster ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        loggedInUserCluster
-      );
-      // let sameClusterUsername = [];
-      //store frens that are in the same cluster as logged in user
-      for (const [frenUsername, Cluster] of Object.entries(
-        pythonResponse.data
-      )) {
-        if (Cluster === loggedInUserCluster && frenUsername !== username)
-          sameClusterUsername.push(frenUsername);
+  useEffect(() => {
+    async function fetchData() {
+      //get user authentication
+      const token = JSON.parse(localStorage.getItem("profile")).token;
+      const userInfo = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      };
+      const response = await axios.get("/posts", userInfo);
+      if (response?.data) {
+        dispatch(setLoginUser(response.data));
+        if (response.data.questions)
+          dispatch(updateQuestions(response.data.questions));
+        // if (response.data.social) dispatch(updateSocial({response.data.social}));
       }
-      console.log(
-        "%c [ sameClusterUsername ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        sameClusterUsername
-      );
-    }
 
-    //set/print cluster frens
-    const frens = await axios.get("/suggest_list/" + sameClusterUsername);
-    if (frens?.data) setFrensList(frens.data);
-    console.log("[ frens.data ]", frens.data);
+      //store the current logged in username
+      let username = response.data.username;
+
+      //generate frens
+      let sameClusterUsername = [];
+      const pythonResponse = await axios.get("/python/");
+      if (pythonResponse?.data) {
+        let loggedInUserCluster = pythonResponse.data[username];
+
+        //store frens that are in the same cluster as logged in user
+        for (const [frenUsername, Cluster] of Object.entries(
+          pythonResponse.data
+        )) {
+          if (Cluster === loggedInUserCluster && frenUsername !== username)
+            sameClusterUsername.push(frenUsername);
+        }
+      }
+
+      //set/print cluster frens
+      const frens = await axios.get("/suggest_list/" + sameClusterUsername);
+      if (frens?.data) setFrensList(frens.data);
+    };
+    fetchData();
   }, [dispatch]); // on first refresh
 
   // card click handler
@@ -258,25 +224,6 @@ function Main() {
     setModal(newModal);
   }
 
-  function handleProfile() {
-    console.log("[ social ]", social);
-    console.log("[ questions ]", questions);
-    console.log("[ login user ]", loginUser);
-  }
-
-  function handlePython() {
-    const getInfoFromPython = async () => {
-      const response = await axios.get("/python");
-
-      if (response?.data)
-        console.log(
-          ">>>>>>>>>>>>>>>>>>>>>> Info in Python is: ",
-          response.data
-        );
-    };
-    getInfoFromPython();
-  }
-
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyles />
@@ -290,10 +237,9 @@ function Main() {
               <hr />
             </div>
             <h2>Time to find your people!</h2>
-            {/* <button onClick={() => handlePython()}> Python Test</button> */}
             <p>Here are frens who share similiar interest with you!</p>
             <a className="arrow-down" href="#frenslist">
-              <img src={arrowDown} />
+              <img src={arrowDown} alt="down arrow"/>
             </a>
           </MainContainer>
           <FrensList

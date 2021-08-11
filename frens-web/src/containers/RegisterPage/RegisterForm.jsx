@@ -16,8 +16,6 @@ const RegisterForm = ({user}) => {
         const isValid = formValidation();
         if (isValid) {
             setBasic();
-            console.log(user.email);
-            console.log(user.password);
             switchToInFo()
         }
     }

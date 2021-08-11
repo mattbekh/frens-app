@@ -93,11 +93,9 @@ function MiddleSection(props) {
         })
         .catch((err) => {
           alert("Incorrect Credentials");
-          console.log(`${err} Caught`);
         });
       reset();
     } else {
-      // alert("Please fill out all inputs");
     }
   }
 
@@ -154,7 +152,6 @@ function MiddleSection(props) {
           >
             Login
           </ButtonWrapper>
-          {/* <ButtonWrapper type="submit" form="login-form" className="login-button" >Login</ButtonWrapper> */}
 
           <AddMargin direction="vertical" margin={10} />
           <Link to="/register">

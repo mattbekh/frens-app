@@ -51,6 +51,9 @@ const ModalTextWrapper = styled.div`
   width: 40%;
   padding: 15px;
   font-weight: 300;
+  & > p {
+    color: white;
+  }
 `;
 
 const ModalName = styled.h3`
@@ -71,11 +74,7 @@ const RandomTopic = styled.p`
 
 function Modal(props) {
   const { topics } = topicList;
-  // console.log("topics: ", topics);
   const randomTopic = topics[Math.floor(Math.random() * topics.length)];
-
-  let visible = "hidden";
-  if (props.modal.visible) visible = "visible";
 
   function handleClick() {
     props.closeModal();

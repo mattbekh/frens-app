@@ -35,6 +35,11 @@ const Block = styled.div`
   border-radius: 8px;
 `
 
+const NoChat = styled.div`
+    height: 100%;
+    background-color: black;
+`;
+
 let socket;
 
 function createRoom(mainUser, selectedUser) {
@@ -70,19 +75,20 @@ function ChatBlock(props) {
 
     const dispatch = useDispatch();
 
-    const [name, setName] = useState("");
     const [room, setRoom] = useState("");
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
 
-    const [input, setInput] = useState(true);
-    // let [defaultValues, setDefaultValues] = useState(0);
 
     const [socketObj, setSocketObj] = useState({});
 
     const currentUser = useSelector((state) => state.loginUser);
     const chatUser = props.user.newUser;
 
+    let display = true;
+    if(!currentUser || !chatUser) {
+        display = false;
+    }
 
     useEffect( () => {
         let mRoom = "none";
@@ -92,10 +98,9 @@ function ChatBlock(props) {
             }
         }
         setRoom(mRoom);
-    });
+    },[chatUser, currentUser]);
     
     useEffect( ()=> {
-        // setDefaultValues(2);
         if(props.socket) {
             setSocketObj(props.socket);
             if(socketObj.socket) {
@@ -123,7 +128,7 @@ function ChatBlock(props) {
                   };
             }    
         }  
-    });
+    },[props.socket, socketObj.socket, messages]);
 
 // Function for sending messages
 const sendMessage = (event) => {
@@ -161,9 +166,10 @@ async function disconnectSocket() {
                 <Block>
                 <OuterContainer>
                     <ChatContainer>
-                        <InfoBar name={props.user.newUser.username} room={room} disconnectSocket={disconnectSocket}/>
-                        <Messages messages={messages} name={currentUser.username}/>
-                        {input && <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>}
+                        {display && <InfoBar name={props.user.newUser.username} room={room} disconnectSocket={disconnectSocket}/>}
+                        {display && <Messages messages={messages} name={currentUser.username}/>}
+                        {display && <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>}
+                        {!display && <NoChat><p>Please select a user to chat with</p></NoChat>}
                     </ChatContainer>
                 </OuterContainer>
                 </Block>

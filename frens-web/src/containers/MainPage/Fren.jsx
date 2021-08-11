@@ -4,7 +4,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   chatPop,
-  socketOff,
   chatUser,
   setChatRoom,
   clearChatRoom,
@@ -111,7 +110,6 @@ function createRoom(mainUser, selectedUser) {
 
 function Fren(props) {
   let socket = props.socket;
-  const isPop = useSelector((state) => state.isPop);
   const currentUser = useSelector((state) => state.loginUser);
   const chatRoom = useSelector((state) => state.chatRoom);
   // const chatUser = useSelector(state => state.chatUser);
@@ -131,9 +129,7 @@ function Fren(props) {
     const room = createRoom(currentUser, props.user);
 
     if (!chatRoom) {
-      console.log("SHUD MAKE NEW ROOM");
       socket.emit("join", { id: currentUser._id, name, room }, () => {
-        // console.log(`%%%%%% ${name} JOINED ROOM ${room}`);
         dispatch(setChatRoom(room));
         //  alert(error);
       });

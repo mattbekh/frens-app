@@ -18,15 +18,9 @@ const FrensWrap = styled.div`
 `;
 
 function FrensList(props) {
-  console.log(props.frensList);
   return (
     <FrensWrap className="frens-list" id="frenslist">
       {props.frensList.map((fren) => {
-        // console.log("[ fren ]", fren);
-        // const [user] = Object.entries(fren);
-        // const userId = user[0];
-        // const info = user[1];
-
         const userId = fren._id;
         const user = fren;
         const info = fren;

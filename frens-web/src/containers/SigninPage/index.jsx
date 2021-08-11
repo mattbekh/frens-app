@@ -35,20 +35,12 @@ export function SigninPage(props) {
     let head = useRef(null);
     let tl = new gsap.timeline();
 
-    // let data = useLocation();
-    // console.log(data.state.theme);
-
     useEffect( () => {
         // Wait for page to load, prevent glitches
         gsap.to(content, 0, {css: {visibility: 'visible'}})
 
         tl.from(head, 1, {x:-1000, ease: Power3.easeOut})
           .from(middleSection, 1.2, {y: -1080, ease: Power3.easeOut},0.2);
-        // tl.from(loginRef, 2, {y: 1280, ease: Power3.easeOut})
-        //   .from(loginRef,2,{scale: 0, ease: Power3.easeOut}, .2)
-        //   .from(registerRef, 1.2, {y: -1080, ease: Power3.easeOut}, 0.9)
-        //   .from(registerRef,2,{scale: 0, ease: Power3.easeOut});
-
     })
 
     return (

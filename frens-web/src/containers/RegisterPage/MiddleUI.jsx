@@ -1,16 +1,14 @@
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
-// CSS for this section
 import React from "react";
 import RegisterForm from "./RegisterForm";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ReactReduxContext } from "react-redux";
 import { RegisterContext } from "./RegisterContext";
 import MoreInfo from "./MoreInfo";
 
 
 // the drop down effect is inspired by Islem Maboud https://github.com/ipenywis
+// CSS for this section
 const BoxContainer = styled.div`
   // width: 500px;
   // min-height: 600px;
