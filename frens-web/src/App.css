@@ -16,6 +16,7 @@
     background-color: var(--yellow);
 } */
 
+/*
 .max-container {
   max-width: 1200px;
   margin: auto;
@@ -24,18 +25,19 @@
 input {
   border-radius: 5px;
   height: 2.3rem;
-  /* border: 1px solid grey; */
+
 }
 
 a {
   text-decoration: none;
   font-weight: bold;
-  /* color: var(--orange); */
+
 }
 
 p {
   color: white;
 }
+*/
 
 /* h3 {
     color: var(--yellow);

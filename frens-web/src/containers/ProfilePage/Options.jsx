@@ -7,7 +7,7 @@ import {
   updateQuestions,
   updateLoginUserSocial,
   insertQuestions,
-} from "../../actions";
+} from "../../redux/actions";
 
 const CardOption = styled.div`
   font-family: "Gill Sans", sans-serif;

@@ -1,9 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
 
-// CSS for this section
-import '../App.css';
-
 const SlipInContainer = styled.div`
     margin: auto 0;
     padding: 0 2rem;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled, {ThemeProvider} from "styled-components";
 import { useSelector, useDispatch, connect} from "react-redux";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
-import {clearChatRoom} from "../../actions";
+import {clearChatRoom} from "../../redux/actions";
 
 import InfoBar from "./Chat/InfoBar";
 import Input from "./Chat/Input";

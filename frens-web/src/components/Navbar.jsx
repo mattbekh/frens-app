@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { logUserOut } from "../actions";
+import { logUserOut } from "../redux/actions";
 
 import ToggleNM from "./ToggleNM";
 
@@ -10,13 +10,16 @@ const HeaderNavUl = styled.ul`
   padding: 0;
   list-style: none;
   display: flex;
+  & > li {
+    
+  }
 `;
 
 const HeaderLink = styled(Link)`
   display: inline-block;
   margin-left: 2rem;
   display: block;
-  color: var(--yellow);
+  color: #FFBE0B;
   text-decoration: none;
   font-size: 18px;
   text-align: center;

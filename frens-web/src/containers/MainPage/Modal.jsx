@@ -5,7 +5,7 @@ const ModalContainer = styled.div`
   max-width: 720px;
   width: 80%;
   padding: 1rem;
-  background: var(--black);
+  background: black;
   position: fixed;
   top: calc(137px + 2rem);
   left: 50%;
@@ -25,7 +25,7 @@ const ModalCloseBtn = styled.button`
   transition: 0.3s;
   transform-origin: 50% 50%;
   padding: 0;
-  background: var(--black);
+  background: black;
   color: white;
   &:hover {
     transform: rotate(135deg);
@@ -55,11 +55,11 @@ const ModalTextWrapper = styled.div`
 
 const ModalName = styled.h3`
   text-align: center;
-  color: var(--yellow);
+  color: #FFBE0B;
 `;
 
 const TopicLine = styled.h2`
-  border-bottom: 2px solid var(--yellow);
+  border-bottom: 2px solid #FFBE0B;
   color: white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1rem;

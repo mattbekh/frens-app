@@ -3,7 +3,6 @@ import {useSelector} from "react-redux";
 import styled, {ThemeProvider} from "styled-components/macro";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";
 import gsap, { Power3 } from "gsap";
-import {useLocation} from "react-router-dom";
 
 import { PageContainer } from "../../components/PageContainer";
 import { HeaderWrapper } from "../../components/HeaderWrapper";
@@ -34,7 +33,7 @@ export function SigninPage(props) {
     let content = useRef(null);
     let middleSection = useRef(null);
     let head = useRef(null);
-    let tl = new gsap.timeline;
+    let tl = new gsap.timeline();
 
     // let data = useLocation();
     // console.log(data.state.theme);

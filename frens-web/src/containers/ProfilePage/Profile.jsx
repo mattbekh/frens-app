@@ -5,7 +5,7 @@ import {
   setLoginUser,
   updateQuestions,
   updateLoginUserSocial,
-} from "../../actions";
+} from "../../redux/actions";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import axios from "axios";
@@ -15,6 +15,7 @@ import DesktopNav from "../../components/DesktopNav";
 import MobileNav from "../../components/MobileNav";
 import CardList from "./CardList";
 import SocialMedia from "./SocialMedia";
+import { PageContainer } from "../../components/PageContainer";
 
 const Container = styled.div`
   margin: 1rem 2rem;
@@ -73,12 +74,15 @@ function Profile() {
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       {/* <button onClick={() => handleProfile()}>handle</button> */}
       <GlobalStyles />
-      <Container>
+      <PageContainer>
         <DesktopNav />
         <MobileNav />
-        <SocialMedia loginUser={loginUser} />
-        <CardList cardlist={cardlist} questions={questions} />
-      </Container>
+        <Container>
+          
+          <SocialMedia loginUser={loginUser} />
+          <CardList cardlist={cardlist} questions={questions} />
+        </Container>
+      </PageContainer>
     </ThemeProvider>
   );
 }

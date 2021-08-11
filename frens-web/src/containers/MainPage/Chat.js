@@ -3,7 +3,7 @@ import {BsChat} from "react-icons/all";
 import styled from "styled-components";
 import ChatBlock from "./ChatBlock";
 import {useDispatch, useSelector} from "react-redux";
-import {chatPop} from "../../actions";
+import {chatPop} from "../../redux/actions";
 
 const ChatWrapper = styled.div`
   position: absolute;

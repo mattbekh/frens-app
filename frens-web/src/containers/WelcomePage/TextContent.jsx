@@ -3,8 +3,6 @@ import gsap, { Power3 } from "gsap";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 
-// CSS STYLING
-import "../../App.css";
 const Container = styled.div`
   visibility: hidden;
   display: flex;

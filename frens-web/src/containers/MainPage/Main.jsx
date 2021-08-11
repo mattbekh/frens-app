@@ -8,7 +8,7 @@ import {
   updateQuestions,
   updateSocial,
   updateUserSocial,
-} from "../../actions";
+} from "../../redux/actions";
 import { Link } from "react-router-dom";
 
 import Modal from "./Modal";

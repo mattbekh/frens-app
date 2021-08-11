@@ -1,5 +1,5 @@
 // Main Entry point for the website
-import React, { useRef } from "react";
+import React from "react";
 import {useSelector} from "react-redux";
 import  {ThemeProvider} from "styled-components/macro";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes.js";

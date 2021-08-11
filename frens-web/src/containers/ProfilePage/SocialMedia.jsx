@@ -5,7 +5,7 @@ import {
   setLoginUser,
   updateQuestions,
   updateLoginUserSocial,
-} from "../../actions";
+} from "../../redux/actions";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";

@@ -1,11 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDM } from "../actions";
+import { toggleDM } from "../redux/actions";
 
 import styled from "styled-components";
-
-// CSS for this section
-import "../App.css";
 
 const ToggleContainer = styled.div`
     margin: auto 0;
@@ -44,9 +41,6 @@ const InnerCircle = styled.div`
 
 function ToggleNM(props) {
     const dispatch = useDispatch();
-
-    // Check redux isDark state
-    const isDark = useSelector((state) => state.isDark);
 
     return (
         <ToggleContainer>

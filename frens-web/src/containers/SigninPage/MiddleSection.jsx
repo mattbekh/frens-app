@@ -1,21 +1,15 @@
 import React, { useState } from "react";
-import styled from "styled-components/macro";
-
 import axios from "axios";
-
-import AddMargin from "../../components/AddMargin";
-
 import { Link, useHistory } from "react-router-dom";
-
-// CSS for this section
-// import '../../App.css';
+import styled from "styled-components/macro";
+import AddMargin from "../../components/AddMargin";
 
 const FormContainer = styled.form`
   height: 33rem;
   width: 34rem;
   // min-width: 10rem;
   border-radius: 5px;
-  margin: 8rem auto;
+  margin: 6rem auto;
   display: flex;
   flex-direction: column;
   @media screen and (max-width: 550px) {
@@ -131,9 +125,11 @@ function MiddleSection(props) {
           <AddMargin direction="vertical" margin={10} />
           <br />
           <LabelWrapper htmlFor="password">Password</LabelWrapper>
-          <SpanWrapper>
-            <a href="">Forgot your password?</a>
-          </SpanWrapper>
+          <Link to="/comingsoon">
+            <SpanWrapper>
+              Forgot your password?
+            </SpanWrapper>
+          </Link>
           <AddMargin direction="vertical" margin={20} />
           <br />
           <InputWrapper
@@ -144,9 +140,9 @@ function MiddleSection(props) {
             required
           />
           <AddMargin direction="vertical" margin={20} />
-          <CheckBoxWrapper type="checkbox" />
+          <CheckBoxWrapper type="checkbox" onClick={()=>{alert('Sorry, "Remember Me" functionality coming soon!')}} />
           <AddMargin direction="vertical" margin={10} />
-          <LabelWrapper>Remember me</LabelWrapper>
+          <LabelWrapper >Remember me</LabelWrapper>
           <br />
           <AddMargin direction="vertical" margin={30} />
 

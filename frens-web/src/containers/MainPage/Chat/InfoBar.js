@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
-import {chatPop} from "../../../actions";
+import {chatPop} from "../../../redux/actions";
 
 import closeIcon from "../../../images/closeIcon.png";
 import onlineIcon from "../../../images/onlineIcon.png";

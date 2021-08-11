@@ -8,7 +8,7 @@ import {
   chatUser,
   setChatRoom,
   clearChatRoom,
-} from "../../actions";
+} from "../../redux/actions";
 
 const FrensContainer = styled.div`
   box-sizing: border-box;

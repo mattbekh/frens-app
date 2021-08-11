@@ -48,7 +48,7 @@ function ImageContent(props) {
     let content = useRef(null);
     let head = useRef(null);
     let image = useRef(null);
-    let tl = new gsap.timeline;
+    let tl = new gsap.timeline();
 
     useEffect( () => {
         // Content remains hidden until everything is ready to be rendered
