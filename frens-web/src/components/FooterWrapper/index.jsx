@@ -9,7 +9,6 @@ const Wrapper = styled.footer`
     flex-direction: reverse-row;
     align-self: flex-end;
     flex-grow: 0.5;
-
 `
 
 export function FooterWrapper(props) {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { insertQuestions } from "../../redux/actions";
+import styled from "styled-components";
 
 const CardOption = styled.div`
   font-family: "Gill Sans", sans-serif;
@@ -21,21 +21,18 @@ const CardOptionInput = styled.input`
 
 function Options(props) {
   const [check, setCheck] = useState(false);
-
   const loginUser = useSelector((state) => state.loginUser);
   const questions = useSelector((state) => state.questionsProfile);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setCheck(!check); //not needed for updating and displaying checkboxes
+    setCheck(!check);
     let questionName = e.target.id;
-
 
     dispatch(
       insertQuestions({ questionName: questionName, check: !check ? 1 : 0 })
     );
 
-    //axio update user question
     axios
       .put("/updateQuestions/" + loginUser._id, questions)
       .then((response) => {

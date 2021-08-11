@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components/macro";
+
 import AddMargin from "../../components/AddMargin";
 
 const FormContainer = styled.form`
   height: 33rem;
   width: 34rem;
-  // min-width: 10rem;
   border-radius: 5px;
   margin: 6rem auto;
   display: flex;
   flex-direction: column;
+
   @media screen and (max-width: 550px) {
     width: 27rem;
     min-width: 27rem;
@@ -59,8 +60,6 @@ const ButtonWrapper = styled.button`
 
 function MiddleSection(props) {
   const history = useHistory();
-
-  // Used to gather the info from user and to clear the inputs
   const [userEmail, setEmail] = useState("");
   const [userPassword, setPassword] = useState("");
 
@@ -79,10 +78,7 @@ function MiddleSection(props) {
 
   function handleLogin() {
     if (userEmail && userPassword) {
-      // Create payload
       let body = { email: userEmail, password: userPassword };
-
-      // Make post request
       axios
         .post(`/login`, body)
         .then((response) => {
@@ -152,7 +148,6 @@ function MiddleSection(props) {
           >
             Login
           </ButtonWrapper>
-
           <AddMargin direction="vertical" margin={10} />
           <Link to="/register">
             <SpanWrapper>Register</SpanWrapper>

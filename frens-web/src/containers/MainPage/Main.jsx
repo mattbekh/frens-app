@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import io from "socket.io-client";
 import {
   socketOn,
@@ -8,9 +7,6 @@ import {
   updateQuestions,
 } from "../../redux/actions";
 import { Link } from "react-router-dom";
-
-import Modal from "./Modal";
-import FrensList from "./FrensList";
 import axios from "axios";
 
 import styled, { ThemeProvider } from "styled-components";
@@ -18,9 +14,10 @@ import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
 import arrowDown from "../../images/arrow-down.png";
 
 import { PageContainer } from "../../components/PageContainer";
-
 import DesktopNav from "../../components/DesktopNav";
 import MobileNav from "../../components/MobileNav";
+import FrensList from "./FrensList";
+import Modal from "./Modal";
 import Chat from "./Chat";
 
 const MainContainer = styled.div`
@@ -75,7 +72,6 @@ const MainContainer = styled.div`
     border-radius: 50%;
   }
   .arrow-down img {
-    // padding: 25px;
     margin-top: 2px;
     width: 45px;
     height: 45px;
@@ -89,12 +85,12 @@ const MainContainer = styled.div`
 `;
 
 const ParallaxContainer = styled.section`
-  /* page break */
   background-image: url("/static/media/friends.310b1ff3.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
   .page-intermission {
     max-width: 680px;
     min-height: 60vh;
@@ -112,11 +108,10 @@ const ParallaxContainer = styled.section`
 `;
 
 const RandomContent = styled.section`
-  /* random content */
   padding: 4rem 0 4rem;
   color: white;
-  /*background: #1a191e;*/
   min-height: 100px;
+
   .random-content-wrapper {
     text-align: center;
     max-width: 680px;
@@ -130,7 +125,6 @@ const RandomContent = styled.section`
 const MainFooter = styled.footer`
   position: fixed;
   bottom: 0;
-  //left: 0;
   width: 100%;
   height: 50px;
   background: #010101;
@@ -140,17 +134,14 @@ const MainFooter = styled.footer`
   justify-content: flex-end;
   flex-direction: row;
 `;
+
 let socket;
 
 function Main() {
-  // Check redux isDark state
   const isDark = useSelector((state) => state.isDark);
-
   const [frensList, setFrensList] = useState([]);
-
   const loginUser = useSelector((state) => state.loginUser);
   const dispatch = useDispatch();
-
   const [modal, setModal] = useState({
     visible: false,
     name: "",
@@ -163,11 +154,10 @@ function Main() {
     socket = io(origin);
     let socketObj = { socket };
     dispatch(socketOn(socketObj));
-  }, [dispatch]); // on first refresh
+  }, [dispatch]);
 
   useEffect(() => {
     async function fetchData() {
-      //get user authentication
       const token = JSON.parse(localStorage.getItem("profile")).token;
       const userInfo = {
         headers: {
@@ -180,10 +170,8 @@ function Main() {
         dispatch(setLoginUser(response.data));
         if (response.data.questions)
           dispatch(updateQuestions(response.data.questions));
-        // if (response.data.social) dispatch(updateSocial({response.data.social}));
       }
 
-      //store the current logged in username
       let username = response.data.username;
 
       //generate frens
@@ -200,15 +188,12 @@ function Main() {
             sameClusterUsername.push(frenUsername);
         }
       }
-
-      //set/print cluster frens
       const frens = await axios.get("/suggest_list/" + sameClusterUsername);
       if (frens?.data) setFrensList(frens.data);
     };
     fetchData();
-  }, [dispatch]); // on first refresh
+  }, [dispatch]);
 
-  // card click handler
   function openModal(name, imgURL, contactInfo) {
     let newModal = { ...modal };
     newModal.visible = true;

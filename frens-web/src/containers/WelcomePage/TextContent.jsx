@@ -1,26 +1,20 @@
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import gsap, { Power3 } from "gsap";
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
 
 const Container = styled.div`
   visibility: hidden;
   display: flex;
-  // flex-direction: row;
-  // justify-content: center;
-  // flex-wrap: wrap;
   text-align: center;
   margin: auto;
   min-height: 100%;
   width: 100%;
 `;
 const SectionWrapper = styled.section`
-  // visibility: visible;
   position: absolute;
   left: 46%;
   margin: 0;
-  // min-height: 100%;
-  // text-align: center;
   overflow: hidden;
 
   @media screen and (max-width: 600px) {
@@ -61,11 +55,9 @@ const RegisterWrapper = styled.div`
   height: 4rem;
   margin: 0 0 0 1rem;
   align-self: center;
-  // position: absolute;
   display: flex;
-  // right: 50%;
-  // bottom: 50%;
   box-shadow: 0px 0px 1rem rgba(0, 0, 0, 0.5);
+
   &:hover {
     width: 14rem;
     height: 7rem;
@@ -97,7 +89,6 @@ function TextContent(props) {
   let loginRef = useRef(null);
   let registerRef = useRef(null);
   let textContent = useRef(null);
-
   let tl = new gsap.timeline();
 
   useEffect(() => {
@@ -127,10 +118,6 @@ function TextContent(props) {
       ease: Power3.easeOut,
     });
 
-    // tl.staggerFrom(textContent, 2, {y: 250, ease: Power3.easeOut})
-    //   .staggerTo(textContent, 1, {y: 250, ease: Power3.easeOut});
-
-    // Ease in the Sign In and Register Bubbles
     tl.from(loginRef, 2, { scale: 0, ease: Power3.easeOut }, 2.5).from(
       registerRef,
       2,
@@ -139,22 +126,9 @@ function TextContent(props) {
     );
   });
 
-  // const headlineFirst = textContent.children[0].children[0];
-  // const headlineSecond = textContent.children[0].children[1];
-  // const headlineThird = textContent.children[0].children[2];
-
-  // tl.staggerFrom([headlineFirst, headlineSecond, headlineThird], 2, {y: 250, ease: Power3.easeOut})
-  //   .staggerTo([headlineFirst, headlineSecond, headlineThird], 1, {y: 250, ease: Power3.easeOut});
-
-  // tl.from(loginRef, 2, {y: 1280, ease: Power3.easeOut})
-  //   .from(loginRef,2,{scale: 0, ease: Power3.easeOut}, .2)
-  //   .from(registerRef, 1.2, {y: -1080, ease: Power3.easeOut}, 0.9)
-  //   .from(registerRef,2,{scale: 0, ease: Power3.easeOut});
-
   return (
     <Container ref={(el) => (content = el)}>
       <SectionWrapper ref={(el) => (textContent = el)}>
-        {/*replace after animation*/}
         <h2>
           <div className="text-content-line">Make friends</div>
           <div className="text-content-line">which last</div>

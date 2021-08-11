@@ -29,17 +29,13 @@ function Chat(props) {
     const isPop = useSelector(state => state.isPop);
     const currentUser = useSelector((state) => state.loginUser);
     const chatUser = useSelector(state => state.chatUser); 
-
     const dispatch = useDispatch();
-    // When we have users
     const name = currentUser.username;
-
 
     function handleClick() {
       dispatch(chatPop());
     }
-
-
+    
     return (
         <ChatWrapper>
             <ChatBlock passedSocket={props.socket} popChat = {isPop} name={name} user={chatUser} />

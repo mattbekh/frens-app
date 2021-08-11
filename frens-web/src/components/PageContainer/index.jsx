@@ -1,7 +1,3 @@
-// import React, { useEffect } from "react";
-// import styled from "styled-components";
-// import { scrollToTop } from "utils/page";
-
 import React from "react";
 import styled from "styled-components/macro";
 
@@ -14,7 +10,6 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  // align-items: center;
 `;
 
 export function PageContainer(props) {
@@ -25,9 +20,7 @@ export const InnerPageContainer = styled.div`
   flex: 1;
   width: 100%;
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "auto")};
-  /*min-height Need more testing*/
   min-height: 70vh;
-  //padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;

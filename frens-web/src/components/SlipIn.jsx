@@ -7,11 +7,8 @@ const SlipInContainer = styled.div`
     min-width: 10rem;
 `
 
-
-
 function SlipIn(props) {
     return (
-
         <SlipInContainer>
             <h1 className="header-h1">{props.name}</h1>
         </SlipInContainer>

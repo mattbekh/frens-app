@@ -1,59 +1,38 @@
-/* DEFINE ROUTES (CRUD)
-
-GET /users - list all users
-POST /users - Create a new user
-GET /users/:id - Get one user (using unique identifier) 
-PATCH /users/:id - Update one user
-DELETE /users/:id - Delete one user
-
-*/
 require("dotenv").config();
 const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 const path = require('path');
-
 const fs = require("fs");
 const fastcsv = require("fast-csv");
 const OUTPUT_FILE_NAME = "data-output.csv";
-// const ws = fs.createWriteStream(OUTPUT_FILE_NAME, { flags: "w+" });
-
 const bcrypt = require("bcrypt");
-const salt = "$2b$10$X4kv7j5ZcG39WgogSl16au"; //TODO make it secret if worked
+const salt = "$2b$10$X4kv7j5ZcG39WgogSl16au";
 const jwt = require("jsonwebtoken");
 const { spawn } = require("child_process");
-
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const { addUser, removeUser, getUser, getUsersInRoom } = require("./chatUsers.js");
 
 /* Custom Error component to throw custom errors*/
 const AppError = require("./AppError");
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./chatUsers.js");
-
-/* MongoDB Atlas Cloud */
 mongoose
   .connect(
-    // "mongodb+srv://admin:admin@cpsc455frensapp.kf2ad.mongodb.net/frensApp",
     "mongodb+srv://admin:admin@cpsc455frensapp.kf2ad.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .then(() => {
-    console.log("MONGO CONNECTION OPEN");
   })
-  .catch((error) => {
-    console.log("##### MONGO CONNECTION ERROR");
-    console.log(error);
+  .catch(() => {
+    throw new AppError("Failed to connect to mongoose", 500);
   });
 
 const User = require("./models/user");
 const Question = require("./models/question");
 
-/* Get a server up and running */
-
 const port = process.env.PORT || 5000;
-
 const app = express();
 const server = http.createServer(app);
 corsOptions={
@@ -63,7 +42,6 @@ corsOptions={
 const io = socketio(server, corsOptions);
 
 /* MIDDLEWARE */
-// .use is a way to run a function on every request
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -72,102 +50,65 @@ app.use(morgan("dev"));
 /* CUSTOM MIDDLEWARE */
 app.use((req, res, next) => {
   req.requestTime = Date.now();
-  console.log("####" + req.method, req.path);
   next();
 });
 
-// CHAT FUNCTIONALITY
+/* CHAT */
 io.on('connection', (socket) => {
-  console.log("@@@ NEW CONNECTION @@@");
-  console.log(socket.id);
-
   socket.on('join', ({id, name, room}, callback) => {
       const { error, user } = addUser({ id, name, room });
-      console.log(`@@@ ${user.name} HAS JOINED THE ROOM : ${user.room} @@@`);
-
+      if(error) {
+        throw new AppError(`Join socket was unsuccessful for name: ${name} room: ${room}`, 500)
+      }
       socket.join(user.room);
-
-      // io.emit('unblockInput');
-      // if(error) return callback(error);
-      
-      // Check for people in room
       const users = getUsersInRoom(user.room);
       io.emit('clearMessages');
       socket.emit('message', { user: "admin", text: `${user.name}, welcome to the room.`});
 
       if( users.length  === 2) {
-        // io.emit('unblockInput');
-        // io.to(user.room).emit("message", {user: user.name, text: message});
         socket.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room. You can start your convo!`});
       } else {
         socket.emit('message', { user: "admin", text: `Please wait for other person to join.`});
         socket.to(user.room).emit('message', { user: "admin", text: `${user.name} has joined the room.`});
       }
-
-      
-
-      //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)})
-
       callback();
   });
-
   socket.on("sendMessage", ({id, message}, callback) => {
       const user = getUser(id);
-
-      // Check for people in room
       const users = getUsersInRoom(user.room);
 
       if( users.length  === 2) {
         io.to(user.room).emit("message", {user: user.name, text: message});
       } else {
-        // socket.broadcast.to(user.room).emit('message', { user: "admin", text: `You lonely dog.`});
       }
-
-      // Clears the input text field
       callback();
   });
-
-
   socket.on('leave', ({id, room}) => {
       const user = removeUser(id, room);
 
       if(user) {
-          console.log("@@@ USER DISCONNECTED @@@");
           io.emit('clearMessages');
-
-          // io.emit('blockInput');
-          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room. You can't send messages anymore.`})
-          //io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
+          io.to(user.room).emit('message', { user: 'admin', text: `${user.name} has left the room. You can't send messages anymore.`});
       }
   })
 });
 
-
-
-
 /* ROUTES */
 app.use(express.static(path.join(__dirname, "frens-web/build")));
 app.use(express.static("public"));
+app.get("/", (req, res) => {
+  res.send("Welcome to the home page!");
+});
 
-
-/* Python Algorithm */
+/* PYTHON ALGORITHM*/
 app.get("/python", (req, res) => {
   let largeDataSet = [];
   const ws = fs.createWriteStream(OUTPUT_FILE_NAME);
-  console.log(">>>>>>>>>>>>>>>>>>> inside calling python <<<<<<<<<<<<<<<<<<<");
-
-  // current testing
   let rows = []; // this is the data matrix
   let header = ["username", "cooking", "music", "drawing", "workout"];
   rows.push(header);
-
   //get user data from mongoDB, create data matrix for .csv file
   User.find({}, function (err, data) {
-    console.log(
-      "%c [ data ]",
-      "font-size:13px; background:pink; color:#bf2c9f;",
-      data
-    );
     data.forEach((user) => {
       rows.push([
         user.username,
@@ -176,40 +117,25 @@ app.get("/python", (req, res) => {
         user.interests[0].drawing,
         user.interests[0].workout,
       ]);
-      console.log(
-        "%c [ user.username ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        user.username
-      );
     });
-
-    console.log("***************** write into csv ***********************");
     fastcsv
       .write(rows, {
         headers: false,
       })
       .on("finish", function () {
-        console.log("Writting Done !!!!!!!!!! ");
       })
       .pipe(ws);
   });
-
   // spawn new child process to call the python script
   const python = spawn("python", ["kmodes-script.py"]);
-
   // collect data from script
   python.stdout.on("data", function (data) {
-    console.log("Pipe data from python script ...");
     largeDataSet.push(data);
   });
-
   // in close event we are sure that stream is from child process is closed
   python.on("close", (code) => {
-    console.log(`child process close all stdio with code ${code}`);
-    // send data to browser
     res.send(largeDataSet.join(""));
   });
-
   // Takes stdout data from script which executed with arguments and send this data to res object
   process.stdout.on("data", function (data) {
     res.send(data.toString());
@@ -224,12 +150,8 @@ app.get("/suggest_list/:sameClusterUsername", (req, res) => {
       res.send(result);
     })
     .catch((err) => {
-      console.log(err);
+      throw new AppError(`Could not get user cluster for suggested user display`, 500)
     });
-});
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the home page!");
 });
 
 app.get("/users", (req, res) => {
@@ -237,31 +159,26 @@ app.get("/users", (req, res) => {
     .then((result) => {
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      throw new AppError(`Could not GET /users`, 500)
     });
 });
 
 
 app.get("/users/:id", (req, res) => {
-  console.log(req.params.id);
   if (req.params.id) {
     let id = req.params.id.toString();
-    console.log(id);
     User.findById(id)
       .then((result) => {
-        // console.log(result);
         res.send(result);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        throw new AppError(`Could not GET /users/:id`, 500)
       });
   }
 });
 
 app.put("/users/:id", async (req, res) => {
-  // console.log(req.body.facebook);
-  // if (req.params.id) {
   let id = req.params.id;
   let targetId = mongoose.Types.ObjectId(id);
 
@@ -274,7 +191,7 @@ app.put("/users/:id", async (req, res) => {
 
     res.send(data);
   } catch (err) {
-    console.log(err);
+    throw new AppError(`Could not PUT /users : ${err}`, 500)
   }
 
 });
@@ -282,11 +199,10 @@ app.put("/users/:id", async (req, res) => {
 app.get("/questions", (req, res) => {
   Question.find()
     .then((result) => {
-      // console.log("[ result ]", result);
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      throw new AppError(`Could not GET /questions`, 500)
     });
 });
 
@@ -304,22 +220,15 @@ app.post("/questions", (req, res) => {
     .then((result) => {
       res.send(result);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      throw new AppError(`Could not POST /questions`, 500)
     });
 });
 
-//update user option checkbox
 app.put("/updateQuestions/:id", async (req, res) => {
   let id = req.params.id;
   let targetId = mongoose.Types.ObjectId(id);
-
   let questionName = req.body;
-
-  console.log("[ targetId ]", targetId);
-  console.log("[ questionName ]", questionName);
-
-  // res.send("option hajelluva");
   try {
     await User.collection.findOneAndUpdate(
       { _id: targetId },
@@ -329,15 +238,13 @@ app.put("/updateQuestions/:id", async (req, res) => {
 
     res.send(data);
   } catch (err) {
-    console.log(err);
+    throw new AppError(`Could not PUT /updateQuestions/:id : ${err}`, 500)
   }
 });
 
 app.post("/register", async (req, res) => {
   const { password, userName, email, interests } = req.body;
-
   const existingUser = await User.findOne({ userName });
-
   if (existingUser) {
     return res
       .status(404)
@@ -360,7 +267,6 @@ app.post("/register", async (req, res) => {
   res.send({ token: token }).redirect("/");
 });
 
-
 app.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -368,7 +274,7 @@ app.post("/login", async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      return res.status(404).json({ message: ">>>>>>>>>>>User doesn't exist" });
+      return res.status(404).json({ message: "User doesn't exist" });
     }
 
     const isPasswordCorrect = await bcrypt.compare(
@@ -377,10 +283,9 @@ app.post("/login", async (req, res, next) => {
     );
 
     if (!isPasswordCorrect) {
-      console.log("wrong ps");
       return res
         .status(400)
-        .send({ message: ">>>>>>>>>>>Invalid credentials" });
+        .send({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign({ existingUser }, process.env.ACCESS_TOKEN_SECRET, {
@@ -393,14 +298,10 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
-//get login user data without middleware
 /* Get login user info */
 app.get("/loginUser/:token", async (req, res) => {
   const user = req.user;
   const token = req.params.token;
-  // console.log("[ I am login user server");
-
-  //auth & get the newest user info
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
     if (err) return res.sendStatus(403);
     let id = user.existingUser._id;
@@ -410,53 +311,38 @@ app.get("/loginUser/:token", async (req, res) => {
       let targetUser = await User.findOne({ _id: targetId });
       res.send(targetUser);
     } catch (err) {
-      console.log(err);
+      throw new AppError(`Could not GET /loginUser/:token : ${err}`, 500)
     }
   });
 });
 
-/* Get login user info */
 app.get("/posts", authenticateToken, async (req, res) => {
   const user = req.user;
-  console.log("[ Im here");
-
-  //if user exists, send updated user info back
   if (user?.existingUser) {
     let id = user.existingUser._id;
     let targetId = mongoose.Types.ObjectId(id);
 
     try {
       let targetUser = await User.findOne({ _id: targetId });
-      console.log(
-        "%c [ !!!targetUser!!! ]",
-        "font-size:13px; background:pink; color:#bf2c9f;",
-        targetUser
-      );
       res.send(targetUser);
     } catch (err) {
-      console.log(err);
+      throw new AppError(`Could not GET /posts : ${err}`, 500)
     }
   } else {
-    //user from register
     res.send(user.user);
   }
 });
 
 /* Middleware to authenticate the token */
 function authenticateToken(req, res, next) {
-  console.log("I'm annoying ]");
   const authHeader = req.headers["authorization"];
-
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token === null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
-
     req.user = user;
-    //TO CHECK
-    console.log("[ req.user ]", req.user);
     next();
   });
 }
@@ -467,12 +353,13 @@ app.use((err, req, res, next) => {
   res.status(status).send(message);
 });
 
-/* Server needs a port to listen on, locally. This runs when server starts up! */
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/frens-web/build/index.html"));
 });
 
 server.listen(port, (err) => {
-  if (err) return console.log(err);
+  if (err) {
+    return new AppError(`Could not start on port : ${port} with error : ${err}`, 500)
+  }
   console.log(`Server started on port ${port}`);
 });

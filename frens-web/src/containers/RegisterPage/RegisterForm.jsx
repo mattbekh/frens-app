@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import {SubmitButton, Input, FormContainer, BoxContainer, Label, MutedLink, BoldLink} from "./CommonElement";
 import {RegisterContext} from "./RegisterContext";
 
-
 const RegisterForm = ({user}) => {
 
     const {switchToInFo} = useContext(RegisterContext);
@@ -63,7 +62,6 @@ const RegisterForm = ({user}) => {
                 </MutedLink>
             </FormContainer>
         </BoxContainer>
-
     );
 };
 

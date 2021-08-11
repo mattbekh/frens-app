@@ -52,16 +52,14 @@ color: grey;
 
 const Message = ({ message: { user, text}, name }) => {
     let theme = "light";
-    // Check redux isDark state
     const isDark = useSelector(state => state.isDark);
     if(isDark) {
         theme = "dark";
     } else {
         theme = "light";
     }
-
+    
     let isSentByCurrentUser = false;
-    // const trimmedName = name.trim().toLowerCase();
     const trimmedName = name.trim();
     if( user === trimmedName) {
         isSentByCurrentUser = true;

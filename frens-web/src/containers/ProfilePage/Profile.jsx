@@ -8,6 +8,7 @@ import {
 } from "../../redux/actions";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../../themes";
+
 import { PageContainer } from "../../components/PageContainer";
 import DesktopNav from "../../components/DesktopNav";
 import MobileNav from "../../components/MobileNav";
@@ -20,14 +21,10 @@ const Container = styled.div`
 
 function Profile() {
   let theme = "light";
-  // Check redux isDark state
-
   const loginUser = useSelector((state) => state.loginUser);
   const questions = useSelector((state) => state.questionsProfile);
-
   const isDark = useSelector((state) => state.isDark);
   const dispatch = useDispatch();
-
   const [cardlist, setCardlist] = useState([]);
 
   if (isDark) {
@@ -57,7 +54,6 @@ function Profile() {
         <DesktopNav />
         <MobileNav />
         <Container>
-          
           <SocialMedia loginUser={loginUser} />
           <CardList cardlist={cardlist} questions={questions} />
         </Container>

@@ -20,7 +20,6 @@ const FrensContainer = styled.div`
     transform: scale(1.05);
   }
   @media only screen and (min-width: 768px) {
-    // width: 20%;
   }
 `;
 
@@ -112,11 +111,7 @@ function Fren(props) {
   let socket = props.socket;
   const currentUser = useSelector((state) => state.loginUser);
   const chatRoom = useSelector((state) => state.chatRoom);
-  // const chatUser = useSelector(state => state.chatUser);
-
   const dispatch = useDispatch();
-
-  // When we have users
   const name = currentUser.username;
 
   function handleClick() {
@@ -131,12 +126,8 @@ function Fren(props) {
     if (!chatRoom) {
       socket.emit("join", { id: currentUser._id, name, room }, () => {
         dispatch(setChatRoom(room));
-        //  alert(error);
       });
     } else {
-      // socket.disconnect()
-      // socket.off();
-      // await setRoom(createRoom(currentUser, chatUser));
       dispatch(clearChatRoom());
       socket.emit("leave", { id: currentUser._id, room });
     }
@@ -149,7 +140,6 @@ function Fren(props) {
         <FrensName className="frens-name" onClick={handleClick}>
           {props.name}
         </FrensName>
-
         <ChatButton onClick={handleChatClick}>
           <BsChat size={38} />
         </ChatButton>

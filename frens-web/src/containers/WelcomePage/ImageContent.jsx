@@ -2,10 +2,8 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components/macro";
 import gsap, { Power3 } from "gsap";
 
-
 import friends from "../../images/friends.jpg";
 import logo from "../../images/Frens-2.png";
-
 
 const Container = styled.div`
     visibility: hidden;
@@ -17,7 +15,6 @@ const LogoWrapper = styled.img`
     position: relative;
     object-fit: cover;
 `
-
 const Nav = styled.nav`
     width: 100%;
     height: 5rem;
@@ -27,11 +24,9 @@ const Nav = styled.nav`
     justify-content: space-around;
     z-index: 1;
     background: none;
-    // background-color: black;
     position: absolute;
     top: 0;
     border-bottom: none;
-
 `
 
 const ImageWrapper = styled.div`
@@ -44,7 +39,7 @@ const ImageWrapper = styled.div`
     z-index: 0;
 `
 
-function ImageContent(props) {
+function ImageContent() {
     let content = useRef(null);
     let head = useRef(null);
     let image = useRef(null);
@@ -65,9 +60,7 @@ function ImageContent(props) {
             <div ref={el => head = el}>
                 <Nav className="welcome-nav">
                     <LogoWrapper  src={logo} alt="logo" className="logo-img"/>
-                    {/* <ToggleNM/> */}
                 </Nav>
-            {/* <Header/> */}
             </div>
             
             <ImageWrapper ref={el => image = el}/>
