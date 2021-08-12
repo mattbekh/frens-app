@@ -84,7 +84,7 @@ A social app for students to meet new people with similar interests. Users will 
 
 ## Unit 1 - HTML CSS JS
 
-When it comes to Web Applications, having HTML CSS AND JS in your project is essential because everything is built upon these (other than the unlikely event that you're using Silverlight or JavaFX). Although we used styled components instead of the standard CSS sheets, our knowledge of CSS has allowed us to create an appealing UI without the use of stock frameworks like Material-UI. There are benefits to using styled components over CSS sheets, like code cleanliness, dynamic styling and of course themes which we used to create our Dark Mode. Having themes opens up a world of opportunity for the user to customize their own identity on the app, along with the obvious benefit to working in a team and having clean code our choice of using styled-components enhances user experience.
+When it comes to Web Applications, having HTML CSS and JS in your project is essential because everything is built upon these (other than the unlikely event that you're using Silverlight or JavaFX). We used JSX to be able to write HTML inside our React components, both our front and back ends consist of a lot of Javascript and although we used styled components instead of the standard CSS sheets, our knowledge of CSS has allowed us to create an appealing UI without the use of stock frameworks like Material-UI. There are benefits to using styled components over CSS sheets, like code cleanliness, dynamic styling and of course themes which we used to create our Dark Mode. Having themes opens up a world of opportunity for the user to customize their own identity on the app, along with the obvious benefit to working in a team and having clean code our choice of using styled-components enhances user experience. As a small bonus we also used a combination of CSS animations & GSAP animations to make the website feel more alive and appealing.
 
 ## Unit 2 - React (Redux)
 
@@ -134,24 +134,24 @@ Our application uses machine learning clustering algorithm to generate clusters 
 
 ## Matt Bekhterev
 
-  - Designed and Developed the Welcome page
-  - Built the login page and implemented password encryption
-  - Implemented the chat logic, set up Sockets and relevant routes
+  - Designed and Developed the Welcome page, Login page, Dark Mode and implemented password encryption
+  - Build the server architecture, set up Express 
+  - Implemented the chat logic, set up Web Socket with Socket.IO/ Redux and set up backend events/ routes
 
 ## Danny Deng
 
-  - Set up the register page
-  - Helped to build the redux 
-  - Designed the Chat UI
+  - Set up the Register page, connected it to the backend and declared related routes
+  - Helped to build the Redux and connect it to the app
+  - Designed the Chat UI, responsible for code cleanup and group organization
 
 ## Ivy He
 
-  - Created the profile page
-  - Researched the machine learning clustering algorithm 
-  - Connected to the database and Heroku
+  - Created the Profile page, wrote the relevant Schema for the "questions", connected to the backend and DB
+  - Researched and helped implement the machine learning clustering algorithm 
+  - Set up MongoDB, served the frontend on the backend and deployed to Heroku
 
 ## Michaux Sun
 
-  - Created the main page
+  - Created the Navbar, Main page, Logout functionality and wrote the relevant Schema for the "users"
   - Implemented user authentication/ persistence using JWT/ local storage and Redux
-  - Integrated the python script, generated recommended friends list
+  - Integrated the python script for the ML clustering algorithm, generated recommended friends list
