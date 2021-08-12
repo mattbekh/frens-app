@@ -45,6 +45,10 @@ A social app for students to meet new people with similar interests. Users will 
   ![Alt text](./frens-web/src/images/overview3.png?raw=true "Optional Title")
   ![Alt text](./frens-web/src/images/overview2.png?raw=true "Optional Title")
   ![Alt text](./frens-web/src/images/overview4.png?raw=true "Optional Title")
+  
+- chat
+  ![Alt text](./frens-web/src/images/overview8.png?raw=true "Optional Title")
+ 
 
 ---
 
